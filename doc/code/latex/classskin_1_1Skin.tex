@@ -1,0 +1,117 @@
+\hypertarget{classskin_1_1Skin}{}\section{skin.\+Skin Class Reference}
+\label{classskin_1_1Skin}\index{skin.\+Skin@{skin.\+Skin}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, coord\+\_\+sys=None, dz\+\_\+dtheta=None, bdy\+\_\+cond=None)\hypertarget{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}{}\label{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}
+
+\item 
+def \hyperlink{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}{comp\+O\+D\+Edydt\+\_\+diffu} (self, t, y, args=None)
+\begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
+def \hyperlink{classskin_1_1Skin_aefaa68f4f0d659f05aa2babeafbe1995}{solve\+MoL} (self, t\+\_\+start, t\+\_\+end)
+\item 
+def \hyperlink{classskin_1_1Skin_a411a39ab1c8faf9faa3fb6c8bea777f9}{get\+Bdy\+Right} (self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)
+\begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
+def \hyperlink{classskin_1_1Skin_a477a800e6beba99197c2744ebcdc5426}{get\+Bdy\+Down} (self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries comps}\hypertarget{classskin_1_1Skin_ac0a2c5b23d7f0f6e69edb6f666c6a8fc}{}\label{classskin_1_1Skin_ac0a2c5b23d7f0f6e69edb6f666c6a8fc}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Class definition for Skin
+which can contain a number of compartments
+\end{DoxyVerb}
+ 
+
+Definition at line 13 of file skin.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{skin\+::\+Skin@{skin\+::\+Skin}!comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}}
+\index{comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{comp\+O\+D\+Edydt\+\_\+diffu(self, t, y, args=\+None)}{compODEdydt_diffu(self, t, y, args=None)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+comp\+O\+D\+Edydt\+\_\+diffu (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{t, }
+\item[{}]{y, }
+\item[{}]{args = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}{}\label{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}
+
+
+(S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# 
+
+\begin{DoxyVerb}Compute the right-hand side of the ODEs, i.e. dydt, due to diffusion
+\end{DoxyVerb}
+ 
+
+Definition at line 26 of file skin.\+py.
+
+\index{skin\+::\+Skin@{skin\+::\+Skin}!get\+Bdy\+Down@{get\+Bdy\+Down}}
+\index{get\+Bdy\+Down@{get\+Bdy\+Down}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{get\+Bdy\+Down(self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)}{getBdyDown(self, compThis, y, idx_up2now, cIdx_i, cIdx_j)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+get\+Bdy\+Down (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{comp\+This, }
+\item[{}]{y, }
+\item[{}]{idx\+\_\+up2now, }
+\item[{}]{c\+Idx\+\_\+i, }
+\item[{}]{c\+Idx\+\_\+j}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_a477a800e6beba99197c2744ebcdc5426}{}\label{classskin_1_1Skin_a477a800e6beba99197c2744ebcdc5426}
+\begin{DoxyVerb}Get the boundary to the down of this compartment
+using values in y[]
+\end{DoxyVerb}
+ 
+
+Definition at line 139 of file skin.\+py.
+
+\index{skin\+::\+Skin@{skin\+::\+Skin}!get\+Bdy\+Right@{get\+Bdy\+Right}}
+\index{get\+Bdy\+Right@{get\+Bdy\+Right}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{get\+Bdy\+Right(self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)}{getBdyRight(self, compThis, y, idx_up2now, cIdx_i, cIdx_j)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+get\+Bdy\+Right (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{comp\+This, }
+\item[{}]{y, }
+\item[{}]{idx\+\_\+up2now, }
+\item[{}]{c\+Idx\+\_\+i, }
+\item[{}]{c\+Idx\+\_\+j}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_a411a39ab1c8faf9faa3fb6c8bea777f9}{}\label{classskin_1_1Skin_a411a39ab1c8faf9faa3fb6c8bea777f9}
+
+
+(E\+ND OF) Class methods dealing with O\+DE computation \#\#\# 
+
+(S\+T\+A\+RT OF) Class methods dealing with boundaries \#\#\# \begin{DoxyVerb}Get the boundary to the right of this compartment
+using values in y[]
+\end{DoxyVerb}
+ 
+
+Definition at line 118 of file skin.\+py.
+
+\index{skin\+::\+Skin@{skin\+::\+Skin}!solve\+MoL@{solve\+MoL}}
+\index{solve\+MoL@{solve\+MoL}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{solve\+Mo\+L(self, t\+\_\+start, t\+\_\+end)}{solveMoL(self, t_start, t_end)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+solve\+MoL (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{t\+\_\+start, }
+\item[{}]{t\+\_\+end}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_aefaa68f4f0d659f05aa2babeafbe1995}{}\label{classskin_1_1Skin_aefaa68f4f0d659f05aa2babeafbe1995}
+\begin{DoxyVerb}Solving PDE using method of lines (MoL)
+\end{DoxyVerb}
+ 
+
+Definition at line 75 of file skin.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+skin.\+py\end{DoxyCompactItemize}
