@@ -1,0 +1,131 @@
+\hypertarget{classskin__setup_1_1Skin__Setup}{}\section{skin\+\_\+setup.\+Skin\+\_\+\+Setup Class Reference}
+\label{classskin__setup_1_1Skin__Setup}\index{skin\+\_\+setup.\+Skin\+\_\+\+Setup@{skin\+\_\+setup.\+Skin\+\_\+\+Setup}}
+Inheritance diagram for skin\+\_\+setup.\+Skin\+\_\+\+Setup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classskin__setup_1_1Skin__Setup}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, chem, conf)\hypertarget{classskin__setup_1_1Skin__Setup_a2611544358a7178751abaf0d2d98c931}{}\label{classskin__setup_1_1Skin__Setup_a2611544358a7178751abaf0d2d98c931}
+
+\item 
+def \hyperlink{classskin__setup_1_1Skin__Setup_aeb7289f58a76638e31e24e71ae186309}{create\+Comps} (self, chem, conf)
+\item 
+def \hyperlink{classskin__setup_1_1Skin__Setup_a080759893083f543703f6b4f17ae6260}{create\+SC} (self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, n\+\_\+layer\+\_\+x, n\+\_\+layer\+\_\+y, offset\+\_\+y, bdy\+Cond)
+\begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Create individual compartments \#\#\# \end{DoxyCompactList}\item 
+def \hyperlink{classskin__setup_1_1Skin__Setup_a0271f9e73005e8c52c3b397edb534881}{create\+VE} (self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, xlen, ylen, n\+\_\+grids\+\_\+x, n\+\_\+grids\+\_\+y, bdy\+Cond)
+\item 
+def \hyperlink{classskin__setup_1_1Skin__Setup_a147ae38354fa1c30b2cb6b911a785e19}{create\+DE} (self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, xlen, ylen, n\+\_\+grids\+\_\+x, n\+\_\+grids\+\_\+y, bdy\+Cond)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries comp\+\_\+structure}\hypertarget{classskin__setup_1_1Skin__Setup_a8b09dae390dec5b69a401098955f3b1b}{}\label{classskin__setup_1_1Skin__Setup_a8b09dae390dec5b69a401098955f3b1b}
+
+\item 
+{\bfseries b\+\_\+has\+\_\+blood}\hypertarget{classskin__setup_1_1Skin__Setup_aead0a66ccc670a27de3f87fab70ab5b9}{}\label{classskin__setup_1_1Skin__Setup_aead0a66ccc670a27de3f87fab70ab5b9}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Class definition for Skin_Setup
+which intends to set up the compartments in simulation as instructed by user
+\end{DoxyVerb}
+ 
+
+Definition at line 18 of file skin\+\_\+setup.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}!create\+Comps@{create\+Comps}}
+\index{create\+Comps@{create\+Comps}!skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}}
+\subsubsection[{\texorpdfstring{create\+Comps(self, chem, conf)}{createComps(self, chem, conf)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin\+\_\+setup.\+Skin\+\_\+\+Setup.\+create\+Comps (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{chem, }
+\item[{}]{conf}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin__setup_1_1Skin__Setup_aeb7289f58a76638e31e24e71ae186309}{}\label{classskin__setup_1_1Skin__Setup_aeb7289f58a76638e31e24e71ae186309}
+\begin{DoxyVerb}Create compartments
+Letter code:
+    V: vehicle            S: stratum cornuem
+    E: viable epidermis   D: dermis
+    B: blood              H: Hair
+\end{DoxyVerb}
+ 
+
+Definition at line 38 of file skin\+\_\+setup.\+py.
+
+\index{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}!create\+DE@{create\+DE}}
+\index{create\+DE@{create\+DE}!skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}}
+\subsubsection[{\texorpdfstring{create\+D\+E(self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, xlen, ylen, n\+\_\+grids\+\_\+x, n\+\_\+grids\+\_\+y, bdy\+Cond)}{createDE(self, chem, coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y, bdyCond)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin\+\_\+setup.\+Skin\+\_\+\+Setup.\+create\+DE (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{chem, }
+\item[{}]{coord\+\_\+x\+\_\+start, }
+\item[{}]{coord\+\_\+y\+\_\+start, }
+\item[{}]{xlen, }
+\item[{}]{ylen, }
+\item[{}]{n\+\_\+grids\+\_\+x, }
+\item[{}]{n\+\_\+grids\+\_\+y, }
+\item[{}]{bdy\+Cond}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin__setup_1_1Skin__Setup_a147ae38354fa1c30b2cb6b911a785e19}{}\label{classskin__setup_1_1Skin__Setup_a147ae38354fa1c30b2cb6b911a785e19}
+\begin{DoxyVerb}Create dermis \end{DoxyVerb}
+ 
+
+Definition at line 143 of file skin\+\_\+setup.\+py.
+
+\index{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}!create\+SC@{create\+SC}}
+\index{create\+SC@{create\+SC}!skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}}
+\subsubsection[{\texorpdfstring{create\+S\+C(self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, n\+\_\+layer\+\_\+x, n\+\_\+layer\+\_\+y, offset\+\_\+y, bdy\+Cond)}{createSC(self, chem, coord_x_start, coord_y_start, n_layer_x, n_layer_y, offset_y, bdyCond)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin\+\_\+setup.\+Skin\+\_\+\+Setup.\+create\+SC (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{chem, }
+\item[{}]{coord\+\_\+x\+\_\+start, }
+\item[{}]{coord\+\_\+y\+\_\+start, }
+\item[{}]{n\+\_\+layer\+\_\+x, }
+\item[{}]{n\+\_\+layer\+\_\+y, }
+\item[{}]{offset\+\_\+y, }
+\item[{}]{bdy\+Cond}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin__setup_1_1Skin__Setup_a080759893083f543703f6b4f17ae6260}{}\label{classskin__setup_1_1Skin__Setup_a080759893083f543703f6b4f17ae6260}
+
+
+(S\+T\+A\+RT OF) Create individual compartments \#\#\# 
+
+\begin{DoxyVerb}Create stratum corneum \end{DoxyVerb}
+ 
+
+Definition at line 126 of file skin\+\_\+setup.\+py.
+
+\index{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}!create\+VE@{create\+VE}}
+\index{create\+VE@{create\+VE}!skin\+\_\+setup\+::\+Skin\+\_\+\+Setup@{skin\+\_\+setup\+::\+Skin\+\_\+\+Setup}}
+\subsubsection[{\texorpdfstring{create\+V\+E(self, chem, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start, xlen, ylen, n\+\_\+grids\+\_\+x, n\+\_\+grids\+\_\+y, bdy\+Cond)}{createVE(self, chem, coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y, bdyCond)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin\+\_\+setup.\+Skin\+\_\+\+Setup.\+create\+VE (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{chem, }
+\item[{}]{coord\+\_\+x\+\_\+start, }
+\item[{}]{coord\+\_\+y\+\_\+start, }
+\item[{}]{xlen, }
+\item[{}]{ylen, }
+\item[{}]{n\+\_\+grids\+\_\+x, }
+\item[{}]{n\+\_\+grids\+\_\+y, }
+\item[{}]{bdy\+Cond}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin__setup_1_1Skin__Setup_a0271f9e73005e8c52c3b397edb534881}{}\label{classskin__setup_1_1Skin__Setup_a0271f9e73005e8c52c3b397edb534881}
+\begin{DoxyVerb}Create viable epidermis \end{DoxyVerb}
+ 
+
+Definition at line 134 of file skin\+\_\+setup.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+skin\+\_\+setup.\+py\end{DoxyCompactItemize}

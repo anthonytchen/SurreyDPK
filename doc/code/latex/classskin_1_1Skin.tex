@@ -1,23 +1,66 @@
 \hypertarget{classskin_1_1Skin}{}\section{skin.\+Skin Class Reference}
 \label{classskin_1_1Skin}\index{skin.\+Skin@{skin.\+Skin}}
+Inheritance diagram for skin.\+Skin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classskin_1_1Skin}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, coord\+\_\+sys=None, dz\+\_\+dtheta=None, bdy\+\_\+cond=None)\hypertarget{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}{}\label{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}
+def \hyperlink{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, coord\+\_\+sys=None, dz\+\_\+dtheta=None, bdy\+\_\+cond=None)
+\item 
+def {\bfseries create\+Comps} (self, nrow, ncol)\hypertarget{classskin_1_1Skin_a0c3313324a2daa4875fba0ee9936c834}{}\label{classskin_1_1Skin_a0c3313324a2daa4875fba0ee9936c834}
 
 \item 
-def \hyperlink{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}{comp\+O\+D\+Edydt\+\_\+diffu} (self, t, y, args=None)
+def {\bfseries set\+\_\+n\+\_\+species} (self, n)\hypertarget{classskin_1_1Skin_ad565c3c4273e613be1be695124c6b0c6}{}\label{classskin_1_1Skin_ad565c3c4273e613be1be695124c6b0c6}
+
+\item 
+def {\bfseries set\+\_\+dim\+\_\+all} (self, dim)\hypertarget{classskin_1_1Skin_ab0e44ea0d793715a98df2be78d4b0bba}{}\label{classskin_1_1Skin_ab0e44ea0d793715a98df2be78d4b0bba}
+
+\item 
+def {\bfseries get\+\_\+dim\+\_\+all} (self)\hypertarget{classskin_1_1Skin_abfb289ef01f5524d660b4c9e34d96751}{}\label{classskin_1_1Skin_abfb289ef01f5524d660b4c9e34d96751}
+
+\item 
+def {\bfseries set\+Comp} (self, comp, idx\+\_\+comp\+\_\+x, idx\+\_\+comp\+\_\+y)\hypertarget{classskin_1_1Skin_a147823571847b0940eb4979c78e33e94}{}\label{classskin_1_1Skin_a147823571847b0940eb4979c78e33e94}
+
+\item 
+def {\bfseries get\+Comp} (self, idx\+\_\+comp\+\_\+x, idx\+\_\+comp\+\_\+y)\hypertarget{classskin_1_1Skin_a76771687f0225d9b7163d15583888515}{}\label{classskin_1_1Skin_a76771687f0225d9b7163d15583888515}
+
+\item 
+def \hyperlink{classskin_1_1Skin_ade7bc5930f22acb44e4cd34258afb4c0}{comp\+O\+D\+Edydt} (self, t, y, args=None)
 \begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classskin_1_1Skin_aefaa68f4f0d659f05aa2babeafbe1995}{solve\+MoL} (self, t\+\_\+start, t\+\_\+end)
 \item 
 def \hyperlink{classskin_1_1Skin_a411a39ab1c8faf9faa3fb6c8bea777f9}{get\+Bdy\+Right} (self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)
 \begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classskin_1_1Skin_a477a800e6beba99197c2744ebcdc5426}{get\+Bdy\+Down} (self, comp\+This, y, idx\+\_\+up2now, c\+Idx\+\_\+i, c\+Idx\+\_\+j)
+\item 
+def \hyperlink{classskin_1_1Skin_acaf230b15ecaac97396c3e598cf786c6}{pass\+Bdy\+Mass\+Out} (self, comp\+This, idx\+\_\+bdy\+Right, idx\+\_\+bdy\+Down)
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 {\bfseries comps}\hypertarget{classskin_1_1Skin_ac0a2c5b23d7f0f6e69edb6f666c6a8fc}{}\label{classskin_1_1Skin_ac0a2c5b23d7f0f6e69edb6f666c6a8fc}
+
+\item 
+{\bfseries dz\+\_\+dtheta}\hypertarget{classskin_1_1Skin_a98d8567140984e95305662589e657547}{}\label{classskin_1_1Skin_a98d8567140984e95305662589e657547}
+
+\item 
+{\bfseries coord\+\_\+sys}\hypertarget{classskin_1_1Skin_aad2b880a94cc302d53283788e8954073}{}\label{classskin_1_1Skin_aad2b880a94cc302d53283788e8954073}
+
+\item 
+{\bfseries nx\+Comp}\hypertarget{classskin_1_1Skin_aee39d4b54e8b6455c19ebe1f7f4c80f4}{}\label{classskin_1_1Skin_aee39d4b54e8b6455c19ebe1f7f4c80f4}
+
+\item 
+{\bfseries ny\+Comp}\hypertarget{classskin_1_1Skin_a6aa1a281abb786a7c7590207638dc44c}{}\label{classskin_1_1Skin_a6aa1a281abb786a7c7590207638dc44c}
+
+\item 
+{\bfseries dim\+\_\+all}\hypertarget{classskin_1_1Skin_a22c2a2306ddd7c388c1eb1e16ce644b5}{}\label{classskin_1_1Skin_a22c2a2306ddd7c388c1eb1e16ce644b5}
+
+\item 
+{\bfseries n\+Species}\hypertarget{classskin_1_1Skin_a68591f41f7298b9df879ab849d324f3d}{}\label{classskin_1_1Skin_a68591f41f7298b9df879ab849d324f3d}
 
 \end{DoxyCompactItemize}
 
@@ -28,30 +71,48 @@ which can contain a number of compartments
 \end{DoxyVerb}
  
 
-Definition at line 13 of file skin.\+py.
+Definition at line 15 of file skin.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{skin\+::\+Skin@{skin\+::\+Skin}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, coord\+\_\+sys=\+None, dz\+\_\+dtheta=\+None, bdy\+\_\+cond=\+None)}{__init__(self, coord_sys=None, dz_dtheta=None, bdy_cond=None)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{coord\+\_\+sys = {\ttfamily None}, }
+\item[{}]{dz\+\_\+dtheta = {\ttfamily None}, }
+\item[{}]{bdy\+\_\+cond = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}{}\label{classskin_1_1Skin_ae8c14fb876f2b90c955f4914df5ecde4}
+\begin{DoxyVerb}\end{DoxyVerb}
+ 
+
+Definition at line 20 of file skin.\+py.
 
 
 
 \subsection{Member Function Documentation}
-\index{skin\+::\+Skin@{skin\+::\+Skin}!comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}}
-\index{comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}!skin\+::\+Skin@{skin\+::\+Skin}}
-\subsubsection[{\texorpdfstring{comp\+O\+D\+Edydt\+\_\+diffu(self, t, y, args=\+None)}{compODEdydt_diffu(self, t, y, args=None)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+comp\+O\+D\+Edydt\+\_\+diffu (
+\index{skin\+::\+Skin@{skin\+::\+Skin}!comp\+O\+D\+Edydt@{comp\+O\+D\+Edydt}}
+\index{comp\+O\+D\+Edydt@{comp\+O\+D\+Edydt}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{comp\+O\+D\+Edydt(self, t, y, args=\+None)}{compODEdydt(self, t, y, args=None)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+comp\+O\+D\+Edydt (
 \begin{DoxyParamCaption}
 \item[{}]{self, }
 \item[{}]{t, }
 \item[{}]{y, }
 \item[{}]{args = {\ttfamily None}}
 \end{DoxyParamCaption}
-)}\hypertarget{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}{}\label{classskin_1_1Skin_ae9dae685416ddd7e3f345a3ff6449998}
+)}\hypertarget{classskin_1_1Skin_ade7bc5930f22acb44e4cd34258afb4c0}{}\label{classskin_1_1Skin_ade7bc5930f22acb44e4cd34258afb4c0}
 
 
 (S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# 
 
-\begin{DoxyVerb}Compute the right-hand side of the ODEs, i.e. dydt, due to diffusion
+\begin{DoxyVerb}Compute the right-hand side of the ODEs, i.e. dydt
 \end{DoxyVerb}
  
 
-Definition at line 26 of file skin.\+py.
+Definition at line 48 of file skin.\+py.
 
 \index{skin\+::\+Skin@{skin\+::\+Skin}!get\+Bdy\+Down@{get\+Bdy\+Down}}
 \index{get\+Bdy\+Down@{get\+Bdy\+Down}!skin\+::\+Skin@{skin\+::\+Skin}}
@@ -70,7 +131,7 @@ using values in y[]
 \end{DoxyVerb}
  
 
-Definition at line 139 of file skin.\+py.
+Definition at line 178 of file skin.\+py.
 
 \index{skin\+::\+Skin@{skin\+::\+Skin}!get\+Bdy\+Right@{get\+Bdy\+Right}}
 \index{get\+Bdy\+Right@{get\+Bdy\+Right}!skin\+::\+Skin@{skin\+::\+Skin}}
@@ -89,11 +150,28 @@ Definition at line 139 of file skin.\+py.
 (E\+ND OF) Class methods dealing with O\+DE computation \#\#\# 
 
 (S\+T\+A\+RT OF) Class methods dealing with boundaries \#\#\# \begin{DoxyVerb}Get the boundary to the right of this compartment
-using values in y[]
+using values in <y>
 \end{DoxyVerb}
  
 
-Definition at line 118 of file skin.\+py.
+Definition at line 155 of file skin.\+py.
+
+\index{skin\+::\+Skin@{skin\+::\+Skin}!pass\+Bdy\+Mass\+Out@{pass\+Bdy\+Mass\+Out}}
+\index{pass\+Bdy\+Mass\+Out@{pass\+Bdy\+Mass\+Out}!skin\+::\+Skin@{skin\+::\+Skin}}
+\subsubsection[{\texorpdfstring{pass\+Bdy\+Mass\+Out(self, comp\+This, idx\+\_\+bdy\+Right, idx\+\_\+bdy\+Down)}{passBdyMassOut(self, compThis, idx_bdyRight, idx_bdyDown)}}]{\setlength{\rightskip}{0pt plus 5cm}def skin.\+Skin.\+pass\+Bdy\+Mass\+Out (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{comp\+This, }
+\item[{}]{idx\+\_\+bdy\+Right, }
+\item[{}]{idx\+\_\+bdy\+Down}
+\end{DoxyParamCaption}
+)}\hypertarget{classskin_1_1Skin_acaf230b15ecaac97396c3e598cf786c6}{}\label{classskin_1_1Skin_acaf230b15ecaac97396c3e598cf786c6}
+\begin{DoxyVerb}Pass the outflow mass into the two boundary meshes
+idx_bdyRight, idx_bdyDown -- index of the boundary classes Comp
+\end{DoxyVerb}
+ 
+
+Definition at line 215 of file skin.\+py.
 
 \index{skin\+::\+Skin@{skin\+::\+Skin}!solve\+MoL@{solve\+MoL}}
 \index{solve\+MoL@{solve\+MoL}!skin\+::\+Skin@{skin\+::\+Skin}}
@@ -108,7 +186,7 @@ Definition at line 118 of file skin.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 75 of file skin.\+py.
+Definition at line 108 of file skin.\+py.
 
 
 

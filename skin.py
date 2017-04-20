@@ -71,8 +71,8 @@ class Skin:
                     #print('current_y\n', current_y)
 
                     # 2.1. Update the concentration in boundary meshes according to y[]                    
-                    compBdyRight, concBdyRight = self.getBdyRight(current_comp, y, idx, i, j)
-                    compBdyDown, concBdyDown = self.getBdyDown(current_comp, y, idx, i, j)
+                    idx_compBdyRight, concBdyRight = self.getBdyRight(current_comp, y, idx, i, j)
+                    idx_compBdyDown, concBdyDown = self.getBdyDown(current_comp, y, idx, i, j)
                     current_comp.setBdyConc(concBdyRight, concBdyDown)
                     
                     # 2.2. Call the compartment specific ODE functions
@@ -86,7 +86,7 @@ class Skin:
 
                     #if (m_bInfSrc)                              // infinite source, concentration doesn't change, but above dydt calculation is still needed
                     #memset(f+idx, 0, sizeof(double)*((Vehicle *)pComp)->m_dim);  //  since calling compODE_dydt will calculate the flux across boundaries properly
-                    current_comp.passBdyMassOut(compBdyRight, compBdyDown)
+                    self.passBdyMassOut(current_comp, idx_compBdyRight, idx_compBdyDown)
                     idx += current_dim
                 # for j
             # for i
@@ -127,7 +127,8 @@ class Skin:
 
         ## Integration
         
-        r = ode(self.compODEdydt).set_integrator('vode', method='bdf', with_jacobian=False)
+        r = ode(self.compODEdydt).set_integrator('vode', method='bdf', 
+            nsteps=5000, with_jacobian=True)
         r.set_initial_value(y0, t_start).set_f_params(None)
         r.integrate( r.t + t_end-t_start )
         
@@ -153,23 +154,25 @@ class Skin:
     
     def getBdyRight(self, compThis, y, idx_up2now, cIdx_i, cIdx_j):
         """ Get the boundary to the right of this compartment
-        using values in y[]
+        using values in <y>
         """
         if (cIdx_j == self.nyComp-1) : # rightmost compartment, no right boundary
             assert( compThis.get_bdyCond(2) != 'FromOther' )
-            compBdyRight = None
+            #compBdyRight = None
+            idx_compBdyRight = None
             size = 0            
             concBdyRight = None
         else :            
-            compBdyRight = self.comps[ cIdx_i*self.nyComp + cIdx_j + 1 ]
-            size = compBdyRight.get_nx()
+            idx_compBdyRight = cIdx_i*self.nyComp + cIdx_j + 1
+            compBdyRight = self.comps[ idx_compBdyRight ]
+            size = compBdyRight.get_nx()            
 
             idx = idx_up2now + compThis.get_dim()
             concBdyRight = np.zeros(size)
             for i in range(size):
                 concBdyRight[i] = y[ idx + i*compBdyRight.get_ny() ]            
             
-        return (compBdyRight, concBdyRight)
+        return (idx_compBdyRight, concBdyRight)
     
         
     def getBdyDown(self, compThis, y, idx_up2now, cIdx_i, cIdx_j):
@@ -178,11 +181,13 @@ class Skin:
         """
         if cIdx_i == self.nxComp-1 : # downmost compartment, no down boundary
             assert( compThis.get_bdyCond(3) != 'FromOther' )
-            compBdyDown = None
+            #compBdyDown = None
+            idx_compBdyDown = None
             size = 0
             concBdyDown = None
         else :
-            compBdyDown = self.comps[ (cIdx_i+1)*self.nyComp + cIdx_j ]
+            idx_compBdyDown = (cIdx_i+1)*self.nyComp + cIdx_j
+            compBdyDown = self.comps[ idx_compBdyDown ]
             size = compBdyDown.get_ny()
             
             # work out the index for the down boundary
@@ -205,7 +210,17 @@ class Skin:
             for j in range(size):
                 concBdyDown[j] = y[ idx + j ]            
             
-        return (compBdyDown, concBdyDown)   
+        return (idx_compBdyDown, concBdyDown)   
            
-      
+    def passBdyMassOut(self, compThis, idx_bdyRight, idx_bdyDown):
+        """Pass the outflow mass into the two boundary meshes
+        idx_bdyRight, idx_bdyDown -- index of the boundary classes Comp
+        """
+        if idx_bdyRight is not None :
+            self.comps[idx_bdyRight].setMassIn_left(compThis.massOut_right)
+            #print(compThis.massOut_right, self.comps[idx_bdyRight].massIn_left)
+        if idx_bdyDown is not None:
+            self.comps[idx_bdyDown].setMassIn_up(compThis.massOut_down)
+            #print(compThis.massOut_down, self.comps[idx_bdyDown].massIn_up)
+            
     ### (END OF) Class methods dealing with boundaries ###

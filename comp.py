@@ -147,7 +147,7 @@ class Comp:
 
         if self.bdyCond[3] == 'FromOther': # down
             self.n_meshBdyDown = nMeshBdyDown
-            self.massOut_down = np.zeros(nMeshBdyRight)
+            self.massOut_down = np.zeros(nMeshBdyDown)
             self.meshBdyDown =  [mesh.Mesh() for i in range(nMeshBdyDown)]
 
 
@@ -182,16 +182,6 @@ class Comp:
         if self.massOut_down is not None:
             self.massOut_down.fill(0)
         
-
-    def passBdyMassOut(self, bdyRight, bdyDown):
-        """Pass the outflow mass into the two boundary meshes
-        bdyRight, bdyDown -- instances of class Comp
-        """
-        if bdyRight is not None :
-            bdyRight.setMassIn_left(self.massOut_right)
-        if bdyDown is not None:
-            bdyDown.setMassIn_up(self.massOut_down)
-
     def setMassIn_left(self, massIn_left):
         self.massIn_left = np.copy(massIn_left)
     
@@ -344,7 +334,7 @@ class Comp:
 
         for i in range(self.n_meshBdyDown) :
 
-            y1_this = methThis.get_y_coord()
+            y1_this = meshThis.get_y_coord()
             y2_this = y1_this + meshThis.get_dy()
 
             currentY = self.meshBdyDown[i].get_y_coord() # y coordinates of the neighbouring mesh
@@ -535,20 +525,20 @@ class Comp:
             for j in range(self.ny): # lateral direction left to right	
                 idx = i*self.ny + j
                 if self.meshes[idx].name == 'VH' :
-                    printf('V ')
+                    print('V ')
                 elif self.meshes[idx].name == 'LP' :
-                    printf('L ')
+                    print('L ')
                 elif self.meshes[idx].name == 'CC' :
-                    printf('C ')
+                    print('C ')
                 elif self.meshes[idx].name == 'VE' :
-                    printf('E ')
+                    print('E ')
                 elif self.meshes[idx].name == 'DE' :
-                    printf('D ')
+                    print('D ')
                 elif self.meshes[idx].name == 'HF' :
-                    printf('H ')
+                    print('H ')
                 else :
                     raise ValueError('Invalid mesh name')
-            printf("\n");
+            print("\n");
 
 
     def getTotalMass(self) :

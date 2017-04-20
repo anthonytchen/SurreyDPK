@@ -5,10 +5,10 @@ Created on Thu Apr 13 15:00:12 2017
 @author: tc0008
 """
 
-import importlib
+#import importlib
 import numpy as np
 
-import chemical
+#import chemical
 #chemical = importlib.import_module('chemical')
 
 class Mesh:
@@ -67,7 +67,11 @@ class Mesh:
     def get_x_coord(self):
         return self.x_coord
     def set_x_coord(self, x_coord):
-        self.x_coord
+        self.x_coord = x_coord
+    def get_y_coord(self):
+        return self.y_coord
+    def set_y_coord(self, y_coord):
+        self.y_coord = y_coord
     def getConc(self):
         return self.conc
     def setConc(self, conc):

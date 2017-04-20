@@ -3,15 +3,23 @@
 Inheritance diagram for comp.\+Comp\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{classcomp_1_1Comp}
+\includegraphics[height=3.000000cm]{classcomp_1_1Comp}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-def \hyperlink{classcomp_1_1Comp_a041986f019d03d7fc7d2d7a400d92966}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, \hyperlink{classcomp_1_1Comp_ae00e132d485d50acaf13977284fd9051}{coord\+\_\+sys}=None, dz\+\_\+dtheta=None, bdy\+\_\+cond=None)
+def \hyperlink{classcomp_1_1Comp_a1041d334bd68899c6a0a6c0a1937a34d}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classcomp_1_1Comp_a0aaeedb7d9ff655d5b7cf1f8d0b5cb00}{setup} (self, xlen, ylen, dz\+\_\+dtheta, nx, ny, \hyperlink{classcomp_1_1Comp_ae00e132d485d50acaf13977284fd9051}{coord\+\_\+sys}, bdy\+\_\+cond)
 \item 
 def {\bfseries get\+\_\+dim} (self)\hypertarget{classcomp_1_1Comp_a194c4491ee3b385837577d7c13ec78a9}{}\label{classcomp_1_1Comp_a194c4491ee3b385837577d7c13ec78a9}
+
+\item 
+def {\bfseries get\+\_\+x\+\_\+length} (self)\hypertarget{classcomp_1_1Comp_a68bec52b5d8268a395c7a0bd4f2a0d5f}{}\label{classcomp_1_1Comp_a68bec52b5d8268a395c7a0bd4f2a0d5f}
+
+\item 
+def {\bfseries get\+\_\+y\+\_\+length} (self)\hypertarget{classcomp_1_1Comp_aa11dcc4fec99c38897350154d3b9900e}{}\label{classcomp_1_1Comp_aa11dcc4fec99c38897350154d3b9900e}
 
 \item 
 def {\bfseries get\+\_\+nx} (self)\hypertarget{classcomp_1_1Comp_a4bc59e92071b7ca507e44d53433a4bf7}{}\label{classcomp_1_1Comp_a4bc59e92071b7ca507e44d53433a4bf7}
@@ -23,6 +31,12 @@ def {\bfseries get\+\_\+ny} (self)\hypertarget{classcomp_1_1Comp_aa9754974a57bbe
 def {\bfseries get\+\_\+bdy\+Cond} (self, direction)\hypertarget{classcomp_1_1Comp_a32251f4a77a6fe555508981111c6b451}{}\label{classcomp_1_1Comp_a32251f4a77a6fe555508981111c6b451}
 
 \item 
+def {\bfseries set\+\_\+\+Kw} (self, \hyperlink{classcomp_1_1Comp_a1ebc8e2cc35684cf7374e5928b01b18d}{Kw})\hypertarget{classcomp_1_1Comp_a44d846f076c0e3205272492a1dab5f78}{}\label{classcomp_1_1Comp_a44d846f076c0e3205272492a1dab5f78}
+
+\item 
+def {\bfseries set\+\_\+D} (self, D)\hypertarget{classcomp_1_1Comp_a75f74fbf919f3241b05e20594cfa3cd3}{}\label{classcomp_1_1Comp_a75f74fbf919f3241b05e20594cfa3cd3}
+
+\item 
 def \hyperlink{classcomp_1_1Comp_af89f05ea9ea53f88ecfa59a503827d23}{create\+Bdy} (self, n\+Mesh\+Bdy\+Right, n\+Mesh\+Bdy\+Down)
 \begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Class methods dealing with boundaries \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classcomp_1_1Comp_a35ef9e925796bb10640cfe40d5f82c4b}{set\+Bdy\+Mesh} (self, mesh\+Bdy\+Right, mesh\+Bdy\+Down)
@@ -31,8 +45,6 @@ def \hyperlink{classcomp_1_1Comp_a9515ffba9a1e5a0de8542cb736e8ece4}{set\+Bdy\+Co
 \item 
 def {\bfseries set\+Bdy\+Mass\+In\+Out\+Zero} (self)\hypertarget{classcomp_1_1Comp_a3811398d197bce2ff384b4f3610eeb0a}{}\label{classcomp_1_1Comp_a3811398d197bce2ff384b4f3610eeb0a}
 
-\item 
-def \hyperlink{classcomp_1_1Comp_a4079436132c3be952506f2652a700baa}{pass\+Bdy\+Mass\+Out} (self, bdy\+Right, bdy\+Down)
 \item 
 def {\bfseries set\+Mass\+In\+\_\+left} (self, mass\+In\+\_\+left)\hypertarget{classcomp_1_1Comp_a86835c18bf9c9b7ce67d0362fc2bd165}{}\label{classcomp_1_1Comp_a86835c18bf9c9b7ce67d0362fc2bd165}
 
@@ -45,19 +57,21 @@ def \hyperlink{classcomp_1_1Comp_af6d700899b8a97e67233d25626554263}{comp\+Total\
 def {\bfseries comp\+Total\+Volume} (self)\hypertarget{classcomp_1_1Comp_ac8ec3d15a67a816e5a42ff5facf6753b}{}\label{classcomp_1_1Comp_ac8ec3d15a67a816e5a42ff5facf6753b}
 
 \item 
-def \hyperlink{classcomp_1_1Comp_a0f93a3308637381e7342a2a7497d174d}{comp\+Mass\+Irreg\+Mesh\+Right} (self, mesh\+This, conc\+\_\+this)
+def \hyperlink{classcomp_1_1Comp_ae966c14ad17e0440715d1958885af6a7}{create\+Mesh\+Homo} (self, name, chem, init\+\_\+conc, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start)
 \begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with geometries \#\#\# \end{DoxyCompactList}\item 
+def \hyperlink{classcomp_1_1Comp_a0f93a3308637381e7342a2a7497d174d}{comp\+Mass\+Irreg\+Mesh\+Right} (self, mesh\+This, conc\+\_\+this)
+\item 
 def \hyperlink{classcomp_1_1Comp_a7b78ad68606fdf55c38c3de6d5a67570}{comp\+Mass\+Irreg\+Mesh\+Down} (self, mesh\+This, conc\+\_\+this)
 \item 
 def \hyperlink{classcomp_1_1Comp_af33e252fda921dadb0e80c825e48e386}{comp\+O\+D\+Edydt\+\_\+diffu} (self, t, y, args=None)
-\begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with geometries \#\#\# \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with meshes \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classcomp_1_1Comp_ad2c0555c16dc7b5bf639407fa44bfaf7}{display\+Mesh} (self)
 \begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classcomp_1_1Comp_a7b8cd6483a2de95d92a0d5b4d939ca65}{get\+Total\+Mass} (self)
 \item 
 def \hyperlink{classcomp_1_1Comp_ac100eb9f8d55df5f9f761cbe45a58024}{get\+Mesh\+Conc} (self)
 \item 
-def \hyperlink{classcomp_1_1Comp_afa8ff8a057f1c9ee1ddd027b08a3160c}{set\+Mesh\+Conc} (self, conc)
+def \hyperlink{classcomp_1_1Comp_aa26bcef2041be06676b2ce772bb3a4e5}{set\+Mesh\+Conc\+\_\+all} (self, conc)
 \item 
 def \hyperlink{classcomp_1_1Comp_ad6b532a1d5c1aa95b9a88124a5b5609d}{set\+Mesh\+Conc} (self, conc, idx\+\_\+x, idx\+\_\+y)
 \item 
@@ -91,6 +105,12 @@ def \hyperlink{classcomp_1_1Comp_a0268c9629d4839526c1e81114adc2408}{save\+Coord}
 
 \item 
 {\bfseries dim}\hypertarget{classcomp_1_1Comp_a5ad617a643f9f0b33d82cb7c774409d3}{}\label{classcomp_1_1Comp_a5ad617a643f9f0b33d82cb7c774409d3}
+
+\item 
+\hyperlink{classcomp_1_1Comp_a1ebc8e2cc35684cf7374e5928b01b18d}{Kw}\hypertarget{classcomp_1_1Comp_a1ebc8e2cc35684cf7374e5928b01b18d}{}\label{classcomp_1_1Comp_a1ebc8e2cc35684cf7374e5928b01b18d}
+
+\begin{DoxyCompactList}\small\item\em partition and diffusion coefficients \#\#\# \end{DoxyCompactList}\item 
+{\bfseries D}\hypertarget{classcomp_1_1Comp_a6d337679db82dfa988963f6d078901d8}{}\label{classcomp_1_1Comp_a6d337679db82dfa988963f6d078901d8}
 
 \item 
 \hyperlink{classcomp_1_1Comp_a3a618fb7afb0d89e902b18620f194cbb}{n\+\_\+mesh\+Bdy\+Right}\hypertarget{classcomp_1_1Comp_a3a618fb7afb0d89e902b18620f194cbb}{}\label{classcomp_1_1Comp_a3a618fb7afb0d89e902b18620f194cbb}
@@ -143,28 +163,22 @@ dermis, blood, hair follicle, sebum layer on top of skin, vehicle etc.
 will be derived as daughter classes.\end{DoxyVerb}
  
 
-Definition at line 11 of file comp.\+py.
+Definition at line 16 of file comp.\+py.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{comp\+::\+Comp@{comp\+::\+Comp}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
 \index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!comp\+::\+Comp@{comp\+::\+Comp}}
-\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, coord\+\_\+sys=\+None, dz\+\_\+dtheta=\+None, bdy\+\_\+cond=\+None)}{__init__(self, coord_sys=None, dz_dtheta=None, bdy_cond=None)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+\_\+\+\_\+init\+\_\+\+\_\+ (
 \begin{DoxyParamCaption}
-\item[{}]{self, }
-\item[{}]{coord\+\_\+sys = {\ttfamily None}, }
-\item[{}]{dz\+\_\+dtheta = {\ttfamily None}, }
-\item[{}]{bdy\+\_\+cond = {\ttfamily None}}
+\item[{}]{self}
 \end{DoxyParamCaption}
-)}\hypertarget{classcomp_1_1Comp_a041986f019d03d7fc7d2d7a400d92966}{}\label{classcomp_1_1Comp_a041986f019d03d7fc7d2d7a400d92966}
-\begin{DoxyVerb}Define instance variables and assign default values.
-Geometric parameters will be setup at the compartment-specific initialisation
-Thus here most default values are set to non-meaning values
-\end{DoxyVerb}
+)}\hypertarget{classcomp_1_1Comp_a1041d334bd68899c6a0a6c0a1937a34d}{}\label{classcomp_1_1Comp_a1041d334bd68899c6a0a6c0a1937a34d}
+\begin{DoxyVerb}A generic method to create the instance \end{DoxyVerb}
  
 
-Definition at line 20 of file comp.\+py.
+Definition at line 24 of file comp.\+py.
 
 
 
@@ -184,7 +198,7 @@ meshThis may interface with multiple meshess with self.meshBdyDown
 \end{DoxyVerb}
  
 
-Definition at line 241 of file comp.\+py.
+Definition at line 326 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!comp\+Mass\+Irreg\+Mesh\+Right@{comp\+Mass\+Irreg\+Mesh\+Right}}
 \index{comp\+Mass\+Irreg\+Mesh\+Right@{comp\+Mass\+Irreg\+Mesh\+Right}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -195,17 +209,13 @@ Definition at line 241 of file comp.\+py.
 \item[{}]{conc\+\_\+this}
 \end{DoxyParamCaption}
 )}\hypertarget{classcomp_1_1Comp_a0f93a3308637381e7342a2a7497d174d}{}\label{classcomp_1_1Comp_a0f93a3308637381e7342a2a7497d174d}
-
-
-(E\+ND OF) Class methods dealing with geometries \#\#\# 
-
-(S\+T\+A\+RT OF) Class methods dealing with geometries \#\#\# \begin{DoxyVerb}Compute mass transfer between meshThis and neighbouring meshes to the right
+\begin{DoxyVerb}Compute mass transfer between meshThis and neighbouring meshes to the right
 whose meshing does not match exactly to meshThis, e.g. 
 meshThis may interface with multiple meshess with self.meshBdyRight
 \end{DoxyVerb}
  
 
-Definition at line 186 of file comp.\+py.
+Definition at line 271 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}}
 \index{comp\+O\+D\+Edydt\+\_\+diffu@{comp\+O\+D\+Edydt\+\_\+diffu}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -219,13 +229,13 @@ Definition at line 186 of file comp.\+py.
 )}\hypertarget{classcomp_1_1Comp_af33e252fda921dadb0e80c825e48e386}{}\label{classcomp_1_1Comp_af33e252fda921dadb0e80c825e48e386}
 
 
-(E\+ND OF) Class methods dealing with geometries \#\#\# 
+(E\+ND OF) Class methods dealing with meshes \#\#\# 
 
 (S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# \begin{DoxyVerb}Compute the right-hand side of the ODEs, i.e. dydt, due to diffusion
 \end{DoxyVerb}
  
 
-Definition at line 298 of file comp.\+py.
+Definition at line 383 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!comp\+Total\+Area@{comp\+Total\+Area}}
 \index{comp\+Total\+Area@{comp\+Total\+Area}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -244,7 +254,7 @@ direction: [0] = up; [1] = left; [2] = right; [3] = down
 \end{DoxyVerb}
  
 
-Definition at line 145 of file comp.\+py.
+Definition at line 196 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!create\+Bdy@{create\+Bdy}}
 \index{create\+Bdy@{create\+Bdy}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -263,7 +273,33 @@ Definition at line 145 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 76 of file comp.\+py.
+Definition at line 133 of file comp.\+py.
+
+\index{comp\+::\+Comp@{comp\+::\+Comp}!create\+Mesh\+Homo@{create\+Mesh\+Homo}}
+\index{create\+Mesh\+Homo@{create\+Mesh\+Homo}!comp\+::\+Comp@{comp\+::\+Comp}}
+\subsubsection[{\texorpdfstring{create\+Mesh\+Homo(self, name, chem, init\+\_\+conc, coord\+\_\+x\+\_\+start, coord\+\_\+y\+\_\+start)}{createMeshHomo(self, name, chem, init_conc, coord_x_start, coord_y_start)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+create\+Mesh\+Homo (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name, }
+\item[{}]{chem, }
+\item[{}]{init\+\_\+conc, }
+\item[{}]{coord\+\_\+x\+\_\+start, }
+\item[{}]{coord\+\_\+y\+\_\+start}
+\end{DoxyParamCaption}
+)}\hypertarget{classcomp_1_1Comp_ae966c14ad17e0440715d1958885af6a7}{}\label{classcomp_1_1Comp_ae966c14ad17e0440715d1958885af6a7}
+
+
+(E\+ND OF) Class methods dealing with geometries \#\#\# 
+
+(S\+T\+A\+RT OF) Class methods dealing with meshes \#\#\# \begin{DoxyVerb}Create mesh for this compartment with homogeneous properties,
+    i.e. the partition and diffusion properties are all uniform
+Args:
+    name: two-letter string to indicate the name of this compartment
+    coord_x_start, coord_y_start: starting coordinates
+\end{DoxyVerb}
+ 
+
+Definition at line 237 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!display\+Mesh@{display\+Mesh}}
 \index{display\+Mesh@{display\+Mesh}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -279,7 +315,7 @@ Definition at line 76 of file comp.\+py.
 (S\+T\+A\+RT OF) Class methods dealing with I/O \#\#\# \begin{DoxyVerb}\end{DoxyVerb}
  
 
-Definition at line 432 of file comp.\+py.
+Definition at line 521 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!get\+Mesh\+Conc@{get\+Mesh\+Conc}}
 \index{get\+Mesh\+Conc@{get\+Mesh\+Conc}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -292,7 +328,7 @@ Definition at line 432 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 467 of file comp.\+py.
+Definition at line 556 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!get\+Total\+Mass@{get\+Total\+Mass}}
 \index{get\+Total\+Mass@{get\+Total\+Mass}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -304,7 +340,7 @@ Definition at line 467 of file comp.\+py.
 \begin{DoxyVerb}\end{DoxyVerb}
  
 
-Definition at line 455 of file comp.\+py.
+Definition at line 544 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!get\+X\+Coord@{get\+X\+Coord}}
 \index{get\+X\+Coord@{get\+X\+Coord}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -317,7 +353,7 @@ Definition at line 455 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 511 of file comp.\+py.
+Definition at line 604 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!get\+Y\+Coord@{get\+Y\+Coord}}
 \index{get\+Y\+Coord@{get\+Y\+Coord}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -330,23 +366,7 @@ Definition at line 511 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 523 of file comp.\+py.
-
-\index{comp\+::\+Comp@{comp\+::\+Comp}!pass\+Bdy\+Mass\+Out@{pass\+Bdy\+Mass\+Out}}
-\index{pass\+Bdy\+Mass\+Out@{pass\+Bdy\+Mass\+Out}!comp\+::\+Comp@{comp\+::\+Comp}}
-\subsubsection[{\texorpdfstring{pass\+Bdy\+Mass\+Out(self, bdy\+Right, bdy\+Down)}{passBdyMassOut(self, bdyRight, bdyDown)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+pass\+Bdy\+Mass\+Out (
-\begin{DoxyParamCaption}
-\item[{}]{self, }
-\item[{}]{bdy\+Right, }
-\item[{}]{bdy\+Down}
-\end{DoxyParamCaption}
-)}\hypertarget{classcomp_1_1Comp_a4079436132c3be952506f2652a700baa}{}\label{classcomp_1_1Comp_a4079436132c3be952506f2652a700baa}
-\begin{DoxyVerb}Pass the outflow mass into the two boundary meshes
-bdyRight, bdyDown -- instances of class Comp
-\end{DoxyVerb}
- 
-
-Definition at line 125 of file comp.\+py.
+Definition at line 616 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!save\+Coord@{save\+Coord}}
 \index{save\+Coord@{save\+Coord}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -362,7 +382,7 @@ Definition at line 125 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 535 of file comp.\+py.
+Definition at line 628 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!save\+Mesh\+Conc@{save\+Mesh\+Conc}}
 \index{save\+Mesh\+Conc@{save\+Mesh\+Conc}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -378,7 +398,7 @@ Args: b_1st_time -- if True, write to a new file; otherwise append to the existi
 \end{DoxyVerb}
  
 
-Definition at line 493 of file comp.\+py.
+Definition at line 585 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!set\+Bdy\+Conc@{set\+Bdy\+Conc}}
 \index{set\+Bdy\+Conc@{set\+Bdy\+Conc}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -394,7 +414,7 @@ concBdyRight, concBdyDown -- numpy array
 \end{DoxyVerb}
  
 
-Definition at line 108 of file comp.\+py.
+Definition at line 165 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!set\+Bdy\+Mesh@{set\+Bdy\+Mesh}}
 \index{set\+Bdy\+Mesh@{set\+Bdy\+Mesh}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -410,21 +430,7 @@ meshBdyRight, meshBdydown -- list of instances of class Mesh
 \end{DoxyVerb}
  
 
-Definition at line 97 of file comp.\+py.
-
-\index{comp\+::\+Comp@{comp\+::\+Comp}!set\+Mesh\+Conc@{set\+Mesh\+Conc}}
-\index{set\+Mesh\+Conc@{set\+Mesh\+Conc}!comp\+::\+Comp@{comp\+::\+Comp}}
-\subsubsection[{\texorpdfstring{set\+Mesh\+Conc(self, conc)}{setMeshConc(self, conc)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+set\+Mesh\+Conc (
-\begin{DoxyParamCaption}
-\item[{}]{self, }
-\item[{}]{conc}
-\end{DoxyParamCaption}
-)}\hypertarget{classcomp_1_1Comp_afa8ff8a057f1c9ee1ddd027b08a3160c}{}\label{classcomp_1_1Comp_afa8ff8a057f1c9ee1ddd027b08a3160c}
-\begin{DoxyVerb}Set the concentration of meshes to conc
-\end{DoxyVerb}
- 
-
-Definition at line 478 of file comp.\+py.
+Definition at line 154 of file comp.\+py.
 
 \index{comp\+::\+Comp@{comp\+::\+Comp}!set\+Mesh\+Conc@{set\+Mesh\+Conc}}
 \index{set\+Mesh\+Conc@{set\+Mesh\+Conc}!comp\+::\+Comp@{comp\+::\+Comp}}
@@ -440,7 +446,43 @@ Definition at line 478 of file comp.\+py.
 \end{DoxyVerb}
  
 
-Definition at line 487 of file comp.\+py.
+Definition at line 579 of file comp.\+py.
+
+\index{comp\+::\+Comp@{comp\+::\+Comp}!set\+Mesh\+Conc\+\_\+all@{set\+Mesh\+Conc\+\_\+all}}
+\index{set\+Mesh\+Conc\+\_\+all@{set\+Mesh\+Conc\+\_\+all}!comp\+::\+Comp@{comp\+::\+Comp}}
+\subsubsection[{\texorpdfstring{set\+Mesh\+Conc\+\_\+all(self, conc)}{setMeshConc_all(self, conc)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+set\+Mesh\+Conc\+\_\+all (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{conc}
+\end{DoxyParamCaption}
+)}\hypertarget{classcomp_1_1Comp_aa26bcef2041be06676b2ce772bb3a4e5}{}\label{classcomp_1_1Comp_aa26bcef2041be06676b2ce772bb3a4e5}
+\begin{DoxyVerb}Set the concentration of meshes to conc
+\end{DoxyVerb}
+ 
+
+Definition at line 570 of file comp.\+py.
+
+\index{comp\+::\+Comp@{comp\+::\+Comp}!setup@{setup}}
+\index{setup@{setup}!comp\+::\+Comp@{comp\+::\+Comp}}
+\subsubsection[{\texorpdfstring{setup(self, xlen, ylen, dz\+\_\+dtheta, nx, ny, coord\+\_\+sys, bdy\+\_\+cond)}{setup(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)}}]{\setlength{\rightskip}{0pt plus 5cm}def comp.\+Comp.\+setup (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{xlen, }
+\item[{}]{ylen, }
+\item[{}]{dz\+\_\+dtheta, }
+\item[{}]{nx, }
+\item[{}]{ny, }
+\item[{}]{coord\+\_\+sys, }
+\item[{}]{bdy\+\_\+cond}
+\end{DoxyParamCaption}
+)}\hypertarget{classcomp_1_1Comp_a0aaeedb7d9ff655d5b7cf1f8d0b5cb00}{}\label{classcomp_1_1Comp_a0aaeedb7d9ff655d5b7cf1f8d0b5cb00}
+\begin{DoxyVerb}Define instance variables and assign default values.
+Geometric parameters will be setup at the compartment-specific initialisation
+Thus here most default values are set to non-meaning values
+\end{DoxyVerb}
+ 
+
+Definition at line 65 of file comp.\+py.
 
 
 

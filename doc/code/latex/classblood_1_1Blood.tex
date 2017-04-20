@@ -1,0 +1,124 @@
+\hypertarget{classblood_1_1Blood}{}\section{blood.\+Blood Class Reference}
+\label{classblood_1_1Blood}\index{blood.\+Blood@{blood.\+Blood}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classblood_1_1Blood_ace3e6d188e7983ec085d19f6920356cb}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, frac\+\_\+unbound, k\+\_\+clear, body\+\_\+mass=70, gender=\textquotesingle{}M\textquotesingle{})
+\item 
+def \hyperlink{classblood_1_1Blood_ac205ec72682730e1ddb3db838b43ecbd}{update\+Mass\+In\+Out\+Dermis} (self, mass\+In, mass\+Out, factor)
+\begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
+def {\bfseries comp\+O\+D\+Edydt} (self, t, y, args=None)\hypertarget{classblood_1_1Blood_a39dfef20f3ac35b314d0c878e441f7a3}{}\label{classblood_1_1Blood_a39dfef20f3ac35b314d0c878e441f7a3}
+
+\item 
+def \hyperlink{classblood_1_1Blood_ad45ed3384aba6fb7e0e37648abaaf848}{set\+Mesh\+Conc\+\_\+all} (self, conc)\hypertarget{classblood_1_1Blood_ad45ed3384aba6fb7e0e37648abaaf848}{}\label{classblood_1_1Blood_ad45ed3384aba6fb7e0e37648abaaf848}
+
+\begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with O\+DE computation \#\#\# \end{DoxyCompactList}\item 
+def {\bfseries get\+Mesh\+Conc\+\_\+all} (self)\hypertarget{classblood_1_1Blood_a7b0fe3d5f68820b0371e76254a681443}{}\label{classblood_1_1Blood_a7b0fe3d5f68820b0371e76254a681443}
+
+\item 
+def \hyperlink{classblood_1_1Blood_a8814bc863db2657dbdd487f7feab6fab}{save\+Conc} (self, b\+\_\+1st\+\_\+time, fn)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries flow\+\_\+capil}\hypertarget{classblood_1_1Blood_a55ca5ca2d12e400f38efd428d4437e1b}{}\label{classblood_1_1Blood_a55ca5ca2d12e400f38efd428d4437e1b}
+
+\item 
+{\bfseries vol\+\_\+blood\+\_\+body}\hypertarget{classblood_1_1Blood_a07a75e187271c945646b1f96b6ac52e3}{}\label{classblood_1_1Blood_a07a75e187271c945646b1f96b6ac52e3}
+
+\item 
+{\bfseries conc}\hypertarget{classblood_1_1Blood_aa16b37eeb54140ebe61de58aabdf4a3d}{}\label{classblood_1_1Blood_aa16b37eeb54140ebe61de58aabdf4a3d}
+
+\item 
+{\bfseries k\+\_\+clear}\hypertarget{classblood_1_1Blood_a7832720868cc3139a87c664e312776ac}{}\label{classblood_1_1Blood_a7832720868cc3139a87c664e312776ac}
+
+\item 
+{\bfseries f\+\_\+unbound}\hypertarget{classblood_1_1Blood_ae27b72aee2decce7ec0067c2713c6a2b}{}\label{classblood_1_1Blood_ae27b72aee2decce7ec0067c2713c6a2b}
+
+\item 
+{\bfseries conc\+\_\+sink}\hypertarget{classblood_1_1Blood_a15dcf816e085edecf6e9e2f45b45b769}{}\label{classblood_1_1Blood_a15dcf816e085edecf6e9e2f45b45b769}
+
+\item 
+{\bfseries vol\+\_\+sink}\hypertarget{classblood_1_1Blood_aff02d25262daa67087a7c9072893c643}{}\label{classblood_1_1Blood_aff02d25262daa67087a7c9072893c643}
+
+\item 
+{\bfseries dim}\hypertarget{classblood_1_1Blood_a20e58b6fa8b5b3ac8edae03eb0787b8a}{}\label{classblood_1_1Blood_a20e58b6fa8b5b3ac8edae03eb0787b8a}
+
+\item 
+{\bfseries mass\+\_\+into\+\_\+dermis}\hypertarget{classblood_1_1Blood_a7f4a0a55fc889201a8587159180ee5c2}{}\label{classblood_1_1Blood_a7f4a0a55fc889201a8587159180ee5c2}
+
+\item 
+{\bfseries mass\+\_\+outfrom\+\_\+dermis}\hypertarget{classblood_1_1Blood_aafbc501fd60a1296f3df0aca7954fded}{}\label{classblood_1_1Blood_aafbc501fd60a1296f3df0aca7954fded}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}\end{DoxyVerb}
+ 
+
+Definition at line 16 of file blood.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{blood\+::\+Blood@{blood\+::\+Blood}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!blood\+::\+Blood@{blood\+::\+Blood}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, frac\+\_\+unbound, k\+\_\+clear, body\+\_\+mass=70, gender=\textquotesingle{}\+M\textquotesingle{})}{__init__(self, frac_unbound, k_clear, body_mass=70, gender='M')}}]{\setlength{\rightskip}{0pt plus 5cm}def blood.\+Blood.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{frac\+\_\+unbound, }
+\item[{}]{k\+\_\+clear, }
+\item[{}]{body\+\_\+mass = {\ttfamily 70}, }
+\item[{}]{gender = {\ttfamily \textquotesingle{}M\textquotesingle{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classblood_1_1Blood_ace3e6d188e7983ec085d19f6920356cb}{}\label{classblood_1_1Blood_ace3e6d188e7983ec085d19f6920356cb}
+\begin{DoxyVerb}\end{DoxyVerb}
+ 
+
+Definition at line 18 of file blood.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{blood\+::\+Blood@{blood\+::\+Blood}!save\+Conc@{save\+Conc}}
+\index{save\+Conc@{save\+Conc}!blood\+::\+Blood@{blood\+::\+Blood}}
+\subsubsection[{\texorpdfstring{save\+Conc(self, b\+\_\+1st\+\_\+time, fn)}{saveConc(self, b_1st_time, fn)}}]{\setlength{\rightskip}{0pt plus 5cm}def blood.\+Blood.\+save\+Conc (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{b\+\_\+1st\+\_\+time, }
+\item[{}]{fn}
+\end{DoxyParamCaption}
+)}\hypertarget{classblood_1_1Blood_a8814bc863db2657dbdd487f7feab6fab}{}\label{classblood_1_1Blood_a8814bc863db2657dbdd487f7feab6fab}
+\begin{DoxyVerb}Save concentrations to file
+Args: b_1st_time -- if True, write to a new file; otherwise append to the existing file
+\end{DoxyVerb}
+ 
+
+Definition at line 76 of file blood.\+py.
+
+\index{blood\+::\+Blood@{blood\+::\+Blood}!update\+Mass\+In\+Out\+Dermis@{update\+Mass\+In\+Out\+Dermis}}
+\index{update\+Mass\+In\+Out\+Dermis@{update\+Mass\+In\+Out\+Dermis}!blood\+::\+Blood@{blood\+::\+Blood}}
+\subsubsection[{\texorpdfstring{update\+Mass\+In\+Out\+Dermis(self, mass\+In, mass\+Out, factor)}{updateMassInOutDermis(self, massIn, massOut, factor)}}]{\setlength{\rightskip}{0pt plus 5cm}def blood.\+Blood.\+update\+Mass\+In\+Out\+Dermis (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{mass\+In, }
+\item[{}]{mass\+Out, }
+\item[{}]{factor}
+\end{DoxyParamCaption}
+)}\hypertarget{classblood_1_1Blood_ac205ec72682730e1ddb3db838b43ecbd}{}\label{classblood_1_1Blood_ac205ec72682730e1ddb3db838b43ecbd}
+
+
+(S\+T\+A\+RT OF) Class methods dealing with O\+DE computation \#\#\# 
+
+\begin{DoxyVerb}This function will be called after calculations in dermis
+\end{DoxyVerb}
+ 
+
+Definition at line 56 of file blood.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+blood.\+py\end{DoxyCompactItemize}

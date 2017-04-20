@@ -88,7 +88,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classviaepd_1_1ViaEpd-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">viaepd.ViaEpd Class Reference</div>  </div>
@@ -101,27 +100,38 @@ Inheritance diagram for viaepd.ViaEpd:</div>
   <img src="classviaepd_1_1ViaEpd.png" usemap="#viaepd.ViaEpd_map" alt=""/>
   <map id="viaepd.ViaEpd_map" name="viaepd.ViaEpd_map">
 <area href="classcomp_1_1Comp.html" alt="comp.Comp" shape="rect" coords="0,0,95,24"/>
+<area href="classdermis_1_1Dermis.html" alt="dermis.Dermis" shape="rect" coords="0,112,95,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a366b3abf6268874ec0a38a0927e6e030"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a366b3abf6268874ec0a38a0927e6e030"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, <a class="el" href="classcomp_1_1Comp.html#ae00e132d485d50acaf13977284fd9051">coord_sys</a>=None, dz_dtheta=None, bdy_cond=None)</td></tr>
-<tr class="separator:a366b3abf6268874ec0a38a0927e6e030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85a353c2e5a5671e08c38b82dad3544a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85a353c2e5a5671e08c38b82dad3544a"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, xlen, ylen, dz_dtheta, nx, ny, <a class="el" href="classcomp_1_1Comp.html#ae00e132d485d50acaf13977284fd9051">coord_sys</a>, bdy_cond)</td></tr>
+<tr class="separator:a85a353c2e5a5671e08c38b82dad3544a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca401fb9bc87b50c59ef25b157227727"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classviaepd_1_1ViaEpd.html#aca401fb9bc87b50c59ef25b157227727">createMesh</a> (self, chem, coord_x_start, coord_y_start)</td></tr>
 <tr class="separator:aca401fb9bc87b50c59ef25b157227727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac206abcf43729b9906dc75cbd49283fe"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classviaepd_1_1ViaEpd.html#ac206abcf43729b9906dc75cbd49283fe">compParDiff</a> (self, chem)</td></tr>
 <tr class="separator:ac206abcf43729b9906dc75cbd49283fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab95e617ec1b7f741a2ae058d226ec66c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classviaepd_1_1ViaEpd.html#ab95e617ec1b7f741a2ae058d226ec66c">compODEdydt</a> (self, t, y, args=None)</td></tr>
+<tr class="separator:ab95e617ec1b7f741a2ae058d226ec66c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b4ca36f663b30b87a13a51b9b62776"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99b4ca36f663b30b87a13a51b9b62776"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>saveCoord</b> (self, fn_x, fn_y)</td></tr>
 <tr class="separator:a99b4ca36f663b30b87a13a51b9b62776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classcomp_1_1Comp"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classcomp_1_1Comp')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classcomp_1_1Comp.html">comp.Comp</a></td></tr>
-<tr class="memitem:a041986f019d03d7fc7d2d7a400d92966 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a041986f019d03d7fc7d2d7a400d92966">__init__</a> (self, <a class="el" href="classcomp_1_1Comp.html#ae00e132d485d50acaf13977284fd9051">coord_sys</a>=None, dz_dtheta=None, bdy_cond=None)</td></tr>
-<tr class="separator:a041986f019d03d7fc7d2d7a400d92966 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1041d334bd68899c6a0a6c0a1937a34d inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a1041d334bd68899c6a0a6c0a1937a34d">__init__</a> (self)</td></tr>
+<tr class="separator:a1041d334bd68899c6a0a6c0a1937a34d inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0aaeedb7d9ff655d5b7cf1f8d0b5cb00 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a0aaeedb7d9ff655d5b7cf1f8d0b5cb00">setup</a> (self, xlen, ylen, dz_dtheta, nx, ny, <a class="el" href="classcomp_1_1Comp.html#ae00e132d485d50acaf13977284fd9051">coord_sys</a>, bdy_cond)</td></tr>
+<tr class="separator:a0aaeedb7d9ff655d5b7cf1f8d0b5cb00 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a194c4491ee3b385837577d7c13ec78a9 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a194c4491ee3b385837577d7c13ec78a9"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>get_dim</b> (self)</td></tr>
 <tr class="separator:a194c4491ee3b385837577d7c13ec78a9 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68bec52b5d8268a395c7a0bd4f2a0d5f inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68bec52b5d8268a395c7a0bd4f2a0d5f"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_x_length</b> (self)</td></tr>
+<tr class="separator:a68bec52b5d8268a395c7a0bd4f2a0d5f inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa11dcc4fec99c38897350154d3b9900e inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa11dcc4fec99c38897350154d3b9900e"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_y_length</b> (self)</td></tr>
+<tr class="separator:aa11dcc4fec99c38897350154d3b9900e inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bc59e92071b7ca507e44d53433a4bf7 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bc59e92071b7ca507e44d53433a4bf7"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>get_nx</b> (self)</td></tr>
 <tr class="separator:a4bc59e92071b7ca507e44d53433a4bf7 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +141,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>get_ny</b> (self)</td>
 <tr class="memitem:a32251f4a77a6fe555508981111c6b451 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32251f4a77a6fe555508981111c6b451"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>get_bdyCond</b> (self, direction)</td></tr>
 <tr class="separator:a32251f4a77a6fe555508981111c6b451 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d846f076c0e3205272492a1dab5f78 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44d846f076c0e3205272492a1dab5f78"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>set_Kw</b> (self, <a class="el" href="classcomp_1_1Comp.html#a1ebc8e2cc35684cf7374e5928b01b18d">Kw</a>)</td></tr>
+<tr class="separator:a44d846f076c0e3205272492a1dab5f78 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f74fbf919f3241b05e20594cfa3cd3 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75f74fbf919f3241b05e20594cfa3cd3"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>set_D</b> (self, D)</td></tr>
+<tr class="separator:a75f74fbf919f3241b05e20594cfa3cd3 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af89f05ea9ea53f88ecfa59a503827d23 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#af89f05ea9ea53f88ecfa59a503827d23">createBdy</a> (self, nMeshBdyRight, nMeshBdyDown)</td></tr>
 <tr class="memdesc:af89f05ea9ea53f88ecfa59a503827d23 inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(START OF) Class methods dealing with boundaries ###  <a href="#af89f05ea9ea53f88ecfa59a503827d23">More...</a><br /></td></tr>
 <tr class="separator:af89f05ea9ea53f88ecfa59a503827d23 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +157,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>get_bdyCond</b> (self,
 <tr class="memitem:a3811398d197bce2ff384b4f3610eeb0a inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3811398d197bce2ff384b4f3610eeb0a"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>setBdyMassInOutZero</b> (self)</td></tr>
 <tr class="separator:a3811398d197bce2ff384b4f3610eeb0a inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4079436132c3be952506f2652a700baa inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a4079436132c3be952506f2652a700baa">passBdyMassOut</a> (self, bdyRight, bdyDown)</td></tr>
-<tr class="separator:a4079436132c3be952506f2652a700baa inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86835c18bf9c9b7ce67d0362fc2bd165 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86835c18bf9c9b7ce67d0362fc2bd165"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>setMassIn_left</b> (self, massIn_left)</td></tr>
 <tr class="separator:a86835c18bf9c9b7ce67d0362fc2bd165 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,13 +169,15 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>setMassIn_up</b> (self
 <tr class="memitem:ac8ec3d15a67a816e5a42ff5facf6753b inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8ec3d15a67a816e5a42ff5facf6753b"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>compTotalVolume</b> (self)</td></tr>
 <tr class="separator:ac8ec3d15a67a816e5a42ff5facf6753b inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae966c14ad17e0440715d1958885af6a7 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#ae966c14ad17e0440715d1958885af6a7">createMeshHomo</a> (self, name, chem, init_conc, coord_x_start, coord_y_start)</td></tr>
+<tr class="memdesc:ae966c14ad17e0440715d1958885af6a7 inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) Class methods dealing with geometries ###  <a href="#ae966c14ad17e0440715d1958885af6a7">More...</a><br /></td></tr>
+<tr class="separator:ae966c14ad17e0440715d1958885af6a7 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f93a3308637381e7342a2a7497d174d inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a0f93a3308637381e7342a2a7497d174d">compMassIrregMeshRight</a> (self, meshThis, conc_this)</td></tr>
-<tr class="memdesc:a0f93a3308637381e7342a2a7497d174d inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) Class methods dealing with geometries ###  <a href="#a0f93a3308637381e7342a2a7497d174d">More...</a><br /></td></tr>
 <tr class="separator:a0f93a3308637381e7342a2a7497d174d inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b78ad68606fdf55c38c3de6d5a67570 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a7b78ad68606fdf55c38c3de6d5a67570">compMassIrregMeshDown</a> (self, meshThis, conc_this)</td></tr>
 <tr class="separator:a7b78ad68606fdf55c38c3de6d5a67570 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af33e252fda921dadb0e80c825e48e386 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#af33e252fda921dadb0e80c825e48e386">compODEdydt_diffu</a> (self, t, y, args=None)</td></tr>
-<tr class="memdesc:af33e252fda921dadb0e80c825e48e386 inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) Class methods dealing with geometries ###  <a href="#af33e252fda921dadb0e80c825e48e386">More...</a><br /></td></tr>
+<tr class="memdesc:af33e252fda921dadb0e80c825e48e386 inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) Class methods dealing with meshes ###  <a href="#af33e252fda921dadb0e80c825e48e386">More...</a><br /></td></tr>
 <tr class="separator:af33e252fda921dadb0e80c825e48e386 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2c0555c16dc7b5bf639407fa44bfaf7 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#ad2c0555c16dc7b5bf639407fa44bfaf7">displayMesh</a> (self)</td></tr>
 <tr class="memdesc:ad2c0555c16dc7b5bf639407fa44bfaf7 inherit pub_methods_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) Class methods dealing with ODE computation ###  <a href="#ad2c0555c16dc7b5bf639407fa44bfaf7">More...</a><br /></td></tr>
@@ -170,8 +186,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>compTotalVolume</b> (s
 <tr class="separator:a7b8cd6483a2de95d92a0d5b4d939ca65 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac100eb9f8d55df5f9f761cbe45a58024 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#ac100eb9f8d55df5f9f761cbe45a58024">getMeshConc</a> (self)</td></tr>
 <tr class="separator:ac100eb9f8d55df5f9f761cbe45a58024 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa8ff8a057f1c9ee1ddd027b08a3160c inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#afa8ff8a057f1c9ee1ddd027b08a3160c">setMeshConc</a> (self, conc)</td></tr>
-<tr class="separator:afa8ff8a057f1c9ee1ddd027b08a3160c inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26bcef2041be06676b2ce772bb3a4e5 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#aa26bcef2041be06676b2ce772bb3a4e5">setMeshConc_all</a> (self, conc)</td></tr>
+<tr class="separator:aa26bcef2041be06676b2ce772bb3a4e5 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6b532a1d5c1aa95b9a88124a5b5609d inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#ad6b532a1d5c1aa95b9a88124a5b5609d">setMeshConc</a> (self, conc, idx_x, idx_y)</td></tr>
 <tr class="separator:ad6b532a1d5c1aa95b9a88124a5b5609d inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe675826a85b99ab6dc5de7ed02a2e0d inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#afe675826a85b99ab6dc5de7ed02a2e0d">saveMeshConc</a> (self, b_1st_time, fn)</td></tr>
@@ -183,17 +199,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>compTotalVolume</b> (s
 <tr class="memitem:a0268c9629d4839526c1e81114adc2408 inherit pub_methods_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a0268c9629d4839526c1e81114adc2408">saveCoord</a> (self, fn_x, fn_y, fn_suffix)</td></tr>
 <tr class="separator:a0268c9629d4839526c1e81114adc2408 inherit pub_methods_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a0a4894a612c4d045d872ccf1fb674578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a4894a612c4d045d872ccf1fb674578"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Kw</b></td></tr>
-<tr class="separator:a0a4894a612c4d045d872ccf1fb674578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa552bd94144bb3b0984127f446c15dd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa552bd94144bb3b0984127f446c15dd6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>D</b></td></tr>
-<tr class="separator:aa552bd94144bb3b0984127f446c15dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f929b4abcbb79bb340237db65b9b33b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f929b4abcbb79bb340237db65b9b33b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>meshes</b></td></tr>
-<tr class="separator:a4f929b4abcbb79bb340237db65b9b33b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classcomp_1_1Comp"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classcomp_1_1Comp')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classcomp_1_1Comp.html">comp.Comp</a></td></tr>
 <tr class="memitem:ae00e132d485d50acaf13977284fd9051 inherit pub_attribs_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae00e132d485d50acaf13977284fd9051"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#ae00e132d485d50acaf13977284fd9051">coord_sys</a></td></tr>
@@ -217,6 +224,13 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5ad617a643f9f0b33d82cb7c774409d3 inherit pub_attribs_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ad617a643f9f0b33d82cb7c774409d3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>dim</b></td></tr>
 <tr class="separator:a5ad617a643f9f0b33d82cb7c774409d3 inherit pub_attribs_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ebc8e2cc35684cf7374e5928b01b18d inherit pub_attribs_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ebc8e2cc35684cf7374e5928b01b18d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a1ebc8e2cc35684cf7374e5928b01b18d">Kw</a></td></tr>
+<tr class="memdesc:a1ebc8e2cc35684cf7374e5928b01b18d inherit pub_attribs_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">partition and diffusion coefficients ### <br /></td></tr>
+<tr class="separator:a1ebc8e2cc35684cf7374e5928b01b18d inherit pub_attribs_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d337679db82dfa988963f6d078901d8 inherit pub_attribs_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d337679db82dfa988963f6d078901d8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>D</b></td></tr>
+<tr class="separator:a6d337679db82dfa988963f6d078901d8 inherit pub_attribs_classcomp_1_1Comp"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a618fb7afb0d89e902b18620f194cbb inherit pub_attribs_classcomp_1_1Comp"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a618fb7afb0d89e902b18620f194cbb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcomp_1_1Comp.html#a3a618fb7afb0d89e902b18620f194cbb">n_meshBdyRight</a></td></tr>
 <tr class="memdesc:a3a618fb7afb0d89e902b18620f194cbb inherit pub_attribs_classcomp_1_1Comp"><td class="mdescLeft">&#160;</td><td class="mdescRight">compartment boundary parameters ### <br /></td></tr>
@@ -264,6 +278,47 @@ which is the viable epidermis, currently modelled as a homogenised media
 </pre> 
 <p>Definition at line <a class="el" href="viaepd_8py_source.html#l00014">14</a> of file <a class="el" href="viaepd_8py_source.html">viaepd.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab95e617ec1b7f741a2ae058d226ec66c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def viaepd.ViaEpd.compODEdydt </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>args</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The wrapper function for computing the right hand side of ODEs
+</pre> 
+<p>Definition at line <a class="el" href="viaepd_8py_source.html#l00059">59</a> of file <a class="el" href="viaepd_8py_source.html">viaepd.py</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac206abcf43729b9906dc75cbd49283fe"></a>
 <div class="memitem">
 <div class="memproto">
@@ -290,7 +345,7 @@ which is the viable epidermis, currently modelled as a homogenised media
 <pre class="fragment">Compute the partition coefficient with respect to water
 and the diffusion coefficient
 </pre> 
-<p>Definition at line <a class="el" href="viaepd_8py_source.html#l00064">64</a> of file <a class="el" href="viaepd_8py_source.html">viaepd.py</a>.</p>
+<p>Definition at line <a class="el" href="viaepd_8py_source.html#l00038">38</a> of file <a class="el" href="viaepd_8py_source.html">viaepd.py</a>.</p>
 
 </div>
 </div>

@@ -97,12 +97,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a217516c99fbf0e2788782d27a261ec89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a217516c99fbf0e2788782d27a261ec89"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, mw, K_ow, pKa, frac_non_ion=None, frac_unbound=None, acid_base=None)</td></tr>
-<tr class="separator:a217516c99fbf0e2788782d27a261ec89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aecc1f2e21b20636f65d45b3787f500"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchemical_1_1Chemical.html#a1aecc1f2e21b20636f65d45b3787f500">__init__</a> (self, conf)</td></tr>
-<tr class="separator:a1aecc1f2e21b20636f65d45b3787f500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23a6f4fc90c0113dbda6d2e510029fdd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23a6f4fc90c0113dbda6d2e510029fdd"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, conf=None)</td></tr>
+<tr class="separator:a23a6f4fc90c0113dbda6d2e510029fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9149275a71ae075228b7d32aa45458d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9149275a71ae075228b7d32aa45458d9"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setChem</b> (self, mw, K_ow, pKa, frac_non_ion=None, frac_unbound=None, acid_base=None)</td></tr>
+<tr class="separator:a9149275a71ae075228b7d32aa45458d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938a38840c7c5e2e969458f0fa4837d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a938a38840c7c5e2e969458f0fa4837d3"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_mw</b> (self)</td></tr>
+<tr class="separator:a938a38840c7c5e2e969458f0fa4837d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c7373a29fd5e3be3bb2866711093f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52c7373a29fd5e3be3bb2866711093f8"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_K_ow</b> (self)</td></tr>
+<tr class="separator:a52c7373a29fd5e3be3bb2866711093f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a789f44a29b8e8108d16dca58a34ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14a789f44a29b8e8108d16dca58a34ca"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_frac_unbound</b> (self)</td></tr>
+<tr class="separator:a14a789f44a29b8e8108d16dca58a34ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0227ca686a08be6d0213d8ef714eed0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0227ca686a08be6d0213d8ef714eed0f"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_frac_non_ion</b> (self)</td></tr>
+<tr class="separator:a0227ca686a08be6d0213d8ef714eed0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3633520af63f8eb799a8f0de381422e0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchemical_1_1Chemical.html#a3633520af63f8eb799a8f0de381422e0">compIon</a> (self)</td></tr>
+<tr class="memdesc:a3633520af63f8eb799a8f0de381422e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">(END OF) instance initialisation methods ###  <a href="#a3633520af63f8eb799a8f0de381422e0">More...</a><br /></td></tr>
 <tr class="separator:a3633520af63f8eb799a8f0de381422e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af738fbeec1e013883784f479ffa19852"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchemical_1_1Chemical.html#af738fbeec1e013883784f479ffa19852">compBinding</a> (self)</td></tr>
 <tr class="separator:af738fbeec1e013883784f479ffa19852"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,37 +149,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><pre class="fragment">Class definition for Chemical whose mass transfer is of interest
 </pre> 
 <p>Definition at line <a class="el" href="chemical_8py_source.html#l00009">9</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a1aecc1f2e21b20636f65d45b3787f500"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def chemical.Chemical.__init__ </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>conf</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Initialisation by importing information from an object of the class Config
-</pre> 
-<p>Definition at line <a class="el" href="chemical_8py_source.html#l00024">24</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="af738fbeec1e013883784f479ffa19852"></a>
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +166,7 @@ Public Attributes</h2></td></tr>
 <pre class="fragment">Compute the fraction of unbound in a 2.7% albumin solution at pH 7.4 (frac_unbound)
 Refs:  Yamazaki K, Kanaoka M (2004). Journal of Pharmaceutical Sciences, 93: 1480.
 </pre> 
-<p>Definition at line <a class="el" href="chemical_8py_source.html#l00041">41</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
+<p>Definition at line <a class="el" href="chemical_8py_source.html#l00050">50</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
 
 </div>
 </div>
@@ -199,10 +183,12 @@ Refs:  Yamazaki K, Kanaoka M (2004). Journal of Pharmaceutical Sciences, 93: 148
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>(END OF) instance initialisation methods ### </p>
 <pre class="fragment">Compute the fraction of solute non-ionised at pH 7.4 (frac_non_ion) 
 Refs: Florence AT, Attwood D (2006). Physicochemical Principles of Pharmacy, Pharmaceutical Press, London, p. 77.
 </pre> 
-<p>Definition at line <a class="el" href="chemical_8py_source.html#l00030">30</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
+<p>Definition at line <a class="el" href="chemical_8py_source.html#l00039">39</a> of file <a class="el" href="chemical_8py_source.html">chemical.py</a>.</p>
 
 </div>
 </div>

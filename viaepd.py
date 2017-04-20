@@ -44,14 +44,17 @@ class ViaEpd(comp.Comp):
         K_lip = rou_lipid / rou_water * chem.get_K_ow()**0.69 # Partition in SC lipid
   
         binding_factor = 0.65 + 0.325/chem.get_frac_unbound() + 0.025*chem.get_frac_non_ion()*K_lip
+        Kw = 0.6 * binding_factor
 
-        comp.Comp.set_Kw(self, 0.6 * binding_factor)
+        comp.Comp.set_Kw(self, Kw)
         
         # c.f. L. Chen's Phar. Res. paper; -8.15 used because of unit (m2/s)
         #   Kasting's original paper used -4.15 because of unit (cm2/s)
         D_free = 10 ** ( -8.15-0.655*np.log10(chem.get_mw()) )
-        comp.Comp.set_D(self, D_free / binding_factor)
-        #print('self.D = ', self.D)
+        D = D_free / binding_factor
+        comp.Comp.set_D(self, D)
+        #print('self.D = ', self.D)        
+        return (Kw, D)
 
     def compODEdydt(self, t, y, args=None):
         """ The wrapper function for computing the right hand side of ODEs

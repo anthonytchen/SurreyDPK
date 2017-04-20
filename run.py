@@ -22,6 +22,7 @@ _skin.createComps(_chem, _conf)
 _skin.solveMoL(0, 1)
 _skin.comps[0].saveMeshConc(True, 'tmp.txt')
 _skin.comps[1].saveMeshConc(False, 'tmp.txt')
+_skin.comps[2].saveMeshConc(False, 'tmp.txt')
 
 #_vpd = viaepd.ViaEpd(10, 10, 1, 2, 2, None, None)
 #_vpd.createMesh( _chem, 0, 0)

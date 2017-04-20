@@ -1,9 +1,17 @@
 \hypertarget{classmesh_1_1Mesh}{}\section{mesh.\+Mesh Class Reference}
 \label{classmesh_1_1Mesh}\index{mesh.\+Mesh@{mesh.\+Mesh}}
+Inheritance diagram for mesh.\+Mesh\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmesh_1_1Mesh}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-def \hyperlink{classmesh_1_1Mesh_a016f17ce91fada2b8c3d3f5b16cce9b4}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, name=None, chem, conc, Kw, D, x\+\_\+coord, y\+\_\+coord, dx, dy, dz)
+def \hyperlink{classmesh_1_1Mesh_a5037d4b9bd0c7d6c6484a24b7bee710c}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, coord\+\_\+sys=\textquotesingle{}Cartesian\textquotesingle{})
+\item 
+def \hyperlink{classmesh_1_1Mesh_a52ee621cf082458a742c8d7e71b802f9}{setup} (self, name, chem, conc, Kw, D, x\+\_\+coord, y\+\_\+coord, dx, dy, dz)
 \item 
 def {\bfseries get\+\_\+dx} (self)\hypertarget{classmesh_1_1Mesh_aac1703ed48d76086e368185b22379f7c}{}\label{classmesh_1_1Mesh_aac1703ed48d76086e368185b22379f7c}
 
@@ -23,6 +31,12 @@ def {\bfseries get\+\_\+x\+\_\+coord} (self)\hypertarget{classmesh_1_1Mesh_af4ce
 def {\bfseries set\+\_\+x\+\_\+coord} (self, x\+\_\+coord)\hypertarget{classmesh_1_1Mesh_ac7be9a536451cb577ebf0ce4debc43c1}{}\label{classmesh_1_1Mesh_ac7be9a536451cb577ebf0ce4debc43c1}
 
 \item 
+def {\bfseries get\+\_\+y\+\_\+coord} (self)\hypertarget{classmesh_1_1Mesh_a56c7c5fdde333f511510d3af6cfda02e}{}\label{classmesh_1_1Mesh_a56c7c5fdde333f511510d3af6cfda02e}
+
+\item 
+def {\bfseries set\+\_\+y\+\_\+coord} (self, y\+\_\+coord)\hypertarget{classmesh_1_1Mesh_a13639a3444151885aeec0ae65e451752}{}\label{classmesh_1_1Mesh_a13639a3444151885aeec0ae65e451752}
+
+\item 
 def {\bfseries get\+Conc} (self)\hypertarget{classmesh_1_1Mesh_a0a358fc09db4af0d46d696bb796bca66}{}\label{classmesh_1_1Mesh_a0a358fc09db4af0d46d696bb796bca66}
 
 \item 
@@ -35,11 +49,19 @@ def {\bfseries get\+\_\+no\+\_\+species} (self)\hypertarget{classmesh_1_1Mesh_ad
 def {\bfseries set\+\_\+no\+\_\+species} (self, n)\hypertarget{classmesh_1_1Mesh_a65d4a784781429cff8e3d20d3741c63f}{}\label{classmesh_1_1Mesh_a65d4a784781429cff8e3d20d3741c63f}
 
 \item 
+def {\bfseries get\+\_\+\+Kw} (self)\hypertarget{classmesh_1_1Mesh_a27c93b95e2185d126749d9ae335ebf34}{}\label{classmesh_1_1Mesh_a27c93b95e2185d126749d9ae335ebf34}
+
+\item 
+def {\bfseries get\+\_\+D} (self)\hypertarget{classmesh_1_1Mesh_ae6f20765f5e6a994d3d30b15c07b3a52}{}\label{classmesh_1_1Mesh_ae6f20765f5e6a994d3d30b15c07b3a52}
+
+\item 
 def \hyperlink{classmesh_1_1Mesh_a5d79b848ed97ec98bd97f92ed7989c66}{comp\+Inter\+Area} (self, direction)
 \begin{DoxyCompactList}\small\item\em (S\+T\+A\+RT OF) Class methods dealing with geometries \#\#\# \end{DoxyCompactList}\item 
 def {\bfseries comp\+Volume} (self)\hypertarget{classmesh_1_1Mesh_ab045aecb3cc2168b185060f7b59f3b6d}{}\label{classmesh_1_1Mesh_ab045aecb3cc2168b185060f7b59f3b6d}
 
-\end{DoxyCompactItemize}
+\item 
+def \hyperlink{classmesh_1_1Mesh_adab1ea19f28c9cb3c66539fd7e55a453}{comp\+Flux\+\_\+diffu} (self, mesh\+Other, conc\+\_\+this, conc\+\_\+other, half\+\_\+dis\+\_\+this, half\+\_\+dis\+\_\+other)
+\begin{DoxyCompactList}\small\item\em (E\+ND OF) Class methods dealing with geometries \#\#\# \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -86,38 +108,51 @@ def {\bfseries comp\+Volume} (self)\hypertarget{classmesh_1_1Mesh_ab045aecb3cc21
 \end{DoxyVerb}
  
 
-Definition at line 11 of file mesh.\+py.
+Definition at line 14 of file mesh.\+py.
 
 
 
 \subsection{Constructor \& Destructor Documentation}
 \index{mesh\+::\+Mesh@{mesh\+::\+Mesh}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
 \index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!mesh\+::\+Mesh@{mesh\+::\+Mesh}}
-\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, name=\+None, chem, conc, Kw, D, x\+\_\+coord, y\+\_\+coord, dx, dy, dz)}{__init__(self, name=None, chem, conc, Kw, D, x_coord, y_coord, dx, dy, dz)}}]{\setlength{\rightskip}{0pt plus 5cm}def mesh.\+Mesh.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, coord\+\_\+sys=\textquotesingle{}\+Cartesian\textquotesingle{})}{__init__(self, coord_sys='Cartesian')}}]{\setlength{\rightskip}{0pt plus 5cm}def mesh.\+Mesh.\+\_\+\+\_\+init\+\_\+\+\_\+ (
 \begin{DoxyParamCaption}
 \item[{}]{self, }
-\item[{}]{name = {\ttfamily None}, }
-\item[{}]{chem, }
-\item[{}]{conc, }
-\item[{}]{Kw, }
-\item[{}]{D, }
-\item[{}]{x\+\_\+coord, }
-\item[{}]{y\+\_\+coord, }
-\item[{}]{dx, }
-\item[{}]{dy, }
-\item[{}]{dz}
+\item[{}]{coord\+\_\+sys = {\ttfamily \textquotesingle{}Cartesian\textquotesingle{}}}
 \end{DoxyParamCaption}
-)}\hypertarget{classmesh_1_1Mesh_a016f17ce91fada2b8c3d3f5b16cce9b4}{}\label{classmesh_1_1Mesh_a016f17ce91fada2b8c3d3f5b16cce9b4}
-\begin{DoxyVerb}Args:
-    Kw, D - partition and diffusion coefficients in this mesh
-\end{DoxyVerb}
+)}\hypertarget{classmesh_1_1Mesh_a5037d4b9bd0c7d6c6484a24b7bee710c}{}\label{classmesh_1_1Mesh_a5037d4b9bd0c7d6c6484a24b7bee710c}
+\begin{DoxyVerb}A generic method to create the instance \end{DoxyVerb}
  
 
-Definition at line 18 of file mesh.\+py.
+Definition at line 20 of file mesh.\+py.
 
 
 
 \subsection{Member Function Documentation}
+\index{mesh\+::\+Mesh@{mesh\+::\+Mesh}!comp\+Flux\+\_\+diffu@{comp\+Flux\+\_\+diffu}}
+\index{comp\+Flux\+\_\+diffu@{comp\+Flux\+\_\+diffu}!mesh\+::\+Mesh@{mesh\+::\+Mesh}}
+\subsubsection[{\texorpdfstring{comp\+Flux\+\_\+diffu(self, mesh\+Other, conc\+\_\+this, conc\+\_\+other, half\+\_\+dis\+\_\+this, half\+\_\+dis\+\_\+other)}{compFlux_diffu(self, meshOther, conc_this, conc_other, half_dis_this, half_dis_other)}}]{\setlength{\rightskip}{0pt plus 5cm}def mesh.\+Mesh.\+comp\+Flux\+\_\+diffu (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{mesh\+Other, }
+\item[{}]{conc\+\_\+this, }
+\item[{}]{conc\+\_\+other, }
+\item[{}]{half\+\_\+dis\+\_\+this, }
+\item[{}]{half\+\_\+dis\+\_\+other}
+\end{DoxyParamCaption}
+)}\hypertarget{classmesh_1_1Mesh_adab1ea19f28c9cb3c66539fd7e55a453}{}\label{classmesh_1_1Mesh_adab1ea19f28c9cb3c66539fd7e55a453}
+
+
+(E\+ND OF) Class methods dealing with geometries \#\#\# 
+
+\begin{DoxyVerb}Compute the flux, due to diffusion, of solute from meshOther to <self> mesh
+However, do not use concentration values in the mesh objects,
+instead use <conc_this> and <conc_other>
+\end{DoxyVerb}
+ 
+
+Definition at line 136 of file mesh.\+py.
+
 \index{mesh\+::\+Mesh@{mesh\+::\+Mesh}!comp\+Inter\+Area@{comp\+Inter\+Area}}
 \index{comp\+Inter\+Area@{comp\+Inter\+Area}!mesh\+::\+Mesh@{mesh\+::\+Mesh}}
 \subsubsection[{\texorpdfstring{comp\+Inter\+Area(self, direction)}{compInterArea(self, direction)}}]{\setlength{\rightskip}{0pt plus 5cm}def mesh.\+Mesh.\+comp\+Inter\+Area (
@@ -135,7 +170,32 @@ direction: [0] = up; [1] = left; [2] = right; [3] = down
 \end{DoxyVerb}
  
 
-Definition at line 61 of file mesh.\+py.
+Definition at line 91 of file mesh.\+py.
+
+\index{mesh\+::\+Mesh@{mesh\+::\+Mesh}!setup@{setup}}
+\index{setup@{setup}!mesh\+::\+Mesh@{mesh\+::\+Mesh}}
+\subsubsection[{\texorpdfstring{setup(self, name, chem, conc, Kw, D, x\+\_\+coord, y\+\_\+coord, dx, dy, dz)}{setup(self, name, chem, conc, Kw, D, x_coord, y_coord, dx, dy, dz)}}]{\setlength{\rightskip}{0pt plus 5cm}def mesh.\+Mesh.\+setup (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name, }
+\item[{}]{chem, }
+\item[{}]{conc, }
+\item[{}]{Kw, }
+\item[{}]{D, }
+\item[{}]{x\+\_\+coord, }
+\item[{}]{y\+\_\+coord, }
+\item[{}]{dx, }
+\item[{}]{dy, }
+\item[{}]{dz}
+\end{DoxyParamCaption}
+)}\hypertarget{classmesh_1_1Mesh_a52ee621cf082458a742c8d7e71b802f9}{}\label{classmesh_1_1Mesh_a52ee621cf082458a742c8d7e71b802f9}
+\begin{DoxyVerb}A separate setup method to modify instance's attributes
+Args:
+    Kw, D - partition and diffusion coefficients in this mesh
+\end{DoxyVerb}
+ 
+
+Definition at line 35 of file mesh.\+py.
 
 
 

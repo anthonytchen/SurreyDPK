@@ -3,13 +3,26 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, mw, K\+\_\+ow, p\+Ka, frac\+\_\+non\+\_\+ion=None, frac\+\_\+unbound=None, acid\+\_\+base=None)\hypertarget{classchemical_1_1Chemical_a217516c99fbf0e2788782d27a261ec89}{}\label{classchemical_1_1Chemical_a217516c99fbf0e2788782d27a261ec89}
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, conf=None)\hypertarget{classchemical_1_1Chemical_a23a6f4fc90c0113dbda6d2e510029fdd}{}\label{classchemical_1_1Chemical_a23a6f4fc90c0113dbda6d2e510029fdd}
 
 \item 
-def \hyperlink{classchemical_1_1Chemical_a1aecc1f2e21b20636f65d45b3787f500}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, conf)
+def {\bfseries set\+Chem} (self, mw, K\+\_\+ow, p\+Ka, frac\+\_\+non\+\_\+ion=None, frac\+\_\+unbound=None, acid\+\_\+base=None)\hypertarget{classchemical_1_1Chemical_a9149275a71ae075228b7d32aa45458d9}{}\label{classchemical_1_1Chemical_a9149275a71ae075228b7d32aa45458d9}
+
+\item 
+def {\bfseries get\+\_\+mw} (self)\hypertarget{classchemical_1_1Chemical_a938a38840c7c5e2e969458f0fa4837d3}{}\label{classchemical_1_1Chemical_a938a38840c7c5e2e969458f0fa4837d3}
+
+\item 
+def {\bfseries get\+\_\+\+K\+\_\+ow} (self)\hypertarget{classchemical_1_1Chemical_a52c7373a29fd5e3be3bb2866711093f8}{}\label{classchemical_1_1Chemical_a52c7373a29fd5e3be3bb2866711093f8}
+
+\item 
+def {\bfseries get\+\_\+frac\+\_\+unbound} (self)\hypertarget{classchemical_1_1Chemical_a14a789f44a29b8e8108d16dca58a34ca}{}\label{classchemical_1_1Chemical_a14a789f44a29b8e8108d16dca58a34ca}
+
+\item 
+def {\bfseries get\+\_\+frac\+\_\+non\+\_\+ion} (self)\hypertarget{classchemical_1_1Chemical_a0227ca686a08be6d0213d8ef714eed0f}{}\label{classchemical_1_1Chemical_a0227ca686a08be6d0213d8ef714eed0f}
+
 \item 
 def \hyperlink{classchemical_1_1Chemical_a3633520af63f8eb799a8f0de381422e0}{comp\+Ion} (self)
-\item 
+\begin{DoxyCompactList}\small\item\em (E\+ND OF) instance initialisation methods \#\#\# \end{DoxyCompactList}\item 
 def \hyperlink{classchemical_1_1Chemical_af738fbeec1e013883784f479ffa19852}{comp\+Binding} (self)
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
@@ -47,23 +60,6 @@ Definition at line 9 of file chemical.\+py.
 
 
 
-\subsection{Constructor \& Destructor Documentation}
-\index{chemical\+::\+Chemical@{chemical\+::\+Chemical}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
-\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!chemical\+::\+Chemical@{chemical\+::\+Chemical}}
-\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, conf)}{__init__(self, conf)}}]{\setlength{\rightskip}{0pt plus 5cm}def chemical.\+Chemical.\+\_\+\+\_\+init\+\_\+\+\_\+ (
-\begin{DoxyParamCaption}
-\item[{}]{self, }
-\item[{}]{conf}
-\end{DoxyParamCaption}
-)}\hypertarget{classchemical_1_1Chemical_a1aecc1f2e21b20636f65d45b3787f500}{}\label{classchemical_1_1Chemical_a1aecc1f2e21b20636f65d45b3787f500}
-\begin{DoxyVerb}Initialisation by importing information from an object of the class Config
-\end{DoxyVerb}
- 
-
-Definition at line 24 of file chemical.\+py.
-
-
-
 \subsection{Member Function Documentation}
 \index{chemical\+::\+Chemical@{chemical\+::\+Chemical}!comp\+Binding@{comp\+Binding}}
 \index{comp\+Binding@{comp\+Binding}!chemical\+::\+Chemical@{chemical\+::\+Chemical}}
@@ -77,7 +73,7 @@ Refs:  Yamazaki K, Kanaoka M (2004). Journal of Pharmaceutical Sciences, 93: 148
 \end{DoxyVerb}
  
 
-Definition at line 41 of file chemical.\+py.
+Definition at line 50 of file chemical.\+py.
 
 \index{chemical\+::\+Chemical@{chemical\+::\+Chemical}!comp\+Ion@{comp\+Ion}}
 \index{comp\+Ion@{comp\+Ion}!chemical\+::\+Chemical@{chemical\+::\+Chemical}}
@@ -86,12 +82,16 @@ Definition at line 41 of file chemical.\+py.
 \item[{}]{self}
 \end{DoxyParamCaption}
 )}\hypertarget{classchemical_1_1Chemical_a3633520af63f8eb799a8f0de381422e0}{}\label{classchemical_1_1Chemical_a3633520af63f8eb799a8f0de381422e0}
+
+
+(E\+ND OF) instance initialisation methods \#\#\# 
+
 \begin{DoxyVerb}Compute the fraction of solute non-ionised at pH 7.4 (frac_non_ion) 
 Refs: Florence AT, Attwood D (2006). Physicochemical Principles of Pharmacy, Pharmaceutical Press, London, p. 77.
 \end{DoxyVerb}
  
 
-Definition at line 30 of file chemical.\+py.
+Definition at line 39 of file chemical.\+py.
 
 
 
