@@ -7,7 +7,6 @@ Created on Tue Apr 18 13:28:52 2017
 import importlib
 import numpy as np
 
-import mesh
 import comp
 importlib.reload(comp)
 
@@ -54,6 +53,10 @@ class ViaEpd(comp.Comp):
         comp.Comp.set_D(self, D_free / binding_factor)
         #print('self.D = ', self.D)
 
+    def compODEdydt(self, t, y, args=None):
+        """ The wrapper function for computing the right hand side of ODEs
+        """
+        return comp.Comp.compODEdydt_diffu (self, t, y, args)
         
     def saveCoord(self, fn_x, fn_y) :
         comp.Comp.saveCoord(self, fn_x, fn_y, '.ve')

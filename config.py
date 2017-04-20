@@ -19,6 +19,8 @@ class Config:
         ## Default values
         self.y_len_ve = 40e-6
         self.n_grids_y_ve = 2
+        self.y_len_de = self.y_len_ve
+        self.n_grids_y_de = 2
 		
         with open(fn_config, 'r') as f:
             lines = f.readlines()

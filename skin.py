@@ -45,8 +45,8 @@ class Skin:
         
     ### (START OF) Class methods dealing with ODE computation ###
     
-    def compODEdydt_diffu (self, t, y, args=None):
-        """Compute the right-hand side of the ODEs, i.e. dydt, due to diffusion
+    def compODEdydt (self, t, y, args=None):
+        """Compute the right-hand side of the ODEs, i.e. dydt
         """
         f = np.zeros(y.shape) #
         #print(y)
@@ -66,6 +66,9 @@ class Skin:
                 for j in range(self.nyComp) :
                     idx_comp = i*self.nyComp+j
                     current_comp = self.comps[idx_comp]
+                    current_dim = current_comp.get_dim()
+                    current_y = y[idx:idx+current_dim]
+                    #print('current_y\n', current_y)
 
                     # 2.1. Update the concentration in boundary meshes according to y[]                    
                     compBdyRight, concBdyRight = self.getBdyRight(current_comp, y, idx, i, j)
@@ -77,14 +80,14 @@ class Skin:
                     #if type(current_comp).__name__ == 'Dermis' :
                         #if (self.b_has_blood) # y[ k*m_dim_all+m_dim_all-1 ] contains the blood concentration, i.e. the last term in the differential equations
                         #((Dermis *)pComp)->updateBlood( y[ k*m_dim_all+m_dim_all-1 ] );
-                    tmp_f = current_comp.compODEdydt_diffu(t, y+idx)
-                    f[idx:idx+current_comp.get_dim()] = tmp_f
-                    #print(y)
+                    tmp_f = current_comp.compODEdydt(t, current_y)
+                    f[idx:idx+current_dim] = tmp_f
+                    #print('f\n', f)
 
                     #if (m_bInfSrc)                              // infinite source, concentration doesn't change, but above dydt calculation is still needed
                     #memset(f+idx, 0, sizeof(double)*((Vehicle *)pComp)->m_dim);  //  since calling compODE_dydt will calculate the flux across boundaries properly
                     current_comp.passBdyMassOut(compBdyRight, compBdyDown)
-                    idx += current_comp.get_dim()
+                    idx += current_dim
                 # for j
             # for i
             
@@ -117,13 +120,14 @@ class Skin:
                     current_comp = self.comps[idx_comp]
                     dim = current_comp.get_dim()
                     y0[ idx : idx+dim ] = current_comp.getMeshConc()
+                    idx += current_comp.get_dim()
             #if (m_b_has_blood)
             #  m_Blood[k].getGridsConc(y+idx, m_Blood[k].m_dim);
         # for k, each species
 
         ## Integration
         
-        r = ode(self.compODEdydt_diffu).set_integrator('vode', method='bdf', with_jacobian=False)
+        r = ode(self.compODEdydt).set_integrator('vode', method='bdf', with_jacobian=False)
         r.set_initial_value(y0, t_start).set_f_params(None)
         r.integrate( r.t + t_end-t_start )
         
@@ -137,6 +141,7 @@ class Skin:
                     current_comp = self.comps[idx_comp]
                     dim = current_comp.get_dim()
                     current_comp.setMeshConc_all( r.y[ idx : idx+dim ] )
+                    idx += current_comp.get_dim()
             #    if (m_b_has_blood)
             # m_Blood[k].setGridsConc(pNVs+idx, m_Blood[k].m_dim);
         # for k, each species
