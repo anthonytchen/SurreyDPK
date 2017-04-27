@@ -14,16 +14,6 @@ import dermis
 import skin_setup
 reload(skin_setup)
 
-import paras
-reload(paras)
-
-
-comps_setup = 'H,V,S,E,D'
-
-_paras = paras.InputParas(10)
-_paras.comps_paras = [paras.StraCornParas() for i in range(10)] 
-
-_paras.comps_paras[0]
 # read chemical config file
 # read compartment structure file
 # set up Kw/D etc 
@@ -39,7 +29,7 @@ _skin.comps[0].saveMeshConc(True, 'tmp.txt')
 _skin.comps[1].saveMeshConc(False, 'tmp.txt')
 _skin.comps[2].saveMeshConc(False, 'tmp.txt')
 _skin.comps[3].saveMeshConc(False, 'tmp.txt')
-_skin.comps[4].saveMeshConc(False, 'tmp.txt')
+#_skin.comps[4].saveMeshConc(False, 'tmp.txt')
 
 #_vpd = viaepd.ViaEpd(10, 10, 1, 2, 2, None, None)
 #_vpd.createMesh( _chem, 0, 0)

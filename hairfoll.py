@@ -16,10 +16,13 @@ class HairFoll(comp.Comp):
     which is the hair follicle, currently modelled as a homogenised sebum media
     """
     
-    def __init__(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond):
+    def __init__(self, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D, coord_sys, bdy_cond):
         comp.Comp.__init__(self)
         comp.Comp.setup(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)
         
+        self.init_conc = init_conc
+        comp.Comp.set_Kw(self, Kw)
+        comp.Comp.set_D(self, D)        
         
     def createMesh(self, chem, coord_x_start, coord_y_start) :
         """ Create mesh for this compartment
@@ -36,11 +39,13 @@ class HairFoll(comp.Comp):
         and the diffusion coefficient
         """
         # todo: include Senpei's QSPR model
-        Kw = 5.62
-        comp.Comp.set_Kw(self, Kw)
+        if self.Kw < 0: # Negative means it requires calculation; otherwise use user-input value
+            Kw = 5.62
+            comp.Comp.set_Kw(self, Kw)
         
-        D = 1.12e-11
-        comp.Comp.set_D(self, D)
+        if self.D < 0:
+            D = 1.12e-11
+            comp.Comp.set_D(self, D)
         
         return (Kw, D)
 

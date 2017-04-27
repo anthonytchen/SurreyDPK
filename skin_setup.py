@@ -4,8 +4,10 @@ Created on Wed Apr 19 09:57:44 2017
 
 @author: tc0008
 """
+import warnings
 import importlib
 #import numpy as np
+
 import vehicle
 importlib.reload(vehicle)
 import stracorn
@@ -48,10 +50,10 @@ class Skin_Setup(skin.Skin):
         """
         
         # Read structure of the compartments
-        tokens = list( filter(None, self.comp_structure.split(',')) )
-        nrow = len(tokens)
-        ncol = len(tokens[0])
-        skin.Skin.createComps(self, nrow, ncol)        
+        #tokens = list( filter(None, self.comp_structure.split(',')) )        
+        #nrow = len(tokens)
+        #ncol = len(tokens[0])        
+        skin.Skin.createComps(self, conf.comps_nrow, conf.comps_ncol)        
         
         # Actually create the compartments
         
@@ -59,40 +61,47 @@ class Skin_Setup(skin.Skin):
         current_x = 0
         current_y = 0        
         
-        for i in range(nrow) :
+        for i in range(conf.comps_nrow) :
             
-            for j in range(ncol) :
+            for j in range(conf.comps_ncol) :
+                
+                idx = i*conf.comps_ncol + j
                 
                 # determine the boundary conditions for this compartment
-                bdy_up = 'ZeroFlux' if i==0 else 'FromOther'
-                #if i==0 : 
-                #    bdy_up = 'ZeroFlux'
-                #else:
-                #    bdy_up = 'FromOther'
-                bdy_down = 'ZeroConc' if i==nrow-1 else 'FromOther'
-                bdy_left = 'Periodic'
-                bdy_right = 'Periodic'
-                assert(ncol==1) # otherwise the above periodic conditions are incorrect
-                bdy_cond = [bdy_up, bdy_left, bdy_right, bdy_down]                
+                bdy_up = 'ZeroFlux' if i==0 else 'FromOther'                
+                bdy_down = 'ZeroConc' if i==conf.comps_nrow-1 else 'FromOther'
+                
+                if conf.comps_ncol == 1 : # only one column of compartments
+                    bdy_left = 'Periodic'
+                    bdy_right = 'Periodic'
+                else :
+                    warnings.warn('Periodic boundary conditions have not been implemented for more-than-one-column compartments, ZeroFlux is used instead')
+                    bdy_left = 'ZeroFlux' if j==0 else 'FromOther'                    
+                    bdy_right = 'ZeroFlux' if j==conf.comps_ncol-1 else 'FromOther'
+                
+                bdy_cond = [bdy_up, bdy_left, bdy_right, bdy_down]
+                
 
-                if tokens[i][j] == 'V':
-                    comp = self.createVH(chem, current_x, current_y, conf.x_len_vehicle, conf.y_len_vehicle, 
-                                         conf.n_grids_x_vh, conf.n_grids_y_vh, conf.conc_vehicle,
-                                         conf.partition_vehicle, conf.diffu_vehicle, bdy_cond) 
-                elif tokens[i][j] == 'S':
-                    comp = self.createSC(chem, current_x, current_y, conf.n_layer_x_sc, conf.n_layer_y_sc, 
-                                         conf.offset_y_sc, bdy_cond)
-                elif tokens[i][j] == 'E':
-                    comp = self.createVE(chem, current_x, current_y, conf.x_len_ve, conf.y_len_ve, 
-                                         conf.n_grids_x_ve, conf.n_grids_y_ve, bdy_cond)
-                elif tokens[i][j] == 'D':
-                    comp = self.createDE(chem, current_x, current_y, conf.x_len_de, conf.y_len_de, 
-                                         conf.n_grids_x_de, conf.n_grids_y_de, bdy_cond)
-                elif tokens[i][j] == 'H':
-                    x_len_hf = conf.x_len_ve
-                    y_len_hf = conf.y_len_ve
-                    comp = self.createHF(chem, current_x, current_y, x_len_hf, y_len_hf, 
-                                         conf.n_grids_x_de, conf.n_grids_y_de, bdy_cond)
+                if conf.comps_geom[idx].name == 'V':
+                    comp = self.createVH(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, 
+                                         conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_vh,
+                                         conf.Kw_vh, conf.D_vh, bdy_cond) 
+                elif conf.comps_geom[idx].name == 'S':
+                    comp = self.createSC(chem, current_x, current_y, conf.comps_geom[idx].n_layer_x_sc, conf.comps_geom[idx].n_layer_y_sc, \
+                                         conf.comps_geom[idx].n_mesh_x_sc_lp, conf.comps_geom[idx].n_mesh_y_sc_lp, conf.init_conc_sc, \
+                                         conf.Kw_sc, conf.D_sc, bdy_cond)                    
+                elif conf.comps_geom[idx].name == 'E':
+                    comp = self.createVE(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
+                                         conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_ve, \
+                                         conf.Kw_ve, conf.D_ve, bdy_cond)
+                elif conf.comps_geom[idx].name == 'D':
+                    comp = self.createDE(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
+                                         conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_de, \
+                                         conf.Kw_de, conf.D_de, bdy_cond)
+                elif conf.comps_geom[idx].name == 'H':
+                    comp = self.createHF(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
+                                         conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_hf, \
+                                         conf.Kw_hf, conf.D_hf, bdy_cond)
                 else :
                     pass
                 skin.Skin.setComp(self, comp, i, j)
@@ -105,11 +114,11 @@ class Skin_Setup(skin.Skin):
         skin.Skin.set_dim_all(self, dim_all)
         
         # Link compartments through boundary conditions
-        for i in range(nrow) :
-            for j in range(ncol) :
+        for i in range(conf.comps_nrow) :
+            for j in range(conf.comps_ncol) :
                 
                 # down boundary
-                if i == nrow-1 : # down-most compartmnet, its down boundary is zero-flux
+                if i == conf.comps_nrow-1 : # down-most compartmnet, its down boundary is zero-flux
                     n_dBdy = 0
                     mesh_dBdy = None
                 else :
@@ -118,7 +127,7 @@ class Skin_Setup(skin.Skin):
                     mesh_dBdy = compDown.meshes[0:n_dBdy]
                     
                 # right boundary
-                if j==ncol-1 : # right-most compartment, its right boundary is zero-flux
+                if j==conf.comps_ncol-1 : # right-most compartment, its right boundary is zero-flux
                     n_rBdy = 0
                     mesh_rBdy = None
                 else :
@@ -144,37 +153,39 @@ class Skin_Setup(skin.Skin):
         return veh
         
     def createSC(self, chem, 
-                 coord_x_start, coord_y_start, n_layer_x, n_layer_y, offset_y,
-                 bdyCond) :
-        """ Create stratum corneum """                
-        sc = stracorn.StraCorn(self.dz_dtheta, n_layer_x, n_layer_y, offset_y, self.coord_sys, bdyCond)
+                 coord_x_start, coord_y_start, n_layer_x, n_layer_y, n_mesh_x_lp, n_mesh_y_lp, 
+                 init_conc, Kw, D, bdyCond) :
+        """ Create stratum corneum """
+        offset_y = 0                
+        sc = stracorn.StraCorn(n_layer_x, n_layer_y, self.dz_dtheta, offset_y, \
+                               n_mesh_x_lp, n_mesh_y_lp, init_conc, Kw, D, self.coord_sys, bdyCond)
         sc.createMesh(chem, coord_x_start, coord_y_start)
         return sc
         
     def createVE(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
-                 bdyCond) :
+                 init_conc, Kw, D, bdyCond) :
         """ Create viable epidermis """        
-        via_epidermis = viaepd.ViaEpd(xlen, ylen, self.dz_dtheta, 
-                                         n_grids_x, n_grids_y, self.coord_sys, bdyCond)
+        via_epidermis = viaepd.ViaEpd(xlen, ylen, self.dz_dtheta, \
+                                      n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
         via_epidermis.createMesh(chem, coord_x_start, coord_y_start)
         return via_epidermis
     
     def createDE(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
-                 bdyCond) :
+                 init_conc, Kw, D, bdyCond) :
         """ Create dermis """        
         derm = dermis.Dermis(xlen, ylen, self.dz_dtheta, 
-                             n_grids_x, n_grids_y, self.coord_sys, bdyCond, self.b_has_blood)
+                             n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond, self.b_has_blood)
         derm.createMesh(chem, coord_x_start, coord_y_start)
         return derm
         
     def createHF(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
-                 bdyCond) :
+                 init_conc, Kw, D, bdyCond) :
         """ Create viable epidermis """        
         hf = hairfoll.HairFoll(xlen, ylen, self.dz_dtheta, 
-                               n_grids_x, n_grids_y, self.coord_sys, bdyCond)
+                               n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
         hf.createMesh(chem, coord_x_start, coord_y_start)
         return hf
         

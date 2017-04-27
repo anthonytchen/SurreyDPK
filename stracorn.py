@@ -19,8 +19,8 @@ class StraCorn(comp.Comp):
     which is the stratum corneum, currently modelled as a heterogeneous media
     """
     
-    def __init__(self, dz_dtheta, n_layer_x, n_layer_y, offset_y, 
-                 n_meshes_x_lp, n_meshes_y_lp, coord_sys, bdy_cond) :
+    def __init__(self, n_layer_x, n_layer_y, dz_dtheta, offset_y, 
+                 n_meshes_x_lp, n_meshes_y_lp, init_conc, Kw, D, coord_sys, bdy_cond) :
         
         comp.Comp.__init__(self)
           

@@ -5,7 +5,7 @@ Created on Tue Apr 18 13:28:52 2017
 @author: tc0008
 """
 import importlib
-import numpy as np
+#import numpy as np
 
 import comp
 importlib.reload(comp)
@@ -41,12 +41,12 @@ class Vehicle(comp.Comp):
         """ Compute the partition coefficient with respect to water
         and the diffusion coefficient
         """
-        if self.Kw is None:
+        if self.Kw < 0:
             Kw = 1 # caution: only placeholder and needs refining
             comp.Comp.set_Kw(self, Kw)
         
                     
-        if self.D is None: # calculation of diffusivity according to the Stoke-Eistein equation
+        if self.D < 0: # calculation of diffusivity according to the Stoke-Eistein equation
             D = comp.Comp.compDiff_stokes(self, self.eta, chem.r_s)
             comp.Comp.set_D(self, D)
         

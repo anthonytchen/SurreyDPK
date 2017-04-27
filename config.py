@@ -6,22 +6,42 @@ Created on Tue Apr 18 22:01:17 2017
 '''
 
 import warnings
+import importlib
 
+import stracorn
+importlib.reload(stracorn)
+
+class Comp_Geom:
+    """ This class contains the geometric parameters of a compartment
+    """
+    def __init__(self):
+        self.name = None
+        
+        self.len_x = -1
+        self.len_y = -1
+        self.n_mesh_x = -1
+        self.n_mesh_y = -1        
+        
+        # The following are specific to stratum corneum
+        self.n_layer_x_sc = -1
+        self.n_layer_y_sc = -1
+        self.n_mesh_x_sc_lp = -1
+        self.n_mesh_y_sc_lp = -1
+        
 class Config:
-    ''' This class intends to read from a text configuration
+    """ This class intends to read from a text configuration
     file the properties of the chemical(s), the setup of the skin compartments 
     and their dimensions, and the simulation parameters,
     and then feeds them to the appropriate classes (e.g. Chemical, Skin etc.)
-    '''
+    """
     
     def __init__(self, fn_config):
         """         """
         ## Default values
-        self.y_len_ve = 40e-6
-        self.n_grids_y_ve = 2
-        self.y_len_de = self.y_len_ve
-        self.y_len_vehicle = self.y_len_ve
-        self.n_grids_y_de = 2
+        self.comps_nrow = 0
+        self.comps_ncol = 0
+        self.comps_geom = None      
+
 		
         with open(fn_config, 'r') as f:
             lines = f.readlines()
@@ -31,7 +51,8 @@ class Config:
             if len(tokens) != 0 :
                 self.readTokens(tokens)
         
-    
+        self.updateGeometry()
+        
     def readTokens(self, tokens):
         
         #print(tokens)
@@ -42,6 +63,37 @@ class Config:
         # setup compartments
         elif tokens[0] == 'COMPARTMENT_SETUP': 
             self.sComps = tokens[1]
+            tks = list( filter(None, tokens[1].split(',')) )
+            self.comps_nrow = len(tks)
+            self.comps_ncol = len(tks[0])
+            #print(tks)            
+            
+            self.comps_geom = [Comp_Geom() for i in range(self.comps_nrow*self.comps_ncol)]
+            for i in range(self.comps_nrow):
+                for j in range(self.comps_ncol):
+                    #print(tks[i][j])
+                    self.comps_geom[i*self.comps_ncol+j].name = tks[i][j]
+
+        elif tokens[0] == 'COMP': 
+            comp_idx = int(tokens[1])
+            if self.comps_geom[comp_idx].name == 'S': # Stratum corneum
+                self.comps_geom[comp_idx].n_layer_x_sc, self.comps_geom[comp_idx].n_layer_y_sc, \
+                self.comps_geom[comp_idx].n_mesh_x_sc_lp, self.comps_geom[comp_idx].n_mesh_y_sc_lp \
+                = [int(k) for k in tokens[2:]]
+                
+                # The purpose of running this is to calculate the dimensions and number of
+                #   meshes in SC from the supplied information
+                sc = stracorn.StraCorn(self.comps_geom[comp_idx].n_layer_x_sc, self.comps_geom[comp_idx].n_layer_y_sc, \
+                                       1, 0, self.comps_geom[comp_idx].n_mesh_x_sc_lp, self.comps_geom[comp_idx].n_mesh_y_sc_lp, \
+                                        0, -1, -1, None, None)
+                self.comps_geom[comp_idx].len_x = sc.get_x_length()
+                self.comps_geom[comp_idx].len_y = sc.get_y_length()
+                self.comps_geom[comp_idx].n_mesh_x = sc.get_nx()
+                self.comps_geom[comp_idx].n_mesh_y = sc.get_ny()
+            else :
+                self.comps_geom[comp_idx].len_x, self.comps_geom[comp_idx].len_y = [float(k) for k in tokens[2:4]]
+                self.comps_geom[comp_idx].n_mesh_x, self.comps_geom[comp_idx].n_mesh_y = [int(k) for k in tokens[4:]]
+
 
         ### parameters relating to chemical(s)
         elif tokens[0] == 'CHEM_NO' : # number of compounds
@@ -61,7 +113,7 @@ class Config:
 
         ### vehicle specific parameters
         elif tokens[0] == 'INFINITE_VH' : # 
-            self.bInfSrc = bool(tokens[1])
+            self.b_infinite_vehicle = bool(tokens[1])
         elif tokens[0] == 'AREA_VH' :
             self.area_vehicle = float(tokens[1])
         
@@ -81,58 +133,53 @@ class Config:
             
             
         # partition and diffusion coefficients
-        elif tokens[0] == 'VEH_INIT_CONC' : # initial concentration in vehicle
-            self.conc_vehicle = float(tokens[1])
-        elif tokens[0] == 'VEH_DX' : 
-            self.x_len_vehicle = float(tokens[1])
-        elif tokens[0] == 'VEH_AREA' : 
-            self.area_vehicle = float(tokens[1])
-        elif tokens[0] == 'VEH_INFINITE' :
-            self.bInfSrc = bool(tokens[1])
-        elif tokens[0] == 'N_GRIDS_X_VH' :
-            self.n_grids_x_vh = int(tokens[1])
-        elif tokens[0] == 'N_GRIDS_Y_VH' :
-            self.n_grids_y_vh = int(tokens[1])
-        
-        elif tokens[0] == 'SKIN_N_LAYER_X_SC' :
-            self.n_layer_x_sc = int(tokens[1])
-        elif tokens[0] == 'SKIN_N_LAYER_Y_SC' :
-            self.n_layer_y_sc = int(tokens[1])
-        elif tokens[0] == 'SKIN_OFFSET_Y_SC' :
-            self.offset_y_sc = float(tokens[1])
-            
-        elif tokens[0] == 'SKIN_N_GRIDS_X_VE' :
-            self.n_grids_x_ve = int(tokens[1])
-        elif tokens[0] == 'SKIN_N_GRIDS_X_DE' :
-            self.n_grids_x_de = int(tokens[1])
-        elif tokens[0] == 'SKIN_LEN_X_VE' :
-            self.x_len_ve = float(tokens[1])
-        elif tokens[0] == 'SKIN_LEN_X_DE' :
-            self.x_len_de = float(tokens[1])
-        elif tokens[0] == 'SKIN_PARTITION_DE2BD' : # dermis to blood partition
-            self.partition_dermis2blood = float(tokens[1])
-        elif tokens[0] == 'SKIN_CLEAR_BD' : # blood clearance rate
-            self.Kclear_blood = float(tokens[1])
-            
-        elif tokens[0] == 'SKIN_N_GRIDS_X_SB_SUR' : 
-            self.n_grids_x_sb_sur = int(tokens[1])
-        elif tokens[0] == 'SKIN_LEN_X_SB_SUR' : 
-            self.x_len_sb_sur = float(tokens[1])
-        elif tokens[0] == 'SKIN_N_GRIDS_Y_SB_SUR' :
-            self.n_grids_y_sb_sur = int(tokens[1])
-        elif tokens[0] == 'SKIN_N_GRIDS_X_SB_HAR' :
-            self.n_grids_x_sb_har = int(tokens[1])
-        elif tokens[0] == 'SKIN_N_GRIDS_Y_SB_HAR' :
-            self.n_grids_y_sb_har = int(tokens[1])
-        elif tokens[0] == 'SKIN_LEN_Y_SB_HAR' :
-            self.y_len_sb_har = float(tokens[1])
-
+        elif tokens[0] == 'KW_VH' :
+            self.Kw_vh = float(tokens[1])
+        elif tokens[0] == 'D_VH' : 
+            self.D_vh = float(tokens[1])
+        elif tokens[0] == 'KW_SC' :
+            self.Kw_sc = float(tokens[1])
+        elif tokens[0] == 'D_SC' : 
+            self.D_sc = float(tokens[1])
+        elif tokens[0] == 'KW_VE' :
+            self.Kw_ve = float(tokens[1])
+        elif tokens[0] == 'D_VE' : 
+            self.D_ve = float(tokens[1])    
+        elif tokens[0] == 'KW_DE' :
+            self.Kw_de = float(tokens[1])
+        elif tokens[0] == 'D_DE' : 
+            self.D_de = float(tokens[1])
+        elif tokens[0] == 'KW_HF' :
+            self.Kw_hf = float(tokens[1])
+        elif tokens[0] == 'D_HF' : 
+            self.D_hf = float(tokens[1])
+        elif tokens[0] == 'K_DE2BD' : # dermis to blood partition
+            self.K_de2bd = float(tokens[1])
+        elif tokens[0] == 'CLEAR_BD' : 
+            self.Cl_bd = float(tokens[1])         
 
         # name not found
         else :
             warnings.warn('Unrecognised line in config file')
             
-    def assignComps(self):
-        #tokens = list( filter(None, self.comp_structure.split(',')) )
-        #nrow = len(tokens)
-        #ncol = len(tokens[0])
+    def updateGeometry(self) :
+        """ Update the gemoetric parameters based on what is provided in configuration file
+        """
+        for i in range(self.comps_nrow):
+            for j in range(self.comps_ncol):
+                idx = i*self.comps_ncol + j
+                
+                if self.comps_geom[idx].len_x < 0:
+                    if j > 0 :
+                        self.comps_geom[idx].len_x = self.comps_geom[idx-1].len_x                    
+                    else :
+                        raise ValueError('Invalid value for conf.comps_geom[idx].len_x')
+                        
+                if self.comps_geom[idx].len_y < 0:
+                    if i > 0 :
+                        self.comps_geom[idx].len_y = self.comps_geom[(i-1)*self.comps_ncol+j].len_y
+                    elif self.comps_geom[ (i+1)*self.comps_ncol + j ].name == 'S' : # stratum corneum
+                        self.comps_geom[idx].len_y = self.comps_geom[(i+1)*self.comps_ncol + j].len_y
+                    else :
+                        raise ValueError('Invalid value for conf.comps_geom[idx].len_y')
+         

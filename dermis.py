@@ -19,8 +19,9 @@ class Dermis(viaepd.ViaEpd):
     blood flow through
     """
     
-    def __init__(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond, b_has_blood=False):
-        viaepd.ViaEpd.__init__(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)
+    def __init__(self, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D, \
+                 coord_sys, bdy_cond, b_has_blood=False):
+        viaepd.ViaEpd.__init__(self, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D, coord_sys, bdy_cond)
         
         ## blood flow ralated varaibles
         self.b_has_blood = b_has_blood
