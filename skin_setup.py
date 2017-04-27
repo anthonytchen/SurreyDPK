@@ -6,12 +6,16 @@ Created on Wed Apr 19 09:57:44 2017
 """
 import importlib
 #import numpy as np
+import vehicle
+importlib.reload(vehicle)
 import stracorn
 importlib.reload(stracorn)
 import viaepd
 importlib.reload(viaepd)
 import dermis
 importlib.reload(dermis)
+import hairfoll
+importlib.reload(hairfoll)
 import skin
 importlib.reload(skin)
 
@@ -70,8 +74,12 @@ class Skin_Setup(skin.Skin):
                 bdy_right = 'Periodic'
                 assert(ncol==1) # otherwise the above periodic conditions are incorrect
                 bdy_cond = [bdy_up, bdy_left, bdy_right, bdy_down]                
-                 
-                if tokens[i][j] == 'S':
+
+                if tokens[i][j] == 'V':
+                    comp = self.createVH(chem, current_x, current_y, conf.x_len_vehicle, conf.y_len_vehicle, 
+                                         conf.n_grids_x_vh, conf.n_grids_y_vh, conf.conc_vehicle,
+                                         conf.partition_vehicle, conf.diffu_vehicle, bdy_cond) 
+                elif tokens[i][j] == 'S':
                     comp = self.createSC(chem, current_x, current_y, conf.n_layer_x_sc, conf.n_layer_y_sc, 
                                          conf.offset_y_sc, bdy_cond)
                 elif tokens[i][j] == 'E':
@@ -79,6 +87,11 @@ class Skin_Setup(skin.Skin):
                                          conf.n_grids_x_ve, conf.n_grids_y_ve, bdy_cond)
                 elif tokens[i][j] == 'D':
                     comp = self.createDE(chem, current_x, current_y, conf.x_len_de, conf.y_len_de, 
+                                         conf.n_grids_x_de, conf.n_grids_y_de, bdy_cond)
+                elif tokens[i][j] == 'H':
+                    x_len_hf = conf.x_len_ve
+                    y_len_hf = conf.y_len_ve
+                    comp = self.createHF(chem, current_x, current_y, x_len_hf, y_len_hf, 
                                          conf.n_grids_x_de, conf.n_grids_y_de, bdy_cond)
                 else :
                     pass
@@ -121,6 +134,15 @@ class Skin_Setup(skin.Skin):
         
     ### (START OF) Create individual compartments ###
     
+    def createVH(self, chem, 
+                 coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
+                 init_conc, Kw, D, bdyCond) :
+        """ Create viable epidermis """        
+        veh = vehicle.Vehicle(xlen, ylen, self.dz_dtheta,
+                              n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
+        veh.createMesh(chem, coord_x_start, coord_y_start)
+        return veh
+        
     def createSC(self, chem, 
                  coord_x_start, coord_y_start, n_layer_x, n_layer_y, offset_y,
                  bdyCond) :
@@ -133,10 +155,10 @@ class Skin_Setup(skin.Skin):
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
                  bdyCond) :
         """ Create viable epidermis """        
-        viable_epidermis = viaepd.ViaEpd(xlen, ylen, self.dz_dtheta, 
+        via_epidermis = viaepd.ViaEpd(xlen, ylen, self.dz_dtheta, 
                                          n_grids_x, n_grids_y, self.coord_sys, bdyCond)
-        viable_epidermis.createMesh(chem, coord_x_start, coord_y_start)
-        return viable_epidermis
+        via_epidermis.createMesh(chem, coord_x_start, coord_y_start)
+        return via_epidermis
     
     def createDE(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
@@ -146,5 +168,14 @@ class Skin_Setup(skin.Skin):
                              n_grids_x, n_grids_y, self.coord_sys, bdyCond, self.b_has_blood)
         derm.createMesh(chem, coord_x_start, coord_y_start)
         return derm
+        
+    def createHF(self, chem, 
+                 coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
+                 bdyCond) :
+        """ Create viable epidermis """        
+        hf = hairfoll.HairFoll(xlen, ylen, self.dz_dtheta, 
+                               n_grids_x, n_grids_y, self.coord_sys, bdyCond)
+        hf.createMesh(chem, coord_x_start, coord_y_start)
+        return hf
         
     ### (END OF) Create individual compartments ###

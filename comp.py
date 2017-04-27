@@ -21,7 +21,7 @@ class Comp:
     dermis, blood, hair follicle, sebum layer on top of skin, vehicle etc.
     will be derived as daughter classes."""
 
-    def __init__(self):
+    def __init__(self, T=305):
         """ A generic method to create the instance """
         self.coord_sys = None        
         self.x_length = 0  # compartment size in the x (verticle, starting from top) and y (lateral, starting from left) directions
@@ -35,6 +35,8 @@ class Comp:
         ### partition and diffusion coefficients ###
         self.Kw = 0
         self.D = 0
+        
+        self.T = T # default is 305 (32 deg C), temperature in Kelvin
         
         ### compartment boundary parameters ###
         
@@ -127,6 +129,12 @@ class Comp:
         self.Kw = Kw
     def set_D(self, D):
         self.D = D
+    
+    def compDiff_stokes(self, eta, r_s) :
+        """ Compute the diffusivity in solution using the Stokes-Einstein equation """
+        K = 1.3806488 * 1E-23 # Boltzmann constant, Kg m^2 s^{-2}
+        D = K*self.T/6/np.pi/eta/r_s
+        return D
         
     ### (START OF) Class methods dealing with boundaries ###
     

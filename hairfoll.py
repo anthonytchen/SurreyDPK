@@ -11,17 +11,14 @@ import comp
 importlib.reload(comp)
 
 
-class ViaEpd(comp.Comp):
-    """Class definition for ViaEpd
-    which is the viable epidermis, currently modelled as a homogenised media
+class HairFoll(comp.Comp):
+    """Class definition for HairFoll
+    which is the hair follicle, currently modelled as a homogenised sebum media
     """
     
     def __init__(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond):
         comp.Comp.__init__(self)
         comp.Comp.setup(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)
-        #print('good')
-        
-        #self.b_homo_media = True # whether the compartment should be treated as homogeneous media
         
         
     def createMesh(self, chem, coord_x_start, coord_y_start) :
@@ -31,29 +28,20 @@ class ViaEpd(comp.Comp):
         """
         init_conc = .0
         self.compParDiff(chem)
-        comp.Comp.createMeshHomo(self, 'VE', chem, init_conc, coord_x_start, coord_y_start)
-        #self.meshes[0].setConc(1)
-
+        comp.Comp.createMeshHomo(self, 'HF', chem, init_conc, coord_x_start, coord_y_start)
+        
         
     def compParDiff(self, chem) :
         """ Compute the partition coefficient with respect to water
         and the diffusion coefficient
         """
-        rou_lipid = 0.9
-        rou_water = 1
-        K_lip = rou_lipid / rou_water * chem.get_K_ow()**0.69 # Partition in SC lipid
-  
-        binding_factor = 0.65 + 0.325/chem.get_frac_unbound() + 0.025*chem.get_frac_non_ion()*K_lip
-        Kw = 0.6 * binding_factor
-
+        # todo: include Senpei's QSPR model
+        Kw = 5.62
         comp.Comp.set_Kw(self, Kw)
         
-        # c.f. L. Chen's Phar. Res. paper; -8.15 used because of unit (m2/s)
-        #   Kasting's original paper used -4.15 because of unit (cm2/s)
-        D_free = 10 ** ( -8.15-0.655*np.log10(chem.get_mw()) )
-        D = D_free / binding_factor
+        D = 1.12e-11
         comp.Comp.set_D(self, D)
-        #print('self.D = ', self.D)        
+        
         return (Kw, D)
 
     def compODEdydt(self, t, y, args=None):
@@ -62,4 +50,4 @@ class ViaEpd(comp.Comp):
         return comp.Comp.compODEdydt_diffu (self, t, y, args)
         
     def saveCoord(self, fn_x, fn_y) :
-        comp.Comp.saveCoord(self, fn_x, fn_y, '.ve')
+        comp.Comp.saveCoord(self, fn_x, fn_y, '.hf')

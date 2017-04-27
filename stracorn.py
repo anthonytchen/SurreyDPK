@@ -19,19 +19,19 @@ class StraCorn(comp.Comp):
     which is the stratum corneum, currently modelled as a heterogeneous media
     """
     
-    def __init__(self, dz_dtheta, n_layer_x, n_layer_y, offset_y, coord_sys, bdy_cond) :
+    def __init__(self, dz_dtheta, n_layer_x, n_layer_y, offset_y, 
+                 n_meshes_x_lp, n_meshes_y_lp, coord_sys, bdy_cond) :
         
         comp.Comp.__init__(self)
           
         # dimension related; c.f. Readme.docx for more details
         self.w = 8.0 # offset ratio, 8.0
-        self.nx_grids_lipid = 1 # Number of x-grids for lipid layer, 2
-        self.nx_grids_cc = 1    # Number of x-grids for corneocyte layer, 4
-        self.ny_grids_lipid = 1 # Number of y-grids for lipid layer, 2
-        self.ny_grids_cc_dn = 1 # Number of y-grids for dn-part of the offset corneocyte layer, 2
+        self.nx_grids_lipid = n_meshes_x_lp # Number of x-grids for lipid layer, 2
+        self.nx_grids_cc = n_meshes_x_lp*2    # Number of x-grids for corneocyte layer, 4
+        self.ny_grids_lipid = n_meshes_y_lp # Number of y-grids for lipid layer, 2
+        self.ny_grids_cc_dn = n_meshes_y_lp # Number of y-grids for dn-part of the offset corneocyte layer, 2
         
-        self.T = 309 # temperature (Kelvin)
-        self.eta = 7.1E-4 # water viscosity at above temperature (Pa s),  
+        self.eta = 7.644E-4 # water viscosity at 305 K (32 deg C) (Pa s),  
         
         self.geom_g = 0.075e-6  
         self.geom_d = 40e-6   
@@ -139,7 +139,7 @@ class StraCorn(comp.Comp):
                     name = 'CC'
                 #   and then create meshes
                 Kw, D = self.compParDiff(name, chem, water_frac, water_frac_sat, 
-                        self.V_mortar, self.V_brick, self.V_all, self.T, self.eta)                    
+                        self.V_mortar, self.V_brick, self.V_all, self.eta)                    
                 self.meshes[idx].setup(name, chem, init_conc, Kw, D,
                         current_point.x_coord, current_point.y_coord, current_point.dx, current_point.dy, 
                         self.dz_dtheta)
@@ -300,7 +300,7 @@ class StraCorn(comp.Comp):
 
         
     def compParDiff(self, name, chem, mass_frac_water, mass_frac_water_sat, 
-                    V_mortar, V_brick, V_all, T, eta) :
+                    V_mortar, V_brick, V_all, eta) :
         """ Compute the partition coefficient with respect to water
         and the diffusion coefficient
         """
@@ -321,7 +321,7 @@ class StraCorn(comp.Comp):
 
         K = 1.3806488 * 1E-23 # Boltzmann constant, Kg m^2 s^{-2}
         r_f = 3.5e-9 # keratin microfibril radius, 3.5 nm
-        Dw = K*T/6/np.pi/eta/chem.r_s # diffusivity in water, Stoke-Eistein equation
+        Dw = comp.Comp.compDiff_stokes(self, eta, chem.r_s)
         
         if name == 'LP' :
             # m_Kw = pow(m_K_ow, 0.7) # this is the old model

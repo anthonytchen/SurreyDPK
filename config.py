@@ -20,6 +20,7 @@ class Config:
         self.y_len_ve = 40e-6
         self.n_grids_y_ve = 2
         self.y_len_de = self.y_len_ve
+        self.y_len_vehicle = self.y_len_ve
         self.n_grids_y_de = 2
 		
         with open(fn_config, 'r') as f:
@@ -42,7 +43,7 @@ class Config:
         elif tokens[0] == 'COMPARTMENT_SETUP': 
             self.sComps = tokens[1]
 
-        # parameters relating to chemical(s)
+        ### parameters relating to chemical(s)
         elif tokens[0] == 'CHEM_NO' : # number of compounds
             self.nChem = int(tokens[1])
         elif tokens[0] == 'CHEM_MW' : # molecular weight
@@ -57,12 +58,29 @@ class Config:
             self.frac_unbound = float(tokens[1])
         elif tokens[0] == 'CHEM_ACIDBASE' :
             self.acid_base = tokens[1]
-        elif tokens[0] == 'CHEM_PAR_VEH' : # partition coefficient in vehicle
-            self.partition_vehicle = float(tokens[1])
-        elif tokens[0] == 'CHEM_DIF_VEH' : # diffution coefficiente in vehicle
-            self.diffu_vehicle = float(tokens[1])
-      
-        # parameters relating to the compartments
+
+        ### vehicle specific parameters
+        elif tokens[0] == 'INFINITE_VH' : # 
+            self.bInfSrc = bool(tokens[1])
+        elif tokens[0] == 'AREA_VH' :
+            self.area_vehicle = float(tokens[1])
+        
+        ### Inital conditions
+        elif tokens[0] == 'INIT_CONC_VH' : # vehicle
+            self.init_conc_vh = float(tokens[1])
+        elif tokens[0] == 'INIT_CONC_SC' : # stratum corneum
+            self.init_conc_sc = float(tokens[1])
+        elif tokens[0] == 'INIT_CONC_VE' : # viable epidermis
+            self.init_conc_ve = float(tokens[1])
+        elif tokens[0] == 'INIT_CONC_DE' : # dermis
+            self.init_conc_de = float(tokens[1])
+        elif tokens[0] == 'INIT_CONC_HF' : # hair follicle
+            self.init_conc_hf = float(tokens[1])
+        elif tokens[0] == 'INIT_CONC_BD' : # blood
+            self.init_conc_bd = float(tokens[1])
+            
+            
+        # partition and diffusion coefficients
         elif tokens[0] == 'VEH_INIT_CONC' : # initial concentration in vehicle
             self.conc_vehicle = float(tokens[1])
         elif tokens[0] == 'VEH_DX' : 
@@ -71,6 +89,10 @@ class Config:
             self.area_vehicle = float(tokens[1])
         elif tokens[0] == 'VEH_INFINITE' :
             self.bInfSrc = bool(tokens[1])
+        elif tokens[0] == 'N_GRIDS_X_VH' :
+            self.n_grids_x_vh = int(tokens[1])
+        elif tokens[0] == 'N_GRIDS_Y_VH' :
+            self.n_grids_y_vh = int(tokens[1])
         
         elif tokens[0] == 'SKIN_N_LAYER_X_SC' :
             self.n_layer_x_sc = int(tokens[1])
@@ -109,4 +131,8 @@ class Config:
         # name not found
         else :
             warnings.warn('Unrecognised line in config file')
-        
+            
+    def assignComps(self):
+        #tokens = list( filter(None, self.comp_structure.split(',')) )
+        #nrow = len(tokens)
+        #ncol = len(tokens[0])
