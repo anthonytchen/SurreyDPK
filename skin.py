@@ -8,7 +8,7 @@ import numpy as np
 import importlib
 #import scipy as sp
 from scipy.integrate import ode
-import chemical
+#import chemical
 import comp
 importlib.reload(comp)
 
@@ -84,8 +84,6 @@ class Skin:
                     f[idx:idx+current_dim] = tmp_f
                     #print('f\n', f)
 
-                    #if (m_bInfSrc)                              // infinite source, concentration doesn't change, but above dydt calculation is still needed
-                    #memset(f+idx, 0, sizeof(double)*((Vehicle *)pComp)->m_dim);  //  since calling compODE_dydt will calculate the flux across boundaries properly
                     self.passBdyMassOut(current_comp, idx_compBdyRight, idx_compBdyDown)
                     idx += current_dim
                 # for j
@@ -224,3 +222,95 @@ class Skin:
             #print(compThis.massOut_down, self.comps[idx_bdyDown].massIn_up)
             
     ### (END OF) Class methods dealing with boundaries ###
+    
+    ### (START OF) Class methods for post processing / computation ###
+    
+    def compFlux(self, idx_compThis, direction):
+        """Compute flux, i.e mass transfer rate per unit surface area,
+        from this compartment (indexed by idx_compThis) to a neighbour (or boundary)
+        Args:
+            idx_compThis: [i, j], a list indicating this compartment
+            direction: 0 - up, 1 - left, 2 - right, 3 - down
+        Returns:
+            flux, area
+        """
+        i = idx_compThis[0]
+        j = idx_compThis[1]
+        idx_comp = i*self.nyComp+j
+        compThis = self.comps[idx_comp]
+
+        b_cross_bdy = False
+        
+        if direction == 0: # up
+            if i == 0 : # already at top
+                b_cross_bdy = True
+            else :
+                idx_other = (i-1)*self.nyComp+j
+                
+        elif direction == 1: # left
+            if j == 0: # already left-most
+                b_cross_bdy = True
+            else : 
+                idx_other = idx_comp-1
+                
+        elif direction == 2: # right
+            if j == self.nyComp-1: # already right-most
+                b_cross_bdy = True
+            else : 
+                idx_other = idx_comp+1
+                
+        elif direction == 3: # down
+            if i == self.nxComp-1: # already at bottom
+                b_cross_bdy = True
+            else : 
+                idx_other = (i+1)*self.nyComp+j
+        else :
+            raise ValueError('Invalid direction')
+            
+        if b_cross_bdy :
+            return compThis.compFluxBdy(direction)
+        else :
+            compOther = self.comps[idx_other]
+            flux, area = self.compFlux_btw_comps(compThis, compOther, direction)
+            return [flux, area]
+            
+            
+    def compFlux_btw_comps(self, compThis, compOther, direction):
+        """Computer the flux from compThis to compOther
+        """
+        compThis.setBdyMassInOutZero()
+        
+        if direction == 3: # down is compOther
+            concOther = compOther.getMeshConc()
+            concBdy = concOther[0:compOther.get_ny()]
+            compThis.setBdyConc(None, concBdy)
+
+            idx = (compThis.get_nx()-1)*compThis.get_ny()
+            mass_tf_rate = 0
+            for j in range(compThis.get_ny()):
+                mass_tf_rate += \
+                compThis.compMassIrregMeshDown( compThis.meshes[idx+j], compThis.meshes[idx+j].getConc() )
+                #print('mass_tf_rate = {:.6e}', mass_tf_rate)
+                                
+            area = compThis.compTotalArea(direction)
+            flux = mass_tf_rate / area
+            return [flux, area]
+
+        else :
+            raise ValueError('TODO: direction value not implemented yet')
+            
+    def compMass_comps(self) :
+        """Compute the total mass in compartments
+        The computed mass is stored both in self.comps[].mass and as return from this function
+        """
+        mass = np.zeros(self.nxComp*self.nyComp)
+        for i in range(self.nxComp) :
+            for j in range(self.nyComp) :
+                idx_comp = i*self.nyComp+j
+                current_comp = self.comps[idx_comp]
+                mass[idx_comp] = current_comp.compTotalMass()
+
+        return mass
+        
+        
+    ### (START OF) Class methods for post processing / computation ###

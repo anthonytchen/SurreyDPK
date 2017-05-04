@@ -37,6 +37,7 @@ class Comp:
         self.D = 0
         
         self.T = T # default is 305 (32 deg C), temperature in Kelvin
+        self.mass = 0 # total mass in this compartment
         
         ### compartment boundary parameters ###
         
@@ -196,6 +197,36 @@ class Comp:
     def setMassIn_up(self, massIn_up):
         self.massIn_up = np.copy(massIn_up)
     
+    def compFluxBdy(self, direction):
+        """Compute flux to boundary
+        Args:            
+            direction: 0 - up, 1 - left, 2 - right, 3 - down
+        Returns:
+            flux, area
+        """
+        assert(direction==3) #only down direction is implemented so far
+        
+        if self.bdyCond[direction] == 'ZeroFlux':
+            mass_tf_rate = 0
+        elif self.bdyCond[direction] == 'ZeroConc':
+            idx = (self.get_nx()-1) * self.get_ny()
+            mass_tf_rate = 0
+
+            for j in range(self.get_ny()) : # y direction left to right
+                meshThis = self.meshes[idx+j]
+                conc_this = meshThis.getConc()
+                f = meshThis.compFlux_diffu(self.meshSink, conc_this, 0, \
+                                            meshThis.get_dx()/2, 0)
+                area_j = meshThis.compInterArea(direction)
+                mass_tf_rate += f*area_j
+	
+        else:
+            raise ValueError('Invalid boundary condition')
+            
+        area = self.compTotalArea(direction)
+        flux = mass_tf_rate / area
+        return [flux, area]
+        
     ### (END OF) Class methods dealing with boundaries ###
     
     
@@ -205,7 +236,8 @@ class Comp:
         """Compute self's total area to a certain direction
         direction: [0] = up; [1] = left; [2] = right; [3] = down 
         """
-        if self.coord_sys == 'Catersian' :
+        #print(self.coord_sys)
+        if self.coord_sys == 'Cartesian' :
             if direction==0 or direction==3 :
                 area = self.y_length * self.dz_dtheta
             elif direction==1 or direction==2 :
@@ -271,7 +303,7 @@ class Comp:
                     coord_y = coord_y_start
                 else : # not the last element in the lateral direction, thus move to the right
                     coord_y += dy
-                current_point.setPoint(coord_x, coord_y, dx, dy, 'VE', 'VE')
+                current_point.setPoint(coord_x, coord_y, dx, dy, name, name)
             # for j
         # for i
         
@@ -283,7 +315,11 @@ class Comp:
         """
         bDone = False
         massIntoThis = 0
-
+        
+        # keep a record that needs to be passed back to meshThis
+        meshThis_x_coord = meshThis.get_x_coord()
+        meshThis_dx = meshThis.get_dx()
+        
         z_length = meshThis.compInterArea(2) / meshThis.get_dx() # interfacial z_length
 
         for i in range(self.n_meshBdyRight) :
@@ -327,7 +363,11 @@ class Comp:
                 else:
                     meshThis.set_x_coord(nextX)
                     meshThis.set_dx(x2_this - x1_this - x_length)
-                    
+        
+        # Pass saved record back to meshThis
+        meshThis.set_x_coord(meshThis_x_coord)
+        meshThis.set_dx(meshThis_dx)
+            
         return massIntoThis
 
 
@@ -336,9 +376,12 @@ class Comp:
         whose meshing does not match exactly to meshThis, e.g. 
         meshThis may interface with multiple meshess with self.meshBdyDown
         """
-        bDone = False
- 
+        bDone = False 
         massIntoThis = 0
+        
+        # keep a record that needs to be passed back to meshThis
+        meshThis_y_coord = meshThis.get_y_coord()
+        meshThis_dy = meshThis.get_dy()
 
         for i in range(self.n_meshBdyDown) :
 
@@ -382,6 +425,10 @@ class Comp:
                     meshThis.set_y_coord(nextY)
                     meshThis.set_dy(y2_this - y1_this - y_length)
 
+        # Pass saved record back to meshThis
+        meshThis.set_y_coord(meshThis_y_coord)
+        meshThis.set_dy(meshThis_dy)
+        
         return massIntoThis;
 
     ### (END OF) Class methods dealing with meshes ###
@@ -549,7 +596,7 @@ class Comp:
             print("\n");
 
 
-    def getTotalMass(self) :
+    def compTotalMass(self) :
         """ """
         mass = .0
         for i in range(self.nx) : # verticle direction up to down
@@ -557,8 +604,10 @@ class Comp:
                 idx = i*self.ny + j
                 volume = self.meshes[idx].compVolume()
                 mass += self.meshes[idx].getConc() * volume
-
-        return amount
+                #print('i=', i, 'j=',j, 'volume=', volume, 'conc=', self.meshes[idx].getConc())
+        self.mass = mass
+        
+        return mass
 
         
     def getMeshConc(self) :

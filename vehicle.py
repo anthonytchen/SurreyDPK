@@ -17,11 +17,12 @@ class Vehicle(comp.Comp):
     """
     
     def __init__(self, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D,
-                 coord_sys, bdy_cond):
+                 coord_sys, bdy_cond, b_inf_source=False):
         comp.Comp.__init__(self)
         comp.Comp.setup(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)
         
-        self.eta = 7.644E-4 # water viscosity at 305 K (32 deg C) (Pa s),
+        self.eta = 7.644E-4 # water viscosity at 305 K (32 deg C) (Pa s)
+        self.b_inf_source = b_inf_source
         
         self.init_conc = init_conc
         comp.Comp.set_Kw(self, Kw)
@@ -57,7 +58,17 @@ class Vehicle(comp.Comp):
     def compODEdydt(self, t, y, args=None):
         """ The wrapper function for computing the right hand side of ODEs
         """
-        return comp.Comp.compODEdydt_diffu (self, t, y, args)
+        dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
+        
+        # If infinite source, concentration doesn't change, but above dydt calculation 
+        #   is still needed since calling compODEdydt_diffu will calculate the 
+        #   flux across boundaries properly
+        #print(self.b_inf_source)
+        #exit
+        if self.b_inf_source :
+            dydt.fill(0)            
+            
+        return dydt
         
     def saveCoord(self, fn_x, fn_y) :
         comp.Comp.saveCoord(self, fn_x, fn_y, '.vh')

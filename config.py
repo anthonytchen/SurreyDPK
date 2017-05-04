@@ -113,7 +113,9 @@ class Config:
 
         ### vehicle specific parameters
         elif tokens[0] == 'INFINITE_VH' : # 
-            self.b_infinite_vehicle = bool(tokens[1])
+            self.b_infinite_vehicle = bool(int(tokens[1]))
+            #print(tokens[1])
+            #print(self.b_infinite_vehicle)
         elif tokens[0] == 'AREA_VH' :
             self.area_vehicle = float(tokens[1])
         

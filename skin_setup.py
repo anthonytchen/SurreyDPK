@@ -85,7 +85,7 @@ class Skin_Setup(skin.Skin):
                 if conf.comps_geom[idx].name == 'V':
                     comp = self.createVH(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, 
                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_vh,
-                                         conf.Kw_vh, conf.D_vh, bdy_cond) 
+                                         conf.Kw_vh, conf.D_vh, bdy_cond, conf.b_infinite_vehicle) 
                 elif conf.comps_geom[idx].name == 'S':
                     comp = self.createSC(chem, current_x, current_y, conf.comps_geom[idx].n_layer_x_sc, conf.comps_geom[idx].n_layer_y_sc, \
                                          conf.comps_geom[idx].n_mesh_x_sc_lp, conf.comps_geom[idx].n_mesh_y_sc_lp, conf.init_conc_sc, \
@@ -145,10 +145,11 @@ class Skin_Setup(skin.Skin):
     
     def createVH(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
-                 init_conc, Kw, D, bdyCond) :
+                 init_conc, Kw, D, bdyCond, b_inf_source=False) :
         """ Create viable epidermis """        
-        veh = vehicle.Vehicle(xlen, ylen, self.dz_dtheta,
-                              n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
+        veh = vehicle.Vehicle(xlen, ylen, self.dz_dtheta, \
+                              n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, \
+                              bdyCond, b_inf_source)
         veh.createMesh(chem, coord_x_start, coord_y_start)
         return veh
         
