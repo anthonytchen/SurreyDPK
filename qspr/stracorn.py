@@ -81,12 +81,12 @@ def compK_from_cc_lp(paras, Kow, K_cc_lp):
         K_cc_lp contains [Kcc, Klp]
     '''
 
-    Kcc = K_cc_lp[0]
-    Klp = K_cc_lp[1]
+    Kcc = K_cc_lp[:,0]
+    Klp = K_cc_lp[:,1]
     
     phi_pro, phi_lip, phi_wat = compVolFrac()
     
-    K = phi_pro*rho_pro/rho_wat*Kcc + phi_lip*rho_lip/rho_wat*Klp + phi_wat
+    K = phi_pro*Kcc + phi_lip*Klp + phi_wat
     return K
     
 

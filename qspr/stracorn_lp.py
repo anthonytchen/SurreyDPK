@@ -31,7 +31,11 @@ def compP(paras, Kow):
 def compK(paras, Kow):
     ''' Function to compute the VOLUMETRIC partition coefficient between lipid and water
     '''
-    K = rho_lip/rho_wat * compP(paras, Kow)
+    if len( Kow.shape ) > 1:
+        Kow1 = Kow.flatten()
+    else:
+        Kow1 = Kow
+    K = rho_lip/rho_wat * compP(paras, Kow1)
     return K
         
         

@@ -24,8 +24,11 @@ def compK(paras, Kow):
     '''
 
     a = np.exp(paras[0])
-    b = np.exp(paras[1])    
-
-    K = rho_pro/rho_wat * a * (K_ow**b)
+    b = np.exp(paras[1])
+    if len( Kow.shape ) > 1:
+        Kow1 = Kow.flatten()
+    else:
+        Kow1 = Kow
+    K = rho_pro/rho_wat * a * (Kow1**b)
     return K
     
