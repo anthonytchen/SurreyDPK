@@ -13,8 +13,6 @@ from scipy.optimize import minimize, basinhopping, brute
 # global variable
 Nfeval = 1
 
-# Example:
-
 
 ###########################################################
 def PluginMain(func_top, func_low, Xy, Y, Xz, Z, theta0, sig2_y0, sig2_z0, Niter=10, bnds=None):
@@ -35,7 +33,7 @@ def PluginMain(func_top, func_low, Xy, Y, Xz, Z, theta0, sig2_y0, sig2_z0, Niter
     
     for i in range(Niter):
         feval = Plugin_theta_obj(theta, func_top, func_low, Xy, Y, Xz, Z, sig2_y, sig2_z)
-        print 'Plugin Iter {0:4d}, f = {1:.6f}'.format(i, float(feval[0]))
+        print('Plugin Iter {0:4d}, f = {1:.6f}'.format(i, float(feval[0])))
 
         if bnds == None:
             res = minimize(Plugin_theta_obj, theta, args=(func_top, func_low, Xy, Y, Xz, Z, sig2_y, sig2_z), 
@@ -158,7 +156,7 @@ def EMmain(func_top, func_low, Xy, Y, Xz, Z, theta0, sig2_y0, sig2_z0, Nmc=10, N
     for i in range(Niter):
         Zsamples = Estep(func_top, func_low, theta, Xy, Y, sig2_y, sig2_z, Nmc)
         feval = Mstep_theta_obj(theta, func_top, func_low, Xy, Y, Zsamples, Xz, Z, sig2_y, sig2_z)
-        print 'EM Iter {0:4d}, f = {1:.6f}'.format(i, float(feval[0]))
+        print( 'EM Iter {0:4d}, f = {1:.6f}'.format(i, float(feval[0])) )
         
         Mrlt = Mstep_main(func_top, func_low, theta, Xy, Y, Zsamples, Xz, Z, sig2_y, sig2_z, bnds)
         np.copyto(theta, Mrlt[0])
@@ -249,13 +247,12 @@ def callbackF(Xi):
     ''' callback function to display information for the optimiser
     '''
     global Nfeval
-    print '\t Iter {0:4d}:  Para values: {1:}'.format(Nfeval, Xi)
+    print( '\t Iter {0:4d}:  Para values: {1:}'.format(Nfeval, Xi) )
     Nfeval += 1
 
 def Mstep_theta_obj_wrapper(theta, *args):
     ''' The wrapper to pass variable arguments to Mstep_theta_obj
     '''
-
     return Mstep_theta_obj(theta, *args)
     #return Mstep_theta_obj(theta, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8])
 
@@ -545,7 +542,7 @@ def testFunc_top_plugin(theta, X, func_low):
     Y =  Ksc_pred
 
     if Y<0:
-        print 'Y is {0:}'.format(Y)
+        print( 'Y is {0:}'.format(Y) )
 
     return np.log10(Y)
 
