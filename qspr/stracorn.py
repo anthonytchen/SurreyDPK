@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 from constants import rho_pro, rho_lip, rho_wat
 
-def compVolFrac(ref_source='Longjian'):
+def compVolFrac(ref_source='Liming'):
     ''' Compute the volume fractions of protein, lipid and water in SC
     There are conflicting literature data and that's why this function is here
     '''

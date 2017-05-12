@@ -53,6 +53,10 @@ class Config:
         
         self.updateGeometry()
         
+        # parameters used in QSPRs to calculate Kw and D
+        self.Kw_sc_paras = np.array([-1]*3)
+        self.D_sc_paras = np.array([-1]*4)
+        
     def readTokens(self, tokens):
         
         #print(tokens)

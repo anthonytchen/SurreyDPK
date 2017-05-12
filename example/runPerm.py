@@ -27,6 +27,7 @@ def compPerm(fn_conf) :
     """
     # Read the .cfg, i.e. configuration, file to set up simulation
     _conf = config.Config(fn_conf)
+    _conf.D_sc_paras[:2] = np.array([9.47, 9.32e-8])
 
     # Setup the chemical
     _chem = chemical.Chemical(_conf)

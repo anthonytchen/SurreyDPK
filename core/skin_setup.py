@@ -89,7 +89,7 @@ class Skin_Setup(skin.Skin):
                 elif conf.comps_geom[idx].name == 'S':
                     comp = self.createSC(chem, current_x, current_y, conf.comps_geom[idx].n_layer_x_sc, conf.comps_geom[idx].n_layer_y_sc, \
                                          conf.comps_geom[idx].n_mesh_x_sc_lp, conf.comps_geom[idx].n_mesh_y_sc_lp, conf.init_conc_sc, \
-                                         conf.Kw_sc, conf.D_sc, bdy_cond)                    
+                                         conf.Kw_sc, conf.D_sc, conf.Kw_sc_paras, conf.D_sc_paras, bdy_cond)                    
                 elif conf.comps_geom[idx].name == 'E':
                     comp = self.createVE(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_ve, \
@@ -155,11 +155,12 @@ class Skin_Setup(skin.Skin):
         
     def createSC(self, chem, 
                  coord_x_start, coord_y_start, n_layer_x, n_layer_y, n_mesh_x_lp, n_mesh_y_lp, 
-                 init_conc, Kw, D, bdyCond) :
+                 init_conc, Kw, D, Kw_paras, D_paras, bdyCond) :
         """ Create stratum corneum """
         offset_y = 0                
         sc = stracorn.StraCorn(n_layer_x, n_layer_y, self.dz_dtheta, offset_y, \
                                n_mesh_x_lp, n_mesh_y_lp, init_conc, Kw, D, self.coord_sys, bdyCond)
+        sc.setParDiff_paras(Kw_paras, D_paras)
         sc.createMesh(chem, coord_x_start, coord_y_start)
         return sc
         

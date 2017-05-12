@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 # 1. add qspr for Dcc
 # 2. propagate the uncertainty in those parameters to prediction of permeability
 
+raise NotImplementedError('This module is dated; do not use')
+
 ###########################################################
 def qspr(func_post, func_pred, fn_data, paras0, Xtest=False):
     ''' Function to build a QSPR model and to calculate parameter uncertainty
@@ -39,8 +41,8 @@ def qspr(func_post, func_pred, fn_data, paras0, Xtest=False):
     paras1 = res.x
     sig2 = func_post(paras1, X, Y, retSig2=True)
 
-    print "  Estimated model parameters are " + str(np.exp(paras1))
-    print "  Estimated standard deviation is " + str(np.sqrt(sig2))
+    #print "  Estimated model parameters are " + str(np.exp(paras1))
+    #print "  Estimated standard deviation is " + str(np.sqrt(sig2))
 
     H = calcHess(func_post, paras1, X, Y, sig2)
     norm_approx_mean = paras1

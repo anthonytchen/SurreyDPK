@@ -20,7 +20,7 @@ from constants import rho_pro, rho_wat
 
 def compK(paras, Kow):
     ''' Function to predict the volumetric partition coefficient between corneocyte and water
-    K = a * Kow^b
+    P = a * Kow^b
     '''
 
     a = np.exp(paras[0])

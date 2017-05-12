@@ -37,6 +37,10 @@ class Comp:
         self.Kw = 0
         self.D = 0
         
+        ### Parameters used in the QSPR models for calculating Kw & D
+        self.Kw_paras = None
+        self.D_paras = None
+        
         self.T = T # default is 305 (32 deg C), temperature in Kelvin
         self.mass = 0 # total mass in this compartment
         

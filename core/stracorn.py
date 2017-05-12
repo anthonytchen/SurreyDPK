@@ -60,7 +60,8 @@ class StraCorn(comp.Comp):
 
         self.offset_y =  offset_y
         
-        
+        self.Kw_paras = np.array([-1]*3)
+        self.D_paras = np.array([-1]*4)
     
     def createMesh(self, chem, coord_x_start, coord_y_start, water_frac_surface=.55) :
         """ Create mesh for this compartment
@@ -68,9 +69,6 @@ class StraCorn(comp.Comp):
                 coord_x_start, coord_y_start: starting coordinates
                 water_frac_surface : water content (w/w); saturation at .55; dry skin at .25
         """
-        #init_conc = .0
-        #self.compParDiff(chem)
-        #comp.Comp.createMeshHomo(self, 'VE', chem, init_conc, coord_x_start, coord_y_start)
                
         # some initial settings
         bOffset = False
@@ -298,6 +296,19 @@ class StraCorn(comp.Comp):
         # for i
 
 
+    def setParDiff_paras(self, Kw_paras, D_paras):
+        """ Set the parameters used in the QSPR models for calculating partition coefficient (Kw) and diffusion coefficient (D)
+        Args: Kw_paras -- [a, b, c] 
+                where for (1) corneocyte, volumetric partition coefficient is K = (rho_pro/rho_wat) * a * Kow^b,
+                          (2) lipid, volumetric partition coefficient is K = (rho_lip/rho_wat) * Kow^c, 
+                          Here rho_pro, rho_wat and rho_lip are the density of protein (coneocyte), water and lipid respectively.
+              D_paras -- [alpha, beta, a, b] 
+                where for (1) corneocyte, diffusivity depends on  given by the corresponding reference
+                          (2) lipid, diffusivity is a * exp(-b*r_s_inA*r_s_inA), here r_s_inA is the radius of the solute in A
+        """
+        self.Kw_paras = paras
+        self.D_paras = paras
+        
         
     def compParDiff(self, name, chem, mass_frac_water, mass_frac_water_sat, 
                     V_mortar, V_brick, V_all, eta) :
@@ -342,8 +353,8 @@ class StraCorn(comp.Comp):
             Kw = (1-phi_b) * K_kw + theta_b
 
             # empirically fitted parameters
-            alpha = 9.47
-            beta = 9.32 * 1E-8
+            alpha = self.D_paras[0] if self.D_paras[0]>0 else 9.47
+            beta = self.D_paras[1] if self.D_paras[1]>0 else 9.32 * 1E-8            
             lambdaa = 1.09
             gamma = -1.17
             
