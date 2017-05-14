@@ -306,8 +306,8 @@ class StraCorn(comp.Comp):
                 where for (1) corneocyte, diffusivity depends on  given by the corresponding reference
                           (2) lipid, diffusivity is a * exp(-b*r_s_inA*r_s_inA), here r_s_inA is the radius of the solute in A
         """
-        self.Kw_paras = paras
-        self.D_paras = paras
+        self.Kw_paras = Kw_paras
+        self.D_paras = D_paras
         
         
     def compParDiff(self, name, chem, mass_frac_water, mass_frac_water_sat, 
@@ -353,8 +353,15 @@ class StraCorn(comp.Comp):
             Kw = (1-phi_b) * K_kw + theta_b
 
             # empirically fitted parameters
-            alpha = self.D_paras[0] if self.D_paras[0]>0 else 9.47
-            beta = self.D_paras[1] if self.D_paras[1]>0 else 9.32 * 1E-8            
+            #print(self.D_paras)
+            if self.D_paras[0]>0 :
+                alpha = self.D_paras[0]  
+            else: 
+                alpha = 9.47
+            if self.D_paras[1]>0 :
+                beta = self.D_paras[1]  
+            else:
+                beta = 9.32e-8            
             lambdaa = 1.09
             gamma = -1.17
             

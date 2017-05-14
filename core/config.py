@@ -6,10 +6,11 @@ Created on Tue Apr 18 22:01:17 2017
 '''
 
 import warnings
-import importlib
+from importlib import reload
+import numpy as np
 
 from core import stracorn
-importlib.reload(stracorn)
+reload(stracorn)
 
 class Comp_Geom:
     """ This class contains the geometric parameters of a compartment

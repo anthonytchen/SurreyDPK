@@ -29,6 +29,10 @@ class Chemical:
         return self.mw
     def get_K_ow(self):
         return self.K_ow
+    def set_mw(self, mw):
+        self.mw = mw
+    def set_K_ow(self, K_ow):
+        self.K_ow = K_ow
     def get_frac_unbound(self):
         return self.frac_unbound
     def get_frac_non_ion(self):
