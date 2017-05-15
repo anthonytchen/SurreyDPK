@@ -50,9 +50,9 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None) :
     # Simulation time (in seconds) and steps
     #t_start, t_end, Nsteps = [0, 3600*48, 101]
     t_start, t_end, Nsteps = [0, 60, 3]
-    t_range = np.linspace(t_start, t_end, Nsteps)
+    t_range = np.linspace(t_start, t_end, Nsteps)    
 
-    for i in range(Nsteps):
+    for i in range(Nsteps-1):
         flux_vh_sc = -_skin.compFlux([0,0], 3)[0]
         flux_sc_down = -_skin.compFlux([1,0], 3)[0]
         if np.fabs( (flux_vh_sc-flux_sc_down) / flux_vh_sc ) < 1e-3 :
