@@ -4,11 +4,13 @@ identification and uncertainty quantification
 
 import warnings
 import numpy as np
-import math
-import scipy.sparse as sp
-import scipy.sparse.linalg as spln
+#import math
+#import scipy.sparse as sp
+#import scipy.sparse.linalg as spln
 #import matplotlib.pyplot as plt
-from scipy.optimize import minimize, basinhopping, brute
+from scipy.optimize import minimize#, basinhopping, brute
+
+from uncertainty.unctn import calcHessVargs, lognormpdf
 
 # global variable
 Nfeval = 1
@@ -535,60 +537,3 @@ def TransUnctnKF(func, paras_mean, paras_cov, X):
     return (y_mean, y_cov)
 
 
-###########################################################
-def calcHessVargs(func_post, paras, *args):
-    ''' Function to calculate the Hessian of negative
-        log posterior w.r.t. model parameters with variable arguments
-    '''
-
-    n_paras = len(paras)
-    H = np.zeros( (n_paras, n_paras) )
-    
-    delta_paras = np.fabs(paras) * 1e-3
-    delta_paras[ delta_paras<1e-8 ] = 1e-8 # to avoid too small values
-
-    for i in range(n_paras):
-        for j in range(n_paras):
-
-            if (i>j):
-                H[i,j] = H[j,i]
-
-            else:
-                p1 = np.copy(paras)                
-                p1[i] += delta_paras[i]
-                p1[j] += delta_paras[j]
-                t1 = func_post(p1, *args)
-
-                p2 = np.copy(paras)                
-                p2[i] += delta_paras[i]
-                p2[j] -= delta_paras[j]
-                t2 = func_post(p2, *args)
-
-                p3 = np.copy(paras)                
-                p3[i] -= delta_paras[i]
-                p3[j] += delta_paras[j]
-                t3 = func_post(p3, *args)
-
-                p4 = np.copy(paras)                
-                p4[i] -= delta_paras[i]
-                p4[j] -= delta_paras[j]
-                t4 = func_post(p4, *args)
-
-                H[i,j] = (t1-t2-t3+t4) / (4*delta_paras[i]*delta_paras[j])            
-
-    return H
-
-###########################################################
-def lognormpdf(x,mu,S):
-    """ Calculate gaussian probability density of x, when x ~ N(mu,sigma) """
-
-    nx = len(S)
-    norm_coeff = nx*math.log(2*math.pi)+np.linalg.slogdet(S)[1]
-
-    err = x-mu
-    if (sp.issparse(S)):
-        numerator = spln.spsolve(S, err).T.dot(err)
-    else:
-        numerator = np.linalg.solve(S, err).T.dot(err)
-
-    return -0.5*(norm_coeff+numerator)

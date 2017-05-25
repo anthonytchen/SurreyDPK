@@ -97,6 +97,12 @@ def compD(paras, MW):
     D = np.exp(D_ln)
     return D
     
+def compD_ln(paras, MW):
+    ''' Function to calculate natural log of compD
+    Args:
+        paras: ln of [a, b]
+    '''
+    return np.log(compD(paras, MW))
     
 def compSSE_lnD(paras, data, disp=False):
     ''' Function to calculate the SSE (sum of square error) of predicted and experimental D in log10 scale
