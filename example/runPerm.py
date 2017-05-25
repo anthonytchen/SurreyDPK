@@ -9,6 +9,8 @@ from scipy.optimize import minimize, basinhopping, brute
 import matplotlib.pyplot as plt
 from importlib import reload
 
+# Using multiple processers
+N_PROCESS = 8
 
 # Import various skin 
 from core import chemical
@@ -22,7 +24,7 @@ reload(dermis)
 from core import skin_setup
 reload(skin_setup)
 
-def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None) :
+def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1) :
     """Compute steady state permeability
     Args:
         fn_conf -- the .cfg file, which gives the configuration of the simulation
@@ -48,8 +50,8 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None) :
     _skin.createComps(_chem, _conf)
 
     # Simulation time (in seconds) and steps
-    #t_start, t_end, Nsteps = [0, 3600*48, 101]
-    t_start, t_end, Nsteps = [0, 60, 3]
+    t_start, t_end, Nsteps = [0, 3600*48, 21]
+    #t_start, t_end, Nsteps = [0, 60, 3]
     t_range = np.linspace(t_start, t_end, Nsteps)    
 
     for i in range(Nsteps-1):
@@ -60,11 +62,16 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None) :
         #elif i == Nsteps-1 :
         #    raise ValueError('Simulation time too short to reach steady-state; re-run the simulation with longer time.')
         
-        print('Time = ', t_range[i], 'Flux vh_sc= ', '{:.3e}'.format(flux_vh_sc), \
-              'Flux sc_down=', '{:.3e}'.format(flux_sc_down) )
+        if disp >= 2:
+            print('Time = ', t_range[i], 'Flux vh_sc= ', '{:.3e}'.format(flux_vh_sc), \
+                  'Flux sc_down=', '{:.3e}'.format(flux_sc_down) )
     
         # Simulate
         _skin.solveMoL(t_range[i], t_range[i+1])
+        
+    if disp >= 1:
+        print('MW= ', '{:.2f}'.format(_chem.mw), 'Flux vh_sc= ', '{:.3e}'.format(flux_vh_sc), \
+                  'Flux sc_down=', '{:.3e}'.format(flux_sc_down))
         
     return flux_vh_sc / _conf.init_conc_vh
 
@@ -78,15 +85,32 @@ def compSSE_Perm(paras, fn_conf, chem_list, perm_list) :
         chem_list - a list of Chemical objects
         perm_list - a list of permeability measurements
     """
+    from multiprocessing import Pool
+    from sys import exit
+    
     n_dat = len(chem_list)
     perm_lg10 = np.zeros((n_dat, 1))
     
     D_paras = np.concatenate( (np.exp(paras), [-1, -1]) )
     
-    for i in range(n_dat):
-        perm = compPerm(fn_conf, chem=chem_list[i], sc_Kw_paras=None, sc_D_paras=D_paras)
-        perm_lg10[i] = np.log10(perm)
     
+    if N_PROCESS == 1 :
+        for i in range(n_dat):
+            perm = compPerm(fn_conf, chem=chem_list[i], sc_Kw_paras=None, sc_D_paras=D_paras)
+            perm_lg10[i] = np.log10(perm)
+    else :
+        arg_list = [None]*n_dat
+        for i in range(n_dat):
+            arg_list[i] = (fn_conf, chem_list[i], None, D_paras)
+        #print(arg_list)
+        
+        
+        with Pool(N_PROCESS) as pool:
+            perm = pool.starmap(compPerm, arg_list)
+        #print(perm)
+        #exit()
+        perm_lg10 = np.log10(perm)
+        
     err = perm_lg10 - np.array(perm_list)
     sse =  np.sum( np.square(err) )
     return sse
@@ -100,6 +124,9 @@ def calibPerm():
     Kow_lg10 = [-3.01, -1.38, -0.77, 1.61, 2.03, 3.05, 3.97, 4.57]
     Mw = [182.2, 18, 32, 362.5, 102.2, 144.2, 206.3, 158.3]
     Kp_lg10 = [-8.16, -6.32, -6.56, -7.48, -5.11, -5.16, -5.00, -4.30]
+    #Kow_lg10 = [-3.01, -1.38]
+    #Mw = [182.2, 18]
+    #Kp_lg10 = [-8.16, -6.32]
     
     n_dat = len(Kp_lg10)
     _chem_list = [chemical.Chemical(_conf) for i in range(n_dat)]
