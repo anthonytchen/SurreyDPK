@@ -42,10 +42,14 @@ class HairFoll(comp.Comp):
         if self.Kw < 0: # Negative means it requires calculation; otherwise use user-input value
             Kw = 5.62
             comp.Comp.set_Kw(self, Kw)
+        else:
+            Kw = self.Kw
         
         if self.D < 0:
             D = 1.12e-11
             comp.Comp.set_D(self, D)
+        else:
+            D = self.D
         
         return (Kw, D)
 

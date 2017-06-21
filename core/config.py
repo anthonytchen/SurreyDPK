@@ -115,7 +115,9 @@ class Config:
             self.frac_unbound = float(tokens[1])
         elif tokens[0] == 'CHEM_ACIDBASE' :
             self.acid_base = tokens[1]
-
+        elif tokens[0] == 'CHEM_DENSITY' :
+            self.rho_chem = float(tokens[1])  
+            
         ### vehicle specific parameters
         elif tokens[0] == 'INFINITE_VH' : # 
             self.b_infinite_vehicle = bool(int(tokens[1]))
@@ -123,6 +125,14 @@ class Config:
             #print(self.b_infinite_vehicle)
         elif tokens[0] == 'AREA_VH' :
             self.area_vehicle = float(tokens[1])
+        elif tokens[0] == 'EVAP_SOLVENT_VH' :
+            self.k_evap_solvent_vehicle = float(tokens[1])
+        elif tokens[0] == 'SOLVENT_DENSITY' :
+            self.rho_solvent = float(tokens[1])
+        elif tokens[0] == 'EVAP_SOLUTE_VH' :
+            self.k_evap_solute_vehicle = float(tokens[1])
+        elif tokens[0] == 'SOLUBILITY_VH' :
+            self.solubility_vehicle = float(tokens[1])          
         
         ### Inital conditions
         elif tokens[0] == 'INIT_CONC_VH' : # vehicle

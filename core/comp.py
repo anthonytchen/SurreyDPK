@@ -608,6 +608,7 @@ class Comp:
             for j in range(self.ny): # lateral direction left to right	
                 idx = i*self.ny + j
                 volume = self.meshes[idx].compVolume()
+                #print('volume = ', volume)
                 mass += self.meshes[idx].getConc() * volume
                 #print('i=', i, 'j=',j, 'volume=', volume, 'conc=', self.meshes[idx].getConc())
         self.mass = mass
@@ -704,5 +705,11 @@ class Comp:
         file_x.close()
         file_y.close()
 
-
+    def setMeshes_D(self, D):
+        """ Set all meshes' diffusivity to D """
+        for i in range(self.nx) : # verticle direction up to down
+            for j in range(self.ny): # lateral direction left to right	
+                idx = i*self.ny + j
+                self.meshes[idx].set_D(D)
+        
 ### (END OF) Class methods dealing with I/O ###

@@ -84,6 +84,8 @@ class Mesh:
         return self.Kw
     def get_D(self):
         return self.D
+    def set_D(self, D):
+        self.D = D
         
   
     ### (START OF) Class methods dealing with geometries ###

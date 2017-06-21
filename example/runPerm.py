@@ -17,6 +17,8 @@ from core import chemical
 reload(chemical)
 from core import config
 reload(config)
+from core import vehicle
+reload(vehicle)
 from core import viaepd
 reload(viaepd)
 from core import dermis
@@ -50,8 +52,9 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1) :
     _skin.createComps(_chem, _conf)
 
     # Simulation time (in seconds) and steps
-    t_start, t_end, Nsteps = [0, 3600*48, 21]
+    #t_start, t_end, Nsteps = [0, 3600*48, 101]
     #t_start, t_end, Nsteps = [0, 60, 3]
+    t_start, t_end, Nsteps = [0, 2000, 100]
     t_range = np.linspace(t_start, t_end, Nsteps)    
 
     for i in range(Nsteps-1):
@@ -65,7 +68,8 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1) :
         if disp >= 2:
             print('Time = ', t_range[i], 'Flux vh_sc= ', '{:.3e}'.format(flux_vh_sc), \
                   'Flux sc_down=', '{:.3e}'.format(flux_sc_down) )
-    
+        
+        print( 'Vehicle conc =', _skin.getComp(0,0).getMeshConc() ) 
         # Simulate
         _skin.solveMoL(t_range[i], t_range[i+1])
         
