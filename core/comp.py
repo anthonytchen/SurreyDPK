@@ -711,5 +711,12 @@ class Comp:
             for j in range(self.ny): # lateral direction left to right	
                 idx = i*self.ny + j
                 self.meshes[idx].set_D(D)
-        
+                
+    def setMeshes_Kw(self, Kw):
+        """ Set all meshes' partition to Kw """
+        for i in range(self.nx) : # verticle direction up to down
+            for j in range(self.ny): # lateral direction left to right	
+                idx = i*self.ny + j
+                self.meshes[idx].set_Kw(Kw)       
+                
 ### (END OF) Class methods dealing with I/O ###

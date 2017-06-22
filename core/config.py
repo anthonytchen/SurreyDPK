@@ -117,6 +117,8 @@ class Config:
             self.acid_base = tokens[1]
         elif tokens[0] == 'CHEM_DENSITY' :
             self.rho_chem = float(tokens[1])  
+        elif tokens[0] == 'CHEM_PHASE' :
+            self.phase_chem = tokens[1]
             
         ### vehicle specific parameters
         elif tokens[0] == 'INFINITE_VH' : # 

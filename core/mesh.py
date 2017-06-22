@@ -82,6 +82,8 @@ class Mesh:
         self.nSpecies = n
     def get_Kw(self):
         return self.Kw
+    def set_Kw(self, Kw):
+        self.Kw = Kw
     def get_D(self):
         return self.D
     def set_D(self, D):

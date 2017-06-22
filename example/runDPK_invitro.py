@@ -56,11 +56,13 @@ def compDPK(fn_conf, chem=None, disp=1) :
     for i in range(Nsteps-1):
         
         mass = _skin.compMass_comps()
+        m_v = np.array( [_skin.comps[0].getMass_OutEvap(), \
+                         _skin.comps[0].getMass_OutPhase()] )
         #total_mass = np.sum(mass)
         
         if disp >= 2:
-            np.set_printoptions(precision=3)
-            print('Time = ', t_range[i], '% mass: ', mass/total_mass )
+            np.set_printoptions(precision=5)
+            print('Time = ', t_range[i], '% mass: ', m_v/total_mass, mass/total_mass )
             
         # Create directory to save results
         newpath = './simu/' + str(t_range[i])

@@ -86,7 +86,7 @@ class Skin_Setup(skin.Skin):
                     comp = self.createVH(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, 
                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_vh,
                                          conf.Kw_vh, conf.D_vh, bdy_cond, conf.b_infinite_vehicle,
-                                         conf.rho_chem, conf.rho_solvent,
+                                         conf.rho_chem, conf.rho_solvent, conf.phase_chem,
                                          conf.k_evap_solvent_vehicle, conf.k_evap_solute_vehicle, conf.solubility_vehicle) 
                 elif conf.comps_geom[idx].name == 'S':
                     comp = self.createSC(chem, current_x, current_y, conf.comps_geom[idx].n_layer_x_sc, conf.comps_geom[idx].n_layer_y_sc, \
@@ -148,12 +148,12 @@ class Skin_Setup(skin.Skin):
     def createVH(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
                  init_conc, Kw, D, bdyCond, b_inf_source,
-                 rho_solute, rho_solvent,
+                 rho_solute, rho_solvent, phase_solute,
                  k_evap_solvent, k_evap_solute, solubility) :
         """ Create vehicle """        
         veh = vehicle.Vehicle(xlen, ylen, self.dz_dtheta, \
                               n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, \
-                              bdyCond, b_inf_source, rho_solute, rho_solvent,\
+                              bdyCond, b_inf_source, rho_solute, rho_solvent, phase_solute,\
                               k_evap_solvent, k_evap_solute, solubility)
         veh.createMesh(chem, coord_x_start, coord_y_start)
         return veh
