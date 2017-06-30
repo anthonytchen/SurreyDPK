@@ -35,7 +35,15 @@ class Vehicle(comp.Comp):
         self.rho_solvent = rho_solvent
         self.phase_solute = phase_solute
         
-        self.conc_solvent = rho_solvent
+        #self.conc_solvent = rho_solvent
+        A = self.compTotalArea(3)
+        V =  A * xlen
+        V_solute = V*init_conc/rho_solute
+        self.conc_solvent =  (V-V_solute)*rho_solvent / V
+
+        #print(V, V_solute, self.conc_solvent, init_conc)
+        #sys.exit()
+        
         self.depth_vehicle = xlen
         self.mass_out_evap = 0
         self.mass_out_phase = 0
@@ -85,82 +93,103 @@ class Vehicle(comp.Comp):
             
             # If infinite source, concentration doesn't change, but above dydt calculation 
             #   is still needed since calling compODEdydt_diffu will calculate the 
-            #   flux across boundaries properly
-            #print(self.b_inf_source)
-            #exit
+            #   flux across boundaries properly            
             if self.b_inf_source :
                 dydt.fill(0)            
 
         else :
             # Evaporation of solvent and solute
-            #   Currently a crude approximation
-            #   and only implemented for a homogeneous vehicle compartment                
-            
-            dim = self.nx*self.ny
-        
+            #   Currently a crude approximation and only implemented for a homogeneous vehicle compartment                
             assert(self.nx==1 and self.ny==1)
+                        
             # y[0] - solute conc, y[1] - solvent conc, y[2] - h,
             # y[3] - solute mass out due to evarporation
-            # y[4] - solute mass out due to over-solubility
+            dim = self.nx*self.ny
+            A = self.compTotalArea(3)            
             
-            # todo: evaporation is a function of the total liquid concentration
-            #  not just the concentration in the solution (but also in separate solute phase)
-            tmp = self.k_evap_solute/self.rho_solute*y[0] \
-                    + self.k_evap_solvent/self.rho_solvent*y[1]
+            if y[0] < 0:
+                y[0] = 0
 
-            dhdt = - tmp
-            dy0dt = ( y[0]*tmp - y[0]*self.k_evap_solute ) / y[2]
-            dy1dt = ( y[1]*tmp - y[1]*self.k_evap_solvent ) / y[2]
-            dy3dt = y[0]*self.k_evap_solute*self.compTotalArea(3)
-            dy4dt = 0
-            
-            if y[0]>self.solubility:
-                k_phase_out = 1e-10
-                c_diff = y[0] - self.solubility
-                V = self.compTotalArea(3) * y[2]
-                dy4dt = k_phase_out * c_diff
-                #print('dy4dt=', dy4dt, 'dy0dt=', dy0dt)
-                dy0dt -= k_phase_out * c_diff / V
-            
-            if self.phase_solute is 'LIQUID':
-                # update partiton coefficient
+            h = y[2] # vehicle thickness
+            if h < 1e-12: # nothing left in vehicle, now fix it to be a thin film
+                h = 1e-12
+                dx = self.meshes[0].dx
+                self.meshes[0].dx = h
+
+                dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
+
+                dy0dt = ( -y[0]*self.k_evap_solute ) / h
+                dy3dt = self.k_evap_solute * y[0] * A
                 
-                # partition and volume of the active's liquid phase
-                P1 = self.rho_solute/self.solubility
-                V1 = y[4] / self.rho_solute
-
-                # partition and volume of the solvent phase
-                P2 = self.Kw
-                V2 = self.compTotalArea(3) * y[2]
-
-                K_vw = P1*V1/(V1+V2) + P2*V2/(V1+V2)
-                self.setMeshes_Kw(K_vw)
-
-            else: # undissolved solute is solid
-                min_h = y[4] / self.rho_solute / self.compTotalArea(3)
-                if y[2]<min_h : # too little liquid, stop diffusion
-                    self.setMeshes_Kw(1e10)
+                dydt += np.array([dy0dt, 0, 0, dy3dt])
+                
+                #self.meshes[0].dx = dx
+                return dydt           
             
-            #print('y=', y, 'V=', self.compTotalArea(3) * y[2])
-            #print('dydt=', [dy0dt, dy1dt, dhdt, dy3dt, dy4dt])
-            #sys.exit()
-            self.meshes[0].dx = y[2] # this is needed to use the correct vehicle depth
-            dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)                     
+                # The following are useless
+                D = self.meshes[0].D
+                self.setMeshes_D(1e-100)
+                dx = self.meshes[0].dx
+                self.meshes[0].dx = self.x_length # reset, doesn't really have any effect
+                
+                dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
+                dydt.fill(0)
+                
+                self.setMeshes_D(D)
+                self.meshes[0].dx = dx
+
+                return dydt
+
+            V =  A * h
             
-            dydt += np.array([dy0dt, dy1dt, dhdt, dy3dt, dy4dt])
+            # Vehicle could consist of solution, a separate phase of over-saturated solute (either liquid or solid)
+            if y[1] < 1e-12:
+                y[1] = 0
+
+            V_solu = y[0]*V/self.rho_solute
+            V_solv = y[1]*V/self.rho_solvent
+            V_solu_1 = self.solubility*V_solv/(self.rho_solute-self.solubility)
+            if V_solu > V_solu_1: # mass out of the solution phase
+                V1 = V_solu - V_solu_1 # volume of the mass out phase
+                V2 = V_solv + V_solu_1 # volume of the solution phase
+            else:
+                V1 = .0
+                V2 = V
+            # Update partiton coefficient for vehicle that could have two phases
+            P1 = self.rho_solute/self.solubility
+            P2 = self.Kw
+            K_vw = P1*V1/(V1+V2) + P2*V2/(V1+V2)
+            
+            # Set mesh parameters 
+            K = self.meshes[0].Kw    
+            self.setMeshes_Kw(K_vw)
+            dx = self.meshes[0].dx
+            self.meshes[0].dx = h
+            #if t > 1442:
+            #    print(K, K_vw, dx, h)
+                #sys.exit()
+            #     and calculating diffusion mass flux
+            dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
+            flux = dydt[0]*V/A
+            
+            # Here we calculate reduction of vehicle due to evaporation (both solvent and solute)
+            #   and due to solute diffusion into skin.
+            #   We assume solvent doesn't diffuse into skin
+                        
+            dhdt = flux/self.rho_solute \
+                    - self.k_evap_solute * y[0] / self.rho_solute \
+                    - self.k_evap_solvent * y[1] / self.rho_solvent
+
+            dy0dt = ( -y[0]*self.k_evap_solute + flux - y[0]*dhdt ) / h
+            dy1dt = ( -y[1]*self.k_evap_solvent - y[1]*dhdt ) / h
+            dy3dt = self.k_evap_solute * y[0] * A
+            
+            dydt = np.array([dy0dt, dy1dt, dhdt, dy3dt])
+            
+            self.setMeshes_Kw(K)
+            self.meshes[0].dx = dx
             #print('dydt=', dydt)
-            #sys.exit()
-
-            #following are tmp code for solids; to be completed
-            #total_mass = self.init_conc * self.compTotalVolume()
-            #min_h = total_mass / density / self.compTotalArea(3)
-            #if h > min_h :
-            #    if y[0]<self.solubility :
-            #        dydt_evap = ( self.k_evap_solvent - self.k_evap_solute ) * y[0] / h
-            #        dydt[0] += dydt_evap
-            #else: # turn off vehicle by setting a very small diffusivity
-            #    self.setMeshes_D(1e-100)
-            #print(y, dydt, dydt_evap)
+            #sys.exit()           
         
         return dydt
         
@@ -182,7 +211,7 @@ class Vehicle(comp.Comp):
             y = np.zeros(self.get_dim())
             y[:dim] = comp.Comp.getMeshConc(self)
             y[dim:] = [self.conc_solvent, self.depth_vehicle,\
-                       self.mass_out_evap, self.mass_out_phase]
+                       self.mass_out_evap]
             return y
 
     def setMeshConc_all(self, conc) :
@@ -194,10 +223,11 @@ class Vehicle(comp.Comp):
         if self.b_vary_vehicle is False:
             comp.Comp.setMeshConc_all(self,conc)
         else:
+            conc[np.where( conc<0 )] = 0
             dim = self.dim
             comp.Comp.setMeshConc_all(self,conc[:dim])
             self.conc_solvent, self.depth_vehicle, \
-                self.mass_out_evap, self.mass_out_phase = conc[dim:]
+                self.mass_out_evap = conc[dim:]
                         
             assert(self.nx==1 and self.ny==1)
             self.x_length = self.depth_vehicle
@@ -207,7 +237,7 @@ class Vehicle(comp.Comp):
         if self.b_vary_vehicle is False:
             return comp.Comp.get_dim(self)
         else:
-            return comp.Comp.get_dim(self)+4
+            return comp.Comp.get_dim(self)+3
 
     def saveMeshConc(self, b_1st_time, fn) :
         """ Save mesh concentrations to file
@@ -218,7 +248,6 @@ class Vehicle(comp.Comp):
             file = open(fn, 'a')
             file.write( "{:.6e}\n".format( self.conc_solvent ) )
             file.write( "{:.6e}\n".format( self.depth_vehicle ) )
-            file.write( "{:.6e}\n".format( self.mass_out_evap ) )
-            file.write( "{:.6e}\n".format( self.mass_out_phase ) )
+            file.write( "{:.6e}\n".format( self.mass_out_evap ) )            
             file.close()
             

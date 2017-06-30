@@ -69,7 +69,8 @@ class Skin_Setup(skin.Skin):
                 
                 # determine the boundary conditions for this compartment
                 bdy_up = 'ZeroFlux' if i==0 else 'FromOther'                
-                bdy_down = 'ZeroConc' if i==conf.comps_nrow-1 else 'FromOther'
+                bdy_down = 'ZeroFlux' if i==conf.comps_nrow-1 else 'FromOther'
+                #bdy_down = 'ZeroConc' if i==conf.comps_nrow-1 else 'FromOther'
                 
                 if conf.comps_ncol == 1 : # only one column of compartments
                     bdy_left = 'Periodic'
@@ -193,7 +194,7 @@ class Skin_Setup(skin.Skin):
         """ Create viable epidermis """        
         hf = hairfoll.HairFoll(xlen, ylen, self.dz_dtheta, 
                                n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
-        print('Kw=', Kw, 'D=', D)
+        #print('Kw=', Kw, 'D=', D)
         hf.createMesh(chem, coord_x_start, coord_y_start)
         return hf
         

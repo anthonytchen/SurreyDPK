@@ -127,7 +127,7 @@ class Skin:
         ## Integration
         
         r = ode(self.compODEdydt).set_integrator('vode', method='bdf', 
-            nsteps=5000, with_jacobian=True)
+            nsteps=5000, with_jacobian=True,atol=1e-10,rtol=1e-8)
         r.set_initial_value(y0, t_start).set_f_params(None)
         r.integrate( r.t + t_end-t_start )
         
