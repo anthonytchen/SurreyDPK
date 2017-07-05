@@ -27,7 +27,7 @@ class Vehicle(comp.Comp):
         self.b_inf_source = b_inf_source
         
         # evaporative mass transfer coefficient for solvent and solute
-        self.b_vary_vehicle = False
+        self.b_vary_vehicle = True
         self.k_evap_solvent = k_evap_solvent
         self.k_evap_solute = k_evap_solute
         self.solubility = solubility
@@ -181,13 +181,18 @@ class Vehicle(comp.Comp):
             #   and due to solute diffusion into skin.
             #   We assume solvent doesn't diffuse into skin
                         
-            dhdt = flux/self.rho_solute \
-                    - self.k_evap_solute * y[0] / self.rho_solute \
-                    - self.k_evap_solvent * y[1] / self.rho_solvent
-
-            dy0dt = ( -y[0]*self.k_evap_solute + flux - y[0]*dhdt ) / h
-            dy1dt = ( -y[1]*self.k_evap_solvent - y[1]*dhdt ) / h
-            dy3dt = self.k_evap_solute * y[0] * A
+            dhdt = flux/self.rho_solute - self.k_evap_solvent
+            if y[0] > self.solubility:
+                t = self.k_evap_solute
+            else:
+                t = self.k_evap_solute * y[0] / self.solubility
+                
+            dhdt += - t    
+            dy0dt = ( -t*self.rho_solute + flux - y[0]*dhdt ) / h
+            dy3dt = t * self.rho_solute * A
+            
+            dy1dt = ( -self.rho_solvent*self.k_evap_solvent - y[1]*dhdt ) / h
+            
             
             dydt = np.array([dy0dt, dy1dt, dhdt, dy3dt])
             
