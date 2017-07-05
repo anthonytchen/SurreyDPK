@@ -27,7 +27,7 @@ class Vehicle(comp.Comp):
         self.b_inf_source = b_inf_source
         
         # evaporative mass transfer coefficient for solvent and solute
-        self.b_vary_vehicle = True
+        self.b_vary_vehicle = False
         self.k_evap_solvent = k_evap_solvent
         self.k_evap_solute = k_evap_solute
         self.solubility = solubility
@@ -115,6 +115,9 @@ class Vehicle(comp.Comp):
                 h = 1e-12
                 dx = self.meshes[0].dx
                 self.meshes[0].dx = h
+                K = self.meshes[0].Kw
+                K_vw = self.rho_solute/self.solubility
+                self.setMeshes_Kw(K_vw)
 
                 dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
 
@@ -123,7 +126,9 @@ class Vehicle(comp.Comp):
                 
                 dydt += np.array([dy0dt, 0, 0, dy3dt])
                 
-                #self.meshes[0].dx = dx
+                self.meshes[0].dx = dx
+                self.setMeshes_Kw(K)
+                # todo: also change partition coefficient above
                 return dydt           
             
                 # The following are useless
@@ -223,6 +228,8 @@ class Vehicle(comp.Comp):
         if self.b_vary_vehicle is False:
             comp.Comp.setMeshConc_all(self,conc)
         else:
+            if conc[2]<0:
+                conc[2] = 1e-12
             conc[np.where( conc<0 )] = 0
             dim = self.dim
             comp.Comp.setMeshConc_all(self,conc[:dim])

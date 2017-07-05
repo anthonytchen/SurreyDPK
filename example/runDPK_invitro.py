@@ -44,6 +44,9 @@ def compDPK(fn_conf, chem=None, disp=1) :
     # Setup skin and create compartments
     _skin = skin_setup.Skin_Setup(_chem, _conf)
     _skin.createComps(_chem, _conf)
+    #print(_skin.comps[0].meshes[0].Kw, _skin.comps[0].meshes[0].D)
+    #print(_skin.comps[1].meshes[0].Kw, _skin.comps[1].meshes[0].D)    
+    #print(_skin.comps[1].meshes[11].Kw, _skin.comps[1].meshes[11].D)    
 
     # Simulation time (in seconds) and steps
     #t_start, t_end, Nsteps = [0, 3600*25, 26]
