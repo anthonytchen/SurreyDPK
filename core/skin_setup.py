@@ -95,7 +95,7 @@ class Skin_Setup(skin.Skin):
                                          conf.Kw_sc, conf.D_sc, conf.Kw_sc_paras, conf.D_sc_paras, bdy_cond)
                     if type(self.comps[0]) is vehicle.Vehicle :
                         self.comps[0].K_lip_water = comp.meshes[0].Kw
-                        print("K_lip_water = ", self.comps[0].K_lip_water)
+                        #print("K_lip_water = ", self.comps[0].K_lip_water)
                 elif conf.comps_geom[idx].name == 'E':
                     comp = self.createVE(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_ve, \

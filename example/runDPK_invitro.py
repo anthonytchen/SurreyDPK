@@ -3,7 +3,7 @@
 A module containing files for calculating kinetics
     for in-vitro experiments
 """
-import os
+import os, sys
 import numpy as np
 #from scipy.optimize import minimize, basinhopping, brute
 import matplotlib.pyplot as plt
@@ -26,11 +26,12 @@ reload(dermis)
 from core import skin_setup
 reload(skin_setup)
 
-def compDPK(fn_conf, chem=None, disp=1) :
+def compDPK(fn_conf, chem=None, disp=1, wk_path='./simu/') :
     """Compute DPK
     Args:
         fn_conf -- the .cfg file, which gives the configuration of the simulation
         chem -- if given, it overrides the values given in fn_conf
+        wk_path -- path to save simulation results
     """
     # Read the .cfg, i.e. configuration, file to set up simulation
     _conf = config.Config(fn_conf)
@@ -43,15 +44,10 @@ def compDPK(fn_conf, chem=None, disp=1) :
 
     # Setup skin and create compartments
     _skin = skin_setup.Skin_Setup(_chem, _conf)
-    _skin.createComps(_chem, _conf)
-    #print(_skin.comps[0].meshes[0].Kw, _skin.comps[0].meshes[0].D)
-    #print(_skin.comps[1].meshes[0].Kw, _skin.comps[1].meshes[0].D)    
-    #print(_skin.comps[1].meshes[11].Kw, _skin.comps[1].meshes[11].D)    
+    _skin.createComps(_chem, _conf)     
 
     # Simulation time (in seconds) and steps
-    t_start, t_end, Nsteps = [0, 3600*25, 26]
-    #t_start, t_end, Nsteps = [0, 3600, 61]
-    #t_start, t_end, Nsteps = [0, 3600, 3601]    
+    t_start, t_end, Nsteps = [0, 3600*24, 49]
     t_range = np.linspace(t_start, t_end, Nsteps)  
     #t_range = np.r_[np.linspace(0, 1350, 2), np.linspace(1380, 1440, 61),\
     #                np.linspace(1450, 3600, 44)]
@@ -59,33 +55,78 @@ def compDPK(fn_conf, chem=None, disp=1) :
     
     nComps = _skin.nxComp*_skin.nyComp
     total_mass = np.sum( _skin.compMass_comps() )
+    
+    # Create directory to save results
+    newpath = wk_path
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+    fn = wk_path + 'MassFrac.csv'
+    saveMass(total_mass, fn, b_1st_time=True)    
+    
     for i in range(Nsteps-1):
         
         mass = _skin.compMass_comps()
         m_v = _skin.comps[0].getMass_OutEvap()
+        m_all = np.insert(mass, 0, m_v) / total_mass
+        print(m_all)
         #total_mass = np.sum(mass)
-        mass_down = _skin.comps[0].compMassIrregMeshDown(_skin.comps[0].meshes[0], _skin.comps[0].meshes[0].conc)
+        #mass_down = _skin.comps[0].compMassIrregMeshDown(_skin.comps[0].meshes[0], _skin.comps[0].meshes[0].conc)
         
         if disp >= 2:
-            np.set_printoptions(precision=4)
-            print('Time = ', t_range[i], ', total mass: ', total_mass, '% mass: ', m_v/total_mass, mass/total_mass )
-            #print('\t K_vw = ', _skin.comps[0].meshes[0].Kw, ', % D_v = ', _skin.comps[0].meshes[0].D )
-            #print('\t mass_down = ', mass_down )
+            np.set_printoptions(precision=2)
+            print('Time = ', t_range[i], '% mass: ', m_all)            
             
         # Create directory to save results
-        newpath = './simu/' + str(t_range[i])
+        newpath = wk_path + str(t_range[i])
         if not os.path.exists(newpath):
             os.makedirs(newpath)
+            
+        # Save fraction of mass in all compartments
+        saveMass(m_all, fn)
         
         # Save current concentrations        
         for j in range(nComps):
             fn = newpath + '/comp' + str(j) + '_' + _conf.comps_geom[j].name        
             _skin.comps[j].saveMeshConc(True, fn)
-            
+           
         # Simulate
         _skin.solveMoL(t_range[i], t_range[i+1])
+    
+    # printing inforamtion and save file for the last time
+    if disp >= 2:
+        np.set_printoptions(precision=2)
+        print('Time = ', t_range[i], '% mass: ', m_all)            
+            
+    # Create directory to save results
+    newpath = wk_path + str(t_range[i])
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+            
+    # Save fraction of mass in all compartments
+    saveMass(m_all, fn)
         
-        
+    # Save current concentrations        
+    for j in range(nComps):
+        fn = newpath + '/comp' + str(j) + '_' + _conf.comps_geom[j].name        
+        _skin.comps[j].saveMeshConc(True, fn)        
+
     return mass
 
-
+def saveMass(nparray, fn, b_1st_time=False) :
+        """ Save mass and fractions to file
+        Args: 
+            nparray -- the data to be saved
+            b_1st_time -- if True, write to a new file; otherwise append to the existing file
+        """
+        if b_1st_time :
+            file = open(fn, 'w')
+        else :
+            file = open(fn, 'a')
+        if type(nparray) is np.ndarray:
+            nd = len(nparray)
+            for i in range(nd):
+                file.write("{:.6e},".format(nparray[i]))            
+        else:
+            file.write( "{:.6e}".format(nparray) )
+        file.write('\n')
+        file.close()
