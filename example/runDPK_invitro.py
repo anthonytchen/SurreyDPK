@@ -47,12 +47,12 @@ def compDPK(fn_conf, chem=None, disp=1, wk_path='./simu/') :
     _skin.createComps(_chem, _conf)     
 
     # Simulation time (in seconds) and steps
-    #t_start, t_end, Nsteps = [0, 3600*24, 49]
+    t_start, t_end, Nsteps = [0, 3600*24, 145]
     #t_start, t_end, Nsteps = [0, 1800, 181]
-    #t_range = np.linspace(t_start, t_end, Nsteps)  
-    t_range = np.r_[np.linspace(0, 1000, 2), np.linspace(1200, 1800, 21),\
-                    np.linspace(1800, 3600, 21),np.linspace(7200, 3600*24, 23)]
-    Nsteps = len(t_range)
+    t_range = np.linspace(t_start, t_end, Nsteps)  
+    #t_range = np.r_[np.linspace(0, 1000, 2), np.linspace(1200, 1800, 21),\
+    #                np.linspace(1800, 3600, 21),np.linspace(7200, 3600*24, 23)]
+    #Nsteps = len(t_range)
     
     nComps = _skin.nxComp*_skin.nyComp
     total_mass = np.sum( _skin.compMass_comps() )

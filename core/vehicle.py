@@ -38,6 +38,7 @@ class Vehicle(comp.Comp):
         self.mw_solvent = mw_solvent
         self.phase_solute = phase_solute
         self.K_lip_water = None
+        self.vehicle_dried = False
         
         #self.conc_solvent = rho_solvent
         A = self.compTotalArea(3)
@@ -112,15 +113,16 @@ class Vehicle(comp.Comp):
             A = self.compTotalArea(3)            
             
             if y[0] < 0:
-                y[0] = 0
-
+                y[0] = 0            
+            
             h = y[2] # vehicle thickness
-            if h < 1e-12: # nothing left in vehicle, now fix it to be a thin film
+            #if h < 1e-12: # nothing left in vehicle, now fix it to be a thin film
+            if h < 1e-12 or self.vehicle_dried is True: # nothing left in vehicle, now fix it to be a thin film
                 h = 1e-12
                 dx = self.meshes[0].dx
                 self.meshes[0].dx = h
                 K = self.meshes[0].Kw
-                K_vw = self.K_lip_water
+                K_vw = self.K_lip_water                
                 self.setMeshes_Kw(K_vw)
 
                 dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
@@ -241,6 +243,7 @@ class Vehicle(comp.Comp):
         else:
             if conc[2]<0:
                 conc[2] = 1e-12
+                self.vehicle_dried = True
             conc[np.where( conc<0 )] = 0
             dim = self.dim
             comp.Comp.setMeshConc_all(self,conc[:dim])
