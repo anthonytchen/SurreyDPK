@@ -190,14 +190,14 @@ class Vehicle(comp.Comp):
             #   and due to solute diffusion into skin.
             #   We assume solvent doesn't diffuse into skin
                         
-            dhdt = flux/self.rho_solute - self.k_evap_solvent
+            dhdt = flux/self.rho_solute - self.k_evap_solvent*x1
             t = self.k_evap_solute * x0
                 
             dhdt += - t    
             dy0dt = ( -t*self.rho_solute + flux - y[0]*dhdt ) / h
             dy3dt = t * self.rho_solute * A
             
-            dy1dt = ( -self.rho_solvent*self.k_evap_solvent - y[1]*dhdt ) / h
+            dy1dt = ( -self.rho_solvent*self.k_evap_solvent*x1 - y[1]*dhdt ) / h
             
             
             dydt = np.array([dy0dt, dy1dt, dhdt, dy3dt])
