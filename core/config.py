@@ -131,6 +131,8 @@ class Config:
             self.k_evap_solvent_vehicle = float(tokens[1])
         elif tokens[0] == 'SOLVENT_DENSITY' :
             self.rho_solvent = float(tokens[1])
+        elif tokens[0] == 'SOLVENT_MW' :
+            self.mw_solvent = float(tokens[1])
         elif tokens[0] == 'EVAP_SOLUTE_VH' :
             self.k_evap_solute_vehicle = float(tokens[1])
         elif tokens[0] == 'SOLUBILITY_VH' :

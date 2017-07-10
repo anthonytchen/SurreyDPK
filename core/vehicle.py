@@ -16,15 +16,17 @@ class Vehicle(comp.Comp):
     which is the delivery vehicle, currently modelled as a homogenised media
     """
     
-    def __init__(self, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D,
+    def __init__(self, chem, xlen, ylen, dz_dtheta, nx, ny, init_conc, Kw, D,
                  coord_sys, bdy_cond, b_inf_source=False,
-                 rho_solute=1e3, rho_solvent=1e3, phase_solute='LIQUID',
+                 rho_solute=1e3, rho_solvent=1e3, mw_solvent=18, phase_solute='LIQUID',
                  k_evap_solvent=0, k_evap_solute=0, solubility=1e10):
         comp.Comp.__init__(self)
         comp.Comp.setup(self, xlen, ylen, dz_dtheta, nx, ny, coord_sys, bdy_cond)
         
         self.eta = 7.644E-4 # water viscosity at 305 K (32 deg C) (Pa s)
         self.b_inf_source = b_inf_source
+        
+        self.chem = chem
         
         # evaporative mass transfer coefficient for solvent and solute
         self.b_vary_vehicle = True
@@ -33,7 +35,9 @@ class Vehicle(comp.Comp):
         self.solubility = solubility
         self.rho_solute = rho_solute
         self.rho_solvent = rho_solvent
+        self.mw_solvent = mw_solvent
         self.phase_solute = phase_solute
+        self.K_lip_water = None
         
         #self.conc_solvent = rho_solvent
         A = self.compTotalArea(3)
@@ -116,32 +120,30 @@ class Vehicle(comp.Comp):
                 dx = self.meshes[0].dx
                 self.meshes[0].dx = h
                 K = self.meshes[0].Kw
-                K_vw = self.rho_solute/self.solubility
+                K_vw = self.K_lip_water
                 self.setMeshes_Kw(K_vw)
 
                 dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
-
-                dy0dt = ( -y[0]*self.k_evap_solute ) / h
-                dy3dt = self.k_evap_solute * y[0] * A
+                
+                # mole fractions
+                mw_lipid = 566 # Biophys J. 2007 Nov 1; 93(9): 3142–3155
+                rho_lipid = 900
+                x0 = y[0] / self.chem.mw
+                x1 = rho_lipid / mw_lipid
+                total = x0+x1
+                x0 /= total                
+                x1 /= total
+                #if t>3600:
+                #    print (y[0], self.chem.mw, rho_lipid, mw_lipid, x0, x1)
+                #    sys.exit()
+                     
+                dy0dt = ( -self.k_evap_solute * x0 * self.rho_solute ) / h
+                dy3dt = self.k_evap_solute * x0 * self.rho_solute * A
                 
                 dydt += np.array([dy0dt, 0, 0, dy3dt])
                 
                 self.meshes[0].dx = dx
-                self.setMeshes_Kw(K)
-                # todo: also change partition coefficient above
-                return dydt           
-            
-                # The following are useless
-                D = self.meshes[0].D
-                self.setMeshes_D(1e-100)
-                dx = self.meshes[0].dx
-                self.meshes[0].dx = self.x_length # reset, doesn't really have any effect
-                
-                dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
-                dydt.fill(0)
-                
-                self.setMeshes_D(D)
-                self.meshes[0].dx = dx
+                self.setMeshes_Kw(K)                
 
                 return dydt
 
@@ -177,15 +179,19 @@ class Vehicle(comp.Comp):
             dydt = comp.Comp.compODEdydt_diffu (self, t, y, args)
             flux = dydt[0]*V/A
             
+            # mole fractions            
+            x0 = y[0] / self.chem.mw
+            x1 = y[1] / self.mw_solvent
+            total = x0+x1
+            x0 /= total
+            x1 /= total
+            
             # Here we calculate reduction of vehicle due to evaporation (both solvent and solute)
             #   and due to solute diffusion into skin.
             #   We assume solvent doesn't diffuse into skin
                         
             dhdt = flux/self.rho_solute - self.k_evap_solvent
-            if y[0] > self.solubility:
-                t = self.k_evap_solute
-            else:
-                t = self.k_evap_solute * y[0] / self.solubility
+            t = self.k_evap_solute * x0
                 
             dhdt += - t    
             dy0dt = ( -t*self.rho_solute + flux - y[0]*dhdt ) / h

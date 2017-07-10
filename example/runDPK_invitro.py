@@ -49,8 +49,8 @@ def compDPK(fn_conf, chem=None, disp=1) :
     #print(_skin.comps[1].meshes[11].Kw, _skin.comps[1].meshes[11].D)    
 
     # Simulation time (in seconds) and steps
-    #t_start, t_end, Nsteps = [0, 3600*25, 26]
-    t_start, t_end, Nsteps = [0, 3600, 61]
+    t_start, t_end, Nsteps = [0, 3600*25, 26]
+    #t_start, t_end, Nsteps = [0, 3600, 61]
     #t_start, t_end, Nsteps = [0, 3600, 3601]    
     t_range = np.linspace(t_start, t_end, Nsteps)  
     #t_range = np.r_[np.linspace(0, 1350, 2), np.linspace(1380, 1440, 61),\

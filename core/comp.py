@@ -33,6 +33,8 @@ class Comp:
         self.ny = 0 #   only support rectangular meshes
         self.dim = 0
         
+        self.chem = None # the solute chemical
+        
         ### partition and diffusion coefficients ###
         self.Kw = 0
         self.D = 0
