@@ -185,8 +185,12 @@ class Vehicle(comp.Comp):
             x0 = y[0] / self.chem.mw
             x1 = y[1] / self.mw_solvent
             total = x0+x1
-            x0 /= total
-            x1 /= total
+            if total < 1e-12: # no evaporation
+                x0 = 0
+                x1 = 0
+            else:
+                x0 /= total
+                x1 /= total
             
             # Here we calculate reduction of vehicle due to evaporation (both solvent and solute)
             #   and due to solute diffusion into skin.
