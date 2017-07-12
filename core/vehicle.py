@@ -115,9 +115,10 @@ class Vehicle(comp.Comp):
             if y[0] < 0:
                 y[0] = 0            
             
-            h = y[2] # vehicle thickness
-            #if h < 1e-12: # nothing left in vehicle, now fix it to be a thin film
-            if h < 1e-12 or self.vehicle_dried is True: # nothing left in vehicle, now fix it to be a thin film
+            h = y[2]  # vehicle thickness
+            if h < 1e-12:  # nothing left in vehicle, now fix it to be a thin film
+                self.vehicle_dried = True
+            if self.vehicle_dried is True: # nothing left in vehicle, now fix it to be a thin film
                 h = 1e-12
                 dx = self.meshes[0].dx
                 self.meshes[0].dx = h
