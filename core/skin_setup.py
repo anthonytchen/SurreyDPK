@@ -12,6 +12,8 @@ from core import vehicle
 importlib.reload(vehicle)
 from core import stracorn
 importlib.reload(stracorn)
+from core import stracornhomo
+importlib.reload(stracornhomo)
 from core import viaepd
 importlib.reload(viaepd)
 from core import dermis
@@ -96,6 +98,12 @@ class Skin_Setup(skin.Skin):
                     if type(self.comps[0]) is vehicle.Vehicle :
                         self.comps[0].K_lip_water = comp.meshes[0].Kw
                         #print("K_lip_water = ", self.comps[0].K_lip_water)
+                elif conf.comps_geom[idx].name == 'O':
+                    comp = self.createSCH(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y,
+                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_sc,
+                                          conf.Kw_sc, conf.D_sc, bdy_cond)
+                    if type(self.comps[0]) is vehicle.Vehicle:
+                        self.comps[0].K_lip_water = comp.meshes[0].Kw
                 elif conf.comps_geom[idx].name == 'E':
                     comp = self.createVE(chem, current_x, current_y, conf.comps_geom[idx].len_x, conf.comps_geom[idx].len_y, \
                                          conf.comps_geom[idx].n_mesh_x, conf.comps_geom[idx].n_mesh_y, conf.init_conc_ve, \
@@ -181,7 +189,16 @@ class Skin_Setup(skin.Skin):
                                       n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
         via_epidermis.createMesh(chem, coord_x_start, coord_y_start)
         return via_epidermis
-    
+
+    def createSCH(self, chem,
+                 coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
+                 init_conc, Kw, D, bdyCond) :
+        """ Create homogenised stratum corneum """
+        sc_homo = stracornhomo.StraCornHomo(xlen, ylen, self.dz_dtheta,
+                                            n_grids_x, n_grids_y, init_conc, Kw, D, self.coord_sys, bdyCond)
+        sc_homo.createMesh(chem, coord_x_start, coord_y_start)
+        return sc_homo
+
     def createDE(self, chem, 
                  coord_x_start, coord_y_start, xlen, ylen, n_grids_x, n_grids_y,
                  init_conc, Kw, D, bdyCond) :
