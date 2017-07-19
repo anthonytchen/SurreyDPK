@@ -26,7 +26,7 @@ reload(dermis)
 from core import skin_setup
 reload(skin_setup)
 
-def compDPK(fn_conf, chem=None, disp=1, wk_path='./simu/') :
+def compDPK(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1, wk_path='./simu/') :
     """Compute DPK
     Args:
         fn_conf -- the .cfg file, which gives the configuration of the simulation
@@ -35,7 +35,11 @@ def compDPK(fn_conf, chem=None, disp=1, wk_path='./simu/') :
     """
     # Read the .cfg, i.e. configuration, file to set up simulation
     _conf = config.Config(fn_conf)
-
+    if sc_Kw_paras is not None:
+        _conf.Kw_sc_paras = sc_Kw_paras
+    if sc_D_paras is not None:
+        _conf.D_sc_paras = sc_D_paras  
+        
     # Setup the chemical
     if chem is not None:
         _chem = chem

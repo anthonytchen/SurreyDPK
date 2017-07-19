@@ -329,27 +329,53 @@ class StraCorn(comp.Comp):
 
 
         # 3. calculate diffusivity and partition coefficient
-
-        K = 1.3806488 * 1E-23 # Boltzmann constant, Kg m^2 s^{-2}
+        
         r_f = 3.5e-9 # keratin microfibril radius, 3.5 nm
         Dw = comp.Comp.compDiff_stokes(self, eta, chem.r_s)
         
         if name == 'LP' :
-            # m_Kw = pow(m_K_ow, 0.7) # this is the old model
-            Kw = rou_lipid / rou_water * (chem.K_ow ** 0.69)
             
+            # Set up QSPR parameters
+            if self.Kw_paras[2] > 0:
+                c = self.Kw_paras[2]
+            else:
+                c = 0.69
+                
+            # m_Kw = pow(m_K_ow, 0.7) # this is the old model
+            Kw = rou_lipid / rou_water * (chem.K_ow ** c)
+            
+            if self.D_paras[2] > 0:
+                a = self.D_paras[2]
+            else:
+                a = 2 * 1E-9
+                
+            if self.D_paras[3] > 0:
+                b = self.D_paras[3]
+            else:
+                b = 0.46
+                
             if chem.mw <= 380.0 :
                 r_s_inA = chem.r_s*1e10 # unit in Angstrom
-                D = 2 * 1E-9 * np.exp(-0.46*r_s_inA*r_s_inA)
+                D = a * np.exp(-b*r_s_inA*r_s_inA)
             else : 
                 D = 3 * 1E-13
+                
         elif name == 'CC' : # corneocyte
             # the following not used:
             #   if (m_K_ow>10)
             #    K_kw = 5.6 * pow(m_K_ow, 0.27);
             #    else 
             #    K_kw = 0.5* ( 1 + pow(m_K_ow, 0.7) );
-            K_kw = rou_keratin / rou_water * 4.2 * (chem.K_ow**0.31)
+            if self.Kw_paras[0] > 0:
+                a = self.Kw_paras[0]
+            else:
+                a = 4.2
+            if self.Kw_paras[1] > 0:
+                b = self.Kw_paras[1]
+            else:
+                b = 0.31
+                
+            K_kw = rou_keratin / rou_water * a * (chem.K_ow**b)
             Kw = (1-phi_b) * K_kw + theta_b
 
             # empirically fitted parameters

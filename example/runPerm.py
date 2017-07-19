@@ -60,7 +60,7 @@ def compPerm(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1) :
     for i in range(Nsteps-1):
         flux_vh_sc = -_skin.compFlux([0,0], 3)[0]
         flux_sc_down = -_skin.compFlux([1,0], 3)[0]
-        if np.fabs( (flux_vh_sc-flux_sc_down) / flux_vh_sc ) < 1e-3 :
+        if np.fabs( (flux_vh_sc-flux_sc_down) / flux_vh_sc ) < 1e-5 :
             break
         #elif i == Nsteps-1 :
         #    raise ValueError('Simulation time too short to reach steady-state; re-run the simulation with longer time.')
