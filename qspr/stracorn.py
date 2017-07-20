@@ -14,7 +14,7 @@ We follow "Int. J. Pharm 398 (2010) 114" to use "K" for volumetric partition
 import numpy as np
 import matplotlib.pyplot as plt
 
-from constants import rho_pro, rho_lip, rho_wat
+from qspr.constants import rho_pro, rho_lip, rho_wat
 
 def compVolFrac(ref_source='Liming'):
     ''' Compute the volume fractions of protein, lipid and water in SC

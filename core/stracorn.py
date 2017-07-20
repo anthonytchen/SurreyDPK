@@ -13,7 +13,19 @@ importlib.reload(mesh)
 from core import comp
 importlib.reload(comp)
 from core import point
+from core import para
 
+class KwDParas():
+    """ """
+    def __init__(self):
+        self.lp = para.optval()
+        self.lp.option = 'DEFT'
+        self.lp.value = None
+        self.cc = para.optval()
+        self.cc.option = 'DEFT'
+        self.cc.value = None
+        
+    
 class StraCorn(comp.Comp):
     """ Class definition for StraCorn, 
     which is the stratum corneum, currently modelled as a heterogeneous media
@@ -60,9 +72,73 @@ class StraCorn(comp.Comp):
 
         self.offset_y =  offset_y
         
-        self.Kw_paras = np.array([-1]*3)
-        self.D_paras = np.array([-1]*4)
-    
+        #self.Kw_paras = np.array([-1]*3)
+        #self.D_paras = np.array([-1]*4)
+        self.Kw_paras = KwDParas()
+        self.D_paras = KwDParas()
+        
+        
+    def setKwOptions(self, Kw_paras=None):
+        """ Set up the way to calculate or input parameters for Kw 
+            self.Kw_paras has two members:
+                lp: lipid, which has two members itself:
+                    option: 'DEFT' (QSPR calcualtion using default parameter values)
+                            'QSPR' (QSPR calcualtion using user supplied parameter values)
+                            'VALE' (Do not calculate, use user supplied Kw directly)
+                    value: None when option is 'DEFT'
+                           <a> as in K = (rho_lip/rho_wat) * Kow^a, when option is 'QSPR'
+                           The Kw value, when option is 'VALE'
+                cc: corneocyte, which has two members itself:
+                    option: 'DEFT' (QSPR calcualtion using default parameter values)
+                            'QSPR' (QSPR calcualtion using user supplied parameter values)
+                            'VALE' (Do not calculate, use user supplied Kw directly)
+                    value: None when option is 'DEFT'
+                           <a, b> as in K = (rho_pro/rho_wat) * a * Kow^b, when option is 'QSPR'
+                           The Kw value, when option is 'VALE'              
+        """        
+        #print(self.Kw_paras)
+        if Kw_paras is None:
+            self.Kw_paras.lp.option = 'DEFT'
+            self.Kw_paras.lp.value = None
+            self.Kw_paras.cc.option = 'DEFT'
+            self.Kw_paras.cc.value = None
+        else:
+            self.Kw_paras.lp.option = Kw_paras.lp.option
+            self.Kw_paras.lp.value = np.copy(Kw_paras.lp.value)
+            self.Kw_paras.cc.option = Kw_paras.cc.option
+            self.Kw_paras.cc.value = np.copy(Kw_paras.cc.value)
+            
+        
+    def setDOptions(self, D_paras=None):
+        """ Set up the way to calculate or input parameters for D 
+            self.D_paras has two members:
+                lp: lipid, which has two members itself:
+                    option: 'DEFT' (QSPR calcualtion using default parameter values)
+                            'QSPR' (QSPR calcualtion using user supplied parameter values)
+                            'VALE' (Do not calculate, use user supplied D directly)
+                    value: None when option is 'DEFT'
+                           <a, b> as in D = a * exp(-b*r_s_inA*r_s_inA), when option is 'QSPR'
+                           The D value, when option is 'VALE'
+                cc: corneocyte, which has two members itself:
+                    option: 'DEFT' (QSPR calcualtion using default parameter values)
+                            'QSPR' (QSPR calcualtion using user supplied parameter values)
+                            'VALE' (Do not calculate, use user supplied D directly)
+                    value: None when option is 'DEFT'
+                           <alpha, beta> as given in the reference, when option is 'QSPR'
+                           The D value, when option is 'VALE'  
+        """        
+        if D_paras is None:
+            self.D_paras.lp.option = 'DEFT'
+            self.D_paras.lp.value = None
+            self.D_paras.cc.option = 'DEFT'
+            self.D_paras.cc.value = None
+        else:
+            self.D_paras.lp.option = D_paras.lp.option
+            self.D_paras.lp.value = np.copy(D_paras.lp.value)
+            self.D_paras.cc.option = D_paras.cc.option
+            self.D_paras.cc.value = no.copy(D_paras.cc.value)
+            
+            
     def createMesh(self, chem, coord_x_start, coord_y_start, water_frac_surface=.55) :
         """ Create mesh for this compartment
         Args:
@@ -297,97 +373,87 @@ class StraCorn(comp.Comp):
 
 
     def setParDiff_paras(self, Kw_paras, D_paras):
-        """ Set the parameters used in the QSPR models for calculating partition coefficient (Kw) and diffusion coefficient (D)
-        Args: Kw_paras -- [a, b, c] 
-                where for (1) corneocyte, volumetric partition coefficient is K = (rho_pro/rho_wat) * a * Kow^b,
-                          (2) lipid, volumetric partition coefficient is K = (rho_lip/rho_wat) * Kow^c, 
-                          Here rho_pro, rho_wat and rho_lip are the density of protein (coneocyte), water and lipid respectively.
-              D_paras -- [alpha, beta, a, b] 
-                where for (1) corneocyte, diffusivity depends on  given by the corresponding reference
-                          (2) lipid, diffusivity is a * exp(-b*r_s_inA*r_s_inA), here r_s_inA is the radius of the solute in A
-        """
-        self.Kw_paras = Kw_paras
-        self.D_paras = D_paras
+        """ A wrapper interface to pass Kw/D options """
+        self.setKwOptions(Kw_paras)
+        self.setDOptions(D_paras)
         
         
-    def compParDiff(self, name, chem, mass_frac_water, mass_frac_water_sat, 
-                    V_mortar, V_brick, V_all, eta) :
+    def compParDiff_lp(self, chem) :
         """ Compute the partition coefficient with respect to water
-        and the diffusion coefficient
-        """
+        and the diffusion coefficient for lipid   """
         rou_lipid = 0.9
-        rou_keratin = 1.37
-        rou_water = 1
+        rou_water = 1               
         
-        # 2. calulcate volume fraction of water in CC based on
-        #    mass fraction of water in SC
-        theta_b = self.compVolFracWater_cc( mass_frac_water, rou_lipid, rou_keratin, rou_water,
-				 V_mortar, V_brick, V_all)
-        # do the same for saturated water
-        phi_b = self.compVolFracWater_cc( mass_frac_water_sat, rou_lipid, rou_keratin, rou_water,
-				 V_mortar, V_brick, V_all)
-
-
-        # 3. calculate diffusivity and partition coefficient
-        
-        r_f = 3.5e-9 # keratin microfibril radius, 3.5 nm
-        Dw = comp.Comp.compDiff_stokes(self, eta, chem.r_s)
-        
-        if name == 'LP' :
-            
-            # Set up QSPR parameters
-            if self.Kw_paras[2] > 0:
-                c = self.Kw_paras[2]
+        # Partition
+        if self.Kw_paras.lp.option == 'VALE':
+            #print(self.Kw_paras.lp.value)
+            Kw = self.Kw_paras.lp.value[0]
+        else:  # Some form of QSPR calcualtion is needed
+            if self.Kw_paras.lp.option == 'DEFT':                
+                a = 0.69
+            elif self.Kw_paras.lp.option == 'QSPR':
+                a = self.Kw_paras.lp.value[0]
             else:
-                c = 0.69
-                
-            # m_Kw = pow(m_K_ow, 0.7) # this is the old model
-            Kw = rou_lipid / rou_water * (chem.K_ow ** c)
+                raise ValueError('Invalid self.Kw_paras.lp.option')
+            Kw = rou_lipid / rou_water * (chem.K_ow ** a)
+        
             
-            if self.D_paras[2] > 0:
-                a = self.D_paras[2]
-            else:
+        # Diffusion
+        if self.D_paras.lp.option == 'VALE':
+            D = self.D_paras.lp.value[0]
+        else:  # Some form of QSPR calcualtion is needed
+            if self.D_paras.lp.option == 'DEFT':                
                 a = 2 * 1E-9
-                
-            if self.D_paras[3] > 0:
-                b = self.D_paras[3]
+                b = 0.46            
+            elif self.D_paras.lp.option == 'QSPR':
+                a, b = self.D_paras.lp.value
             else:
-                b = 0.46
+                raise ValueError('Invalid self.D_paras.lp.option')  
                 
-            if chem.mw <= 380.0 :
+            if chem.mw <= 380.0:
                 r_s_inA = chem.r_s*1e10 # unit in Angstrom
                 D = a * np.exp(-b*r_s_inA*r_s_inA)
-            else : 
+            else: 
                 D = 3 * 1E-13
                 
-        elif name == 'CC' : # corneocyte
-            # the following not used:
-            #   if (m_K_ow>10)
-            #    K_kw = 5.6 * pow(m_K_ow, 0.27);
-            #    else 
-            #    K_kw = 0.5* ( 1 + pow(m_K_ow, 0.7) );
-            if self.Kw_paras[0] > 0:
-                a = self.Kw_paras[0]
-            else:
-                a = 4.2
-            if self.Kw_paras[1] > 0:
-                b = self.Kw_paras[1]
-            else:
-                b = 0.31
                 
-            K_kw = rou_keratin / rou_water * a * (chem.K_ow**b)
-            Kw = (1-phi_b) * K_kw + theta_b
+        return (Kw, D)        
+        
+        
+    def compParDiff_cc(self, chem, Dw, r_f, phi_b, theta_b) :
+        """ Compute the partition coefficient with respect to water
+        and the diffusion coefficient for corneocyte   """
+        rou_keratin = 1.37
+        rou_water = 1               
 
-            # empirically fitted parameters
-            #print(self.D_paras)
-            if self.D_paras[0]>0 :
-                alpha = self.D_paras[0]  
-            else: 
-                alpha = 9.47
-            if self.D_paras[1]>0 :
-                beta = self.D_paras[1]  
+        # Partition
+        if self.Kw_paras.cc.option == 'VALE':
+            K_kw = self.Kw_paras.cc.value[0]
+        else:  # Some form of QSPR calcualtion is needed
+            if self.Kw_paras.cc.option == 'DEFT':                
+                a = 4.2
+                b = 0.31
+            elif self.Kw_paras.cc.option == 'QSPR':
+                a, b = self.Kw_paras.cc.value
             else:
-                beta = 9.32e-8            
+                raise ValueError('Invalid self.Kw_paras.cc.option')
+            K_kw = rou_keratin / rou_water * a * (chem.K_ow**b)
+            
+        Kw = (1-phi_b) * K_kw + theta_b            
+
+            
+        # Diffusion
+        if self.D_paras.cc.option == 'VALE':
+            D = self.D_paras.cc.value[0]
+        else:  # Some form of QSPR calcualtion is needed
+            if self.D_paras.cc.option == 'DEFT':                
+                alpha = 9.47
+                beta = 9.32e-8             
+            elif self.D_paras.cc.option == 'QSPR':
+                alpha, beta = self.D_paras.cc.value
+            else:
+                raise ValueError('Invalid self.D_paras.cc.option')                                
+          
             lambdaa = 1.09
             gamma = -1.17
             
@@ -401,11 +467,41 @@ class StraCorn(comp.Comp):
             
             D = np.exp( -alpha*(S**lambdaa) ) / ( 1 + r_s_inA/np.sqrt(k) + r_s_inA*r_s_inA/3/k )
             D *= Dw
+                
+                
+        return (Kw, D)
+
+                
+    def compParDiff(self, name, chem, mass_frac_water, mass_frac_water_sat, 
+                    V_mortar, V_brick, V_all, eta) :
+        """ Compute the partition coefficient with respect to water
+        and the diffusion coefficient   """
+        rou_lipid = 0.9
+        rou_keratin = 1.37
+        rou_water = 1
         
-        #comp.Comp.set_Kw(self, Kw)
-        #comp.Comp.set_D(self, Dw)
+        # calulcate volume fraction of water in CC based on
+        #    mass fraction of water in SC
+        theta_b = self.compVolFracWater_cc( mass_frac_water, rou_lipid, rou_keratin, rou_water,
+				 V_mortar, V_brick, V_all)
+        # do the same for saturated water
+        phi_b = self.compVolFracWater_cc( mass_frac_water_sat, rou_lipid, rou_keratin, rou_water,
+				 V_mortar, V_brick, V_all)
+
+
+        # calculate diffusivity and partition coefficient
+        
+        r_f = 3.5e-9 # keratin microfibril radius, 3.5 nm
+        Dw = comp.Comp.compDiff_stokes(self, eta, chem.r_s)
+        
+        if name == 'LP':            
+            Kw, D = self.compParDiff_lp(chem)                
+        elif name == 'CC' : # corneocyte
+            Kw, D = self.compParDiff_cc(chem, Dw, r_f, phi_b, theta_b)
+            
         
         return (Kw, D)
+        
         
     def compVolFracWater_cc(self, mass_frac_water, rou_lipid, rou_keratin, rou_water, 
                             V_mortar_geometry, V_brick_geometry, V_all_geometry):

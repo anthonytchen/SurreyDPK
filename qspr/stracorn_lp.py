@@ -15,7 +15,7 @@ import numpy as np
 #from importlib import reload
 import matplotlib.pyplot as plt
 
-from constants import rho_lip, rho_wat
+from qspr.constants import rho_lip, rho_wat
 
 ### Functions calculating partition coefficients ###
 
