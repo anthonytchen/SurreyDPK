@@ -1,2 +1,11 @@
+import sys
 import example.runDPK_invitro as rDI
-rDI.compDPK_KwVar('example/config/CosEU/Vanillin_CE.cfg', wk_path='5.Surrey2D_KscVar/Vanillin/')
+
+case = str(sys.argv[1])
+
+#case = args[1]
+#print(case)
+cfg_fn = 'example/config/CosEU/' + case + '_CE.cfg'
+wk_path = '5.Surrey2D_KscVar/' + case + '/'
+
+rDI.compDPK_KwVar(cfg_fn, wk_path=wk_path)
