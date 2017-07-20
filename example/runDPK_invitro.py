@@ -124,7 +124,7 @@ def saveMass(nparray, fn, b_1st_time=False) :
         file.close()
 
         
-def compDPK_KwVar(fn_conf, sc_Kw_paras=None, wk_path='./simu/') :        
+def compDPK_KwVar(fn_conf, sc_Kw_paras=None, wk_path='./simu/', N_PROCESS=1) :        
     """ Simulate with the uncertainty in Kw for lipid and corneocytes """
     _conf = config.Config(fn_conf)
     _chem = chemical.Chemical(_conf)        
@@ -133,7 +133,7 @@ def compDPK_KwVar(fn_conf, sc_Kw_paras=None, wk_path='./simu/') :
     import example.runUnctQSPR as rUq
     reload(rUq)
     #print(np.array([_chem.mw]))
-    Kw_var, Kw_base = rUq.compUnct_Ksc(np.array([[_chem.mw]]))
+    Kw_var, Kw_base = rUq.compUnct_Ksc(np.array([[_chem.K_ow]]))
     print('Base case, Klp= ', 10**Kw_base[0][0][1], ' Kcc= ', 10**Kw_base[0][0][0])
     #print(Kw_var[0][0])
     m_cc, m_lp = Kw_var[0][0]
@@ -146,10 +146,27 @@ def compDPK_KwVar(fn_conf, sc_Kw_paras=None, wk_path='./simu/') :
     sc_Kw_paras.lp.option = 'VALE'
     sc_Kw_paras.cc.option = 'VALE'
     
-    N = 50
-    for i in range(N):  # N MC samples
-        sc_Kw_paras.lp.value = np.array( [10**np.random.normal(m_lp, sd_lp)] )
-        sc_Kw_paras.cc.value = np.array( [10**np.random.normal(m_cc, sd_cc)] )
-        wk_path_i = wk_path + 'rep_' + str(i) + '/'
-        print('\t Rep ', i, 'Klp= ', sc_Kw_paras.lp.value, ' Kcc= ', sc_Kw_paras.cc.value, '\n')
-        compDPK(fn_conf, _chem, sc_Kw_paras, disp=3, wk_path=wk_path_i)
+    from multiprocessing import Pool    
+    N = 50  # N MC samples
+    
+    if N_PROCESS == 1 :
+        for i in range(N):  
+            sc_Kw_paras.lp.value = np.array( [10**np.random.normal(m_lp, sd_lp)] )
+            sc_Kw_paras.cc.value = np.array( [10**np.random.normal(m_cc, sd_cc)] )
+            wk_path_i = wk_path + 'rep_' + str(i) + '/'
+            print('\t Rep ', i, 'Klp= ', sc_Kw_paras.lp.value, ' Kcc= ', sc_Kw_paras.cc.value, '\n')
+            compDPK(fn_conf, _chem, sc_Kw_paras, disp=3, wk_path=wk_path_i)
+    else:
+        arg_list = [None]*N
+        for i in range(N):
+            sc_Kw_paras.lp.value = np.array( [10**np.random.normal(m_lp, sd_lp)] )
+            sc_Kw_paras.cc.value = np.array( [10**np.random.normal(m_cc, sd_cc)] )
+            wk_path_i = wk_path + 'rep_' + str(i) + '/'
+            print('\t Rep ', i, 'Klp= ', sc_Kw_paras.lp.value, ' Kcc= ', sc_Kw_paras.cc.value, '\n')
+            arg_list[i] = (fn_conf, _chem, sc_Kw_paras, None, 3, wk_path_i) 
+        
+        with Pool(N_PROCESS) as pool:
+            pool.starmap(compDPK, arg_list)
+        
+        
+    
