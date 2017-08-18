@@ -34,7 +34,7 @@ def compDPK(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1, wk_pa
     # Read the .cfg, i.e. configuration, file to set up simulation
     _conf = config.Config(fn_conf)
     if sc_Kw_paras is not None:
-        _conf.Kw_sc_paras = sc_Kw_paras
+        _conf.Kw_sc_paras = sc_Kw_paras                
     if sc_D_paras is not None:
         _conf.D_sc_paras = sc_D_paras  
         
@@ -156,6 +156,7 @@ def compDPK_KwVar(fn_conf, wk_path='./simu/', N=50, N_PROCESS=1) :
             print('\t Rep ', i, 'Klp= ', sc_Kw_paras.lp.value, ' Kcc= ', sc_Kw_paras.cc.value, '\n')
             compDPK(fn_conf, _chem, sc_Kw_paras, disp=3, wk_path=wk_path_i)
     else:
+        raise ValueError('N_PROCESS must be 1; there is a bug in multiprocessing waiting to be fixed!')
         arg_list = [None]*N
         sc_Kw_paras = [ KwDParas() for i in range(N) ]
         for i in range(N):
