@@ -1,0 +1,52 @@
+# This is the configuration file to run dermal absorption simulation of ibuprofen in propylene glycol (PG)
+#  In general, a negative value means that parameter will be calculated by the code, instead of supplied by user
+
+# .chem0 means it an active ingredient, in this case ibuprofen
+
+CHEM_MW      76.09
+# 10**-1.07 = 0.120
+CHEM_KOW     0.0851
+CHEM_PKA     -1
+CHEM_NONION  0.4427
+CHEM_UNBND   0.0531
+CHEM_ACIDBASE A
+CHEM_DENSITY 1231
+CHEM_PHASE SOLID
+
+### Vehicle specific setting
+INFINITE_VH  1
+AREA_VH      1e-4
+#      Below values are from CosEU project
+# Water evaporation from skin surface from Gajjar et al., Ann. Occup. Hyg., 57: 853, 2013
+EVAP_SOLVENT_VH 772E-10   
+EVAP_SOLUTE_VH 1.32E-12
+SOLVENT_MW 18
+SOLUBILITY_VH 1030
+SOLVENT_DENSITY 1000
+
+
+### Initial concentration in (possible) compartments
+
+INIT_CONC_VH 1030
+INIT_CONC_SC 0
+INIT_CONC_VE 0
+INIT_CONC_DE 0
+INIT_CONC_HF 0
+
+### Partiton and diffusion coefficienets in (possible) compartments
+
+KW_VH			1
+D_VH			-1
+
+KW_SC			-1
+D_SC			-1
+
+KW_VE			-1
+D_VE			-1
+
+KW_DE			-1
+D_DE			-1
+
+KW_HF			1
+D_HF			1e-9
+

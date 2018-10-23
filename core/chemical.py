@@ -13,7 +13,10 @@ class Chemical:
         if conf is not None :
             self.setChem(conf.mw, conf.K_ow, conf.pKa, conf.frac_non_ion, conf.frac_unbound, conf.acid_base)
     
-        
+    def setChemConf(self, conf=None):
+        if conf is not None :
+            self.setChem(conf.mw, conf.K_ow, conf.pKa, conf.frac_non_ion, conf.frac_unbound, conf.acid_base)
+            
     def setChem(self, mw, K_ow, pKa, frac_non_ion = None, frac_unbound = None, acid_base = None):        
         
         self.mw = mw

@@ -49,12 +49,11 @@ def compDPK(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1, wk_pa
     _skin.createComps(_chem, _conf)     
 
     # Simulation time (in seconds) and steps
-    t_start, t_end, Nsteps = [0, 3600*24, 145]
+    t_start, t_end, Nsteps = [0, 3600*24, 25]
     #t_start, t_end, Nsteps = [0, 1800, 181]
     t_range = np.linspace(t_start, t_end, Nsteps)  
-    #t_range = np.r_[np.linspace(0, 1000, 2), np.linspace(1200, 1800, 21),\
-    #                np.linspace(1800, 3600, 21),np.linspace(7200, 3600*24, 23)]
-    #Nsteps = len(t_range)
+    # t_range = np.r_[np.linspace(0, 1000, 2), np.linspace(1200, 1400, 201)]
+    Nsteps = len(t_range)
     
     nComps = _skin.nxComp*_skin.nyComp
     total_mass = np.sum( _skin.compMass_comps() )
@@ -98,6 +97,93 @@ def compDPK(fn_conf, chem=None, sc_Kw_paras=None, sc_D_paras=None, disp=1, wk_pa
     
     #return mass
 
+def compDPK_multiChem(fn_conf, disp=1, wk_path='./simu/') :
+    """Compute DPK for multiple chemicals which all penetrate into skin
+    Args:
+        fn_conf -- the .cfg file, which gives the configuration of the simulation
+        chem -- if given, it overrides the values given in fn_conf
+        wk_path -- path to save simulation results
+    """
+    # Read the .cfg, i.e. configuration, file to set up simulation
+    _conf = config.Config(fn_conf)
+    nChem = _conf.nChem
+    if nChem > 1:
+        _chem = [chemical.Chemical() for i in range(nChem)]
+        _conf_chem = [config.Config() for i in range(nChem)]
+    else:
+        raise ValueError('This function should only be used with multiple chemicals co-penetrating')
+        
+    # set up _chem[]
+    for i in range(nChem):
+        fn = fn_conf + '.chem' + str(i)
+        _conf_chem[i].readFile(fn)
+        _conf_chem[i].combine(_conf)
+        _chem[i].setChemConf(_conf_chem[i])
+        
+    # set up skin objects, one for each chemical species
+    _skin = [skin_setup.Skin_Setup(_chem[i], _conf_chem[i]) for i in range(nChem)]
+    total_mass = np.zeros(nChem) # to store the total mass of each chemical
+    for i in range(nChem):        
+        _skin[i].createComps(_chem[i], _conf_chem[i])    
+        total_mass[i] = np.sum( _skin[i].compMass_comps() )
+
+    # Simulation time (in seconds) and steps
+    t_start, t_end, Nsteps = [0, 3600*24, 25]
+    #t_start, t_end, Nsteps = [0, 1800, 181]
+    t_range = np.linspace(t_start, t_end, Nsteps)  
+    # t_range = np.r_[np.linspace(0, 1000, 2), np.linspace(1200, 1400, 201)]
+    Nsteps = len(t_range)    
+    
+    
+    # Create directory to save results
+    newpath = wk_path
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+    for i in range(nChem):
+        fn = wk_path + 'MassFrac.csv' + 'chem' + str(i)
+        saveMass(total_mass[i], fn, b_1st_time=True)    
+    
+    nComps = _skin[0].nxComp*_skin[0].nyComp
+    
+    for j in range(Nsteps):
+        
+        if disp >= 2:
+            print('Time = \n', t_range[j])
+            
+        # Create directory to save results
+        newpath = wk_path + str(t_range[j])
+        if not os.path.exists(newpath):
+            os.makedirs(newpath)
+            
+        for i in range(nChem):
+        
+            mass = _skin[i].compMass_comps()
+            m_v = _skin[i].comps[0].getMass_OutEvap()
+            m_all = np.insert(mass, 0, m_v) / total_mass[i]
+        
+            if disp >= 2:
+                np.set_printoptions(precision=2)
+                print('\tChem no. ', i, '% mass: ', m_all)
+            
+            
+            # Save fraction of mass in all compartments
+            fn = wk_path + 'MassFrac.csv' + 'chem' + str(i)
+            saveMass(np.insert(m_all, 0, t_range[j]), fn)
+        
+            # Save current concentrations        
+            for k in range(nComps):
+                fn = newpath + '/comp' + str(k) + '_' + _conf.comps_geom[k].name        
+                _skin[i].comps[k].saveMeshConc(True, fn)
+        
+            if j == Nsteps-1:
+                break
+        
+            # Simulate
+            _skin[i].solveMoL(t_range[j], t_range[j+1])
+    
+    #return mass
+    
+    
 def saveMass(nparray, fn, b_1st_time=False) :
         """ Save mass and fractions to file
         Args: 

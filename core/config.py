@@ -36,28 +36,32 @@ class Config:
     and then feeds them to the appropriate classes (e.g. Chemical, Skin etc.)
     """
     
-    def __init__(self, fn_config):
+    def __init__(self, fn_config=None):
         """         """
         ## Default values
         self.comps_nrow = 0
         self.comps_ncol = 0
         self.comps_geom = None      
 
-		
-        with open(fn_config, 'r') as f:
-            lines = f.readlines()
-        f.close()
-        for lin in lines:
-            tokens = list( filter(None, lin.split()) )
-            if len(tokens) != 0 :
-                self.readTokens(tokens)
-        
-        self.updateGeometry()
+        if fn_config is not None:
+            self.readFile(fn_config)            
+            self.updateGeometry()
         
         # parameters used in QSPRs to calculate Kw and D
         self.Kw_sc_paras = None
         self.D_sc_paras = None
-        
+    
+    def readFile(self, fn_config):
+        """ Read text from a configuration file, and parse using method <readTokens> """
+        with open(fn_config, 'r') as f:
+            lines = f.readlines()
+            f.close()
+            for lin in lines:
+                tokens = list( filter(None, lin.split()) )
+                if len(tokens) != 0 :
+                    self.readTokens(tokens)
+                    
+                    
     def readTokens(self, tokens):
         
         #print(tokens)
@@ -204,3 +208,15 @@ class Config:
                     else :
                         raise ValueError('Invalid value for conf.comps_geom[idx].len_y')
          
+    def combine(self, other_conf):
+        """ Combine <other_conf> into this conf object
+        If this conf contains the same attributes, they will be replaced by those in <other_conf>
+        and warning messages will be reported
+        """
+        members = [attr for attr in dir(other_conf) if not callable(getattr(other_conf, attr)) and not attr.startswith("__")]
+        for attr in members:
+            val = getattr(other_conf, attr)
+            if hasattr(self, attr):
+                msg = "Conflict values when trying to combine two config objects; attributes: " + attr + "; self value = " + str(getattr(self, attr)) + " , other value = " + str(val)
+                warnings.warn(msg, DeprecationWarning)
+            setattr(self, attr, val)

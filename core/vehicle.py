@@ -29,7 +29,7 @@ class Vehicle(comp.Comp):
         self.chem = chem
         
         # evaporative mass transfer coefficient for solvent and solute
-        self.b_vary_vehicle = True
+        self.b_vary_vehicle = False #True
         self.k_evap_solvent = k_evap_solvent
         self.k_evap_solute = k_evap_solute
         self.solubility = solubility
@@ -162,6 +162,7 @@ class Vehicle(comp.Comp):
             if V_solu > V_solu_1: # mass out of the solution phase
                 V1 = V_solu - V_solu_1 # volume of the mass out phase
                 V2 = V_solv + V_solu_1 # volume of the solution phase
+                print(V1, V2)
             else:
                 V1 = .0
                 V2 = V
