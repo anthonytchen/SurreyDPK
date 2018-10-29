@@ -149,12 +149,18 @@ def compDPK_multiChem(fn_conf, disp=1, wk_path='./simu/') :
         
         if disp >= 2:
             print('Time = \n', t_range[j])
+
+        # At each time step, update the partition coefficient due to co-penetration
+        # todo: test code now
+        multiplier = .0
+        _skin[0].updateKw_fromOther(_conf_chem[0], _skin[1], multiplier)
             
         # Create directory to save results
         newpath = wk_path + str(t_range[j])
         if not os.path.exists(newpath):
             os.makedirs(newpath)
             
+        # Save results
         for i in range(nChem):
         
             mass = _skin[i].compMass_comps()
@@ -163,8 +169,7 @@ def compDPK_multiChem(fn_conf, disp=1, wk_path='./simu/') :
         
             if disp >= 2:
                 np.set_printoptions(precision=2)
-                print('\tChem no. ', i, '% mass: ', m_all)
-            
+                print('\tChem no. ', i, '% mass: ', m_all)            
             
             # Save fraction of mass in all compartments
             fn = wk_path + 'MassFrac.csv' + 'chem' + str(i)
@@ -174,10 +179,11 @@ def compDPK_multiChem(fn_conf, disp=1, wk_path='./simu/') :
             for k in range(nComps):
                 fn = newpath + '/comp' + str(k) + '_' + _conf.comps_geom[k].name        
                 _skin[i].comps[k].saveMeshConc(True, fn)
-        
+                
+        # Conduct simulation                
+        for i in range(nChem):
             if j == Nsteps-1:
-                break
-        
+                break        
             # Simulate
             _skin[i].solveMoL(t_range[j], t_range[j+1])
     

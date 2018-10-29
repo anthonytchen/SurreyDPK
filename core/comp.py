@@ -721,4 +721,16 @@ class Comp:
                 idx = i*self.ny + j
                 self.meshes[idx].set_Kw(Kw)       
                 
+    def setMeshes_Kw_fromOther(self, compOther, multiplier):
+        """ Set meshes' partition coefficient based on the concentrations in the other component
+        This is mainly used to model the effect of penetration enhancers (solvents) on partition of the main ingredients
+        Kw_new = Kw * ( 1 + compOther.meshes[idx].getConc() * multiplier )
+        """
+        for i in range(self.nx) : # verticle direction up to down
+            for j in range(self.ny): # lateral direction left to right	
+                idx = i*self.ny + j
+                Kw = self.meshes[idx].get_Kw() * ( 1.0 + compOther.meshes[idx].getConc() * multiplier )
+                self.meshes[idx].set_Kw(Kw)
+                
+                
 ### (END OF) Class methods dealing with I/O ###

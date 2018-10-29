@@ -46,7 +46,7 @@ class Skin_Setup(skin.Skin):
     def createComps(self, chem, conf) :
         """ Create compartments
         Letter code:
-            V: vehicle            S: stratum cornuem
+            V: vehicle            S: 2D stratum cornuem       O: 1D stratum corneum
             E: viable epidermis   D: dermis
             B: blood              H: Hair
         """
@@ -219,3 +219,22 @@ class Skin_Setup(skin.Skin):
         return hf
         
     ### (END OF) Create individual compartments ###
+    
+    
+    ### (START OF) Methods dealing with penetration enhancers ###
+    
+    def updateKw_fromOther(self, this_conf, other_skin, multiplier) :
+        """ Update the partition coefficient (thus this chemical species) based on
+        the concentration of <other_skin> (thus the other chemical species)    """
+        for i in range(this_conf.comps_nrow) :            
+            for j in range(this_conf.comps_ncol) :                
+                idx = i*this_conf.comps_ncol + j
+                
+                this_comp = self.comps[idx]
+                other_comp = other_skin.comps[idx]
+                
+                if this_conf.comps_geom[idx].name != 'V': # if it's vehicle, do not update
+                    this_comp.setMeshes_Kw_fromOther(other_comp, multiplier)
+    # End of updateKw_fromOther()
+                        
+    ### (END OF) Methods dealing with penetration enhancers ###
